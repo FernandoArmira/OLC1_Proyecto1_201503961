@@ -1,0 +1,723 @@
+package analizadores;
+import java_cup.runtime.*;
+import proyecto.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+parser code
+{:  
+
+    public static int contId=2;
+    public static int contI=0;
+    public static int contarbol = 1;
+    public static String primeros = ""; 
+    public static String ultimos = ""; 
+    public static Nodo Raiz;
+    public static ArrayList<String> siguientes = new ArrayList();
+    public static ArrayList<String> hojas = new ArrayList();
+    public static ArrayList<String> transiciones = new ArrayList();
+    public static ArrayList<String> estados = new ArrayList();
+    public static ArrayList<String> hojasauxiliar = new ArrayList();
+    public static ArrayList<String> afd = new ArrayList();
+    public static ArrayList<String> estadosaceptacion = new ArrayList();
+
+    public static void graficarArbol(Nodo act, String nombre){
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\ARBOLES_201503961\\" + nombre + ".dot");
+            pw = new PrintWriter(fichero);
+            pw.println("digraph G{");
+            pw.println("rankdir=UD");
+            pw.println("concentrate=true");
+            pw.println("node[shape=record]");
+            //System.out.println("primeros:" + primeros);
+            pw.println("struct0[ label =\" {N|{" + primeros + "|.|" + (contI + 1) + "}|} \"];");
+            pw.println("struct1[ label =\" {N|{" + (contI + 1) + "|#|" + (contI + 1) + "} |" + (contI + 1) + "} \"];");
+            pw.println(act.getCodigoInterno());
+            pw.println("struct0->struct" + (contId - 1));
+            pw.println("struct0->struct1");
+            pw.println("}");
+            //siguientes.add(ultimos + "-" + Integer.toString(contI + 1) );
+            siguientes(ultimos,Integer.toString(contI + 1));
+            System.out.println("Archivo Arbol generado correctamente");
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        //para compilar el archivo dot y obtener la imagen
+        try {
+            //dirección doonde se ecnuentra el compilador de graphviz
+            String dotPath = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+            //dirección del archivo dot
+            String fileInputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\ARBOLES_201503961\\" + nombre + ".dot";
+            //dirección donde se creara la magen
+            String fileOutputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\ARBOLES_201503961\\" +nombre+ ".jpg";
+            //tipo de conversón
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+
+            Runtime rt = Runtime.getRuntime();
+
+            rt.exec(cmd);
+
+            graficarSiguientes("siguientes" + Integer.toString(parser.contarbol));
+
+            contId=2;
+            contI=0;
+            primeros = "";
+            ultimos = "";
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        }
+    }
+
+    public static void graficarSiguientes(String nombre){
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\SIGUIENTES_201503961\\" + nombre + ".dot");
+            pw = new PrintWriter(fichero);
+            pw.println("digraph H{");
+            pw.println("parent [");
+            pw.println("shape=plaintext");
+            pw.println("label=<");
+            pw.println("<table border=\'1\' cellborder=\'1\'>");
+            pw.println("<tr><td>Hoja</td><td>Numero</td><td>Siguientes</td></tr>");   
+            for(int i = 0;i < siguientes.size();i++){
+                String valor = "";
+                String[] parts = siguientes.get(i).split("-");
+                for(int j = 0;j < hojas.size();j++){
+                    String[] parts2 = hojas.get(j).split("-");
+                    if(parts[0].equals(parts2[0])){
+                        valor = parts2[1];
+                        j = hojas.size();
+                    }
+                }
+                pw.println("<tr><td>" + valor + "</td><td>" + parts[0]  + "</td><td>" + parts[1] + "</td></tr>");
+                //System.out.println(siguientes.get(i));      
+            }
+            pw.println("<tr><td>#</td><td>"+ (contI + 1 )+ "</td><td> - </td></tr>");
+            pw.println("</table>");
+            pw.println(">];");
+            pw.println("}");
+            System.out.println("Archivo Siguientes generado correctamente");
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        //para compilar el archivo dot y obtener la imagen
+        try {
+            //dirección doonde se ecnuentra el compilador de graphviz
+            String dotPath = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+            //dirección del archivo dot
+            String fileInputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\SIGUIENTES_201503961\\" + nombre + ".dot";
+            //dirección donde se creara la magen
+            String fileOutputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\SIGUIENTES_201503961\\" +nombre+ ".jpg";
+            //tipo de conversón
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+
+            Runtime rt = Runtime.getRuntime();
+
+            rt.exec(cmd);
+
+            transicion();
+            graficarTransiciones("transiciones" + Integer.toString(parser.contarbol));
+            graficarAFD("afd" + Integer.toString(parser.contarbol));
+
+            siguientes.clear();
+            hojas.clear();
+            transiciones.clear();
+            estados.clear();
+            hojasauxiliar.clear();
+            afd.clear();
+            estadosaceptacion.clear();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        }
+    }
+
+public static void graficarTransiciones(String nombre){
+        //int contador= 0;
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\TRANCISIONES_201503961\\" + nombre + ".dot");
+            pw = new PrintWriter(fichero);
+            /*for(int i = 0;i < transiciones.size();i++){
+                pw.println(transiciones.get(i));
+                }
+            */
+            pw.println("digraph H{");
+            pw.println("parent [");
+            pw.println("shape=plaintext");
+            pw.println("label=<");
+            pw.println("<table border=\'1\' cellborder=\'1\'>");
+            pw.println("<tr><td>Estado</td>");
+            //Encabezado
+            for(int i = 0;i < hojas.size();i++){
+                boolean hestado = true;
+                String[] part = hojas.get(i).split("-");
+                for(int j = 0;j < hojas.size();j++){
+                    String[] part2 = hojas.get(j).split("-");
+                    //System.out.println(part[1]+ " COMPARANDO " + part2[1]);
+                    if(part[1].equals(part2[1]) && j!=i && j <= i){
+                        //System.out.println("Ya existe hoja");
+                        hestado = false;
+                        j=hojas.size();
+                    }else if(j == i){
+                        j=hojas.size();
+                    } 
+                }
+                if(hestado == true){
+                    System.out.println(part[1]);
+                    pw.println("<td>" + part[1] + "</td>");
+                    hojasauxiliar.add(part[1]);
+                    //contador++;
+                }
+            }
+            pw.println("</tr>");
+
+            for(int i = 0;i < estados.size();i++){ // filas
+                pw.println("<tr><td>" + estados.get(i) + "</td>");
+                String estadoaux = estados.get(i);
+                //System.out.println("Fila " + estados.get(i));
+                for(int j = 0;j < hojasauxiliar.size();j++){ // columnas
+                boolean transicion = false;
+                String hojaux = hojasauxiliar.get(j);
+                //System.out.println("Columna" + j);
+                    for(int k = 0;k < transiciones.size();k++){  //buscar en array de trancisiones
+                        String aux = "";
+                        String[] part = transiciones.get(k).split("-");
+                        //System.out.println(transiciones.get(k));
+                        for(int l = 0;l < hojas.size();l++){ //buscar valor de la hoja
+                            String[] part2 = hojas.get(l).split("-");
+                            if(part[0].equals(part2[0])){
+                                aux = part2[1];
+                                l = hojas.size();
+                                //System.out.println(aux);
+                            }  
+                        }
+                       if(part[2].equals(estadoaux) && aux.equals(hojaux)){
+                            pw.println("<td>" + part[3] +"</td>");
+                            transicion = true;
+                            afd.add(estadoaux + "-" + part[3] + "-" + hojaux);
+                       }
+                    }
+                    if(transicion == false){
+                        pw.println("<td> - </td>");
+                    }
+                }
+                pw.println("</tr>");
+            }
+            pw.println("</table>");
+            pw.println(">];");
+            pw.println("}");
+            System.out.println("Archivo Transiciones generado correctamente");
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        //para compilar el archivo dot y obtener la imagen
+        try {
+            //dirección doonde se ecnuentra el compilador de graphviz
+            String dotPath = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+            //dirección del archivo dot
+            String fileInputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\TRANCISIONES_201503961\\" + nombre + ".dot";
+            //dirección donde se creara la magen
+            String fileOutputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\TRANCISIONES_201503961\\" +nombre+ ".jpg";
+            //tipo de conversón
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+
+            Runtime rt = Runtime.getRuntime();
+
+            rt.exec(cmd);
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        }
+    }
+
+    public static void graficarAFD(String nombre){
+        aceptacion();
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\AFD_201503961\\" + nombre + ".dot");
+            pw = new PrintWriter(fichero);
+            pw.println("digraph automata_finito {");
+            pw.println("rankdir=LR;");
+            pw.println("graph [label=\"AFD\", labelloc=t, fontsize=20];");
+            pw.print("node [shape=doublecircle, style = filled,color = mediumseagreen]; ");
+            for(int i = 0;i < estados.size();i++){
+                for(int j = 0;j < estadosaceptacion.size();j++){
+                    if(!(estados.get(i).equals(estadosaceptacion.get(j)))){
+                        pw.print(estados.get(i) + " ");
+                    }
+                }
+            }
+            pw.println(";");
+            pw.println("node [shape=circle];");
+            pw.println("node [color=midnightblue,fontcolor=white];");
+            pw.println("edge [color=black];");
+            pw.println("secret_node [style=invis];");
+            pw.println("secret_node -> S0 [label=\"inicio\"];");
+
+            for(int i = 0;i < afd.size();i++){
+                String[] part = afd.get(i).split("-");
+                pw.println(part[0] + "->" + part[1] + "[label=\"" + part[2] + "\"];" );
+            }
+            pw.println("}");
+            System.out.println("AFD generado correctamente");
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        //para compilar el archivo dot y obtener la imagen
+        try {
+            //dirección doonde se ecnuentra el compilador de graphviz
+            String dotPath = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
+            //dirección del archivo dot
+            String fileInputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\AFD_201503961\\" + nombre + ".dot";
+            //dirección donde se creara la magen
+            String fileOutputPath = "C:\\Users\\Fernando Armira\\Documents\\Reportes\\AFD_201503961\\" +nombre+ ".jpg";
+            //tipo de conversón
+            String tParam = "-Tjpg";
+            String tOParam = "-o";
+
+            String[] cmd = new String[5];
+            cmd[0] = dotPath;
+            cmd[1] = tParam;
+            cmd[2] = fileInputPath;
+            cmd[3] = tOParam;
+            cmd[4] = fileOutputPath;
+
+            Runtime rt = Runtime.getRuntime();
+
+            rt.exec(cmd);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        }
+    }
+
+    public static void siguientes(String hoja, String siguiente){
+        String[] parts = hoja.split(",");
+        boolean estado = true;
+            for(int i=0; i< parts.length; i++){            
+            for(int j = 0;j < siguientes.size();j++){ // Recorrer la lista
+                String[] parts2 = siguientes.get(j).split("-");
+                //System.out.println(parts[i] + " COMPARANDO " + parts2[0]);
+                if(parts[i].equals(parts2[0])){
+                    //System.out.println("Ya existe el nodo");
+                    //Add a la lista
+                    //System.out.println(siguientes.get(j) + "," + siguiente);
+                    siguientes.set(j, siguientes.get(j) + "," + siguiente);
+                    estado = false;
+                    j = siguientes.size();
+                }
+            }
+            if(estado == true){
+                //System.out.println("No existe el nodo");
+                //Add a la lista
+                //System.out.println(parts[i] + "-" + siguiente);
+                siguientes.add(parts[i] + "-" + siguiente);
+            }
+            }
+ 
+    }
+
+    public static void transicion(){
+        int cestado = 0;
+        int testado = 1;
+        String[] parts = primeros.split(",");
+        //System.out.println("raiz");
+        //System.out.println(primeros);
+        //For solo para primeros
+        for(int i=0; i< parts.length; i++){
+            for(int j = 0;j < siguientes.size();j++){
+                String[] parts2 = siguientes.get(j).split("-");
+                if(parts[i].equals(parts2[0])){
+                    transiciones.add(siguientes.get(j) + "-S" + cestado);
+                    //System.out.println(siguientes.get(j));
+                    j = siguientes.size();
+                }
+                     
+            }    
+        }
+        
+        estados.add("S" + cestado);
+        cestado++;
+        
+        //Cada transicion
+        for(int i = 0;i < transiciones.size();i++){
+                boolean estado = true;
+                //System.out.println("Demas transiciones " + i);
+                //System.out.println(transiciones.get(i));
+                String[] part = transiciones.get(i).split("-");
+                for(int j = 0;j < transiciones.size() ;j++){
+                    //System.out.println("Entrando a for" + i + "-" + j);
+                    String[] parts2 = transiciones.get(j).split("-");
+                    //System.out.println(part[1] + " COMPARANDO " + parts2[1]);
+                    if(part[1].equals(parts2[1]) && j != i  && j<= i){
+                        //System.out.println("Ya existe transicion");
+                        estado = false;
+                        transiciones.set(i,transiciones.get(i) + "-" +parts2[3]);
+                        j = transiciones.size();
+                    }else if (j == i){
+                        j = transiciones.size();
+                    }
+                }
+                if(estado == true){
+                    transiciones.set(i,transiciones.get(i) + "-S" + testado);
+                    testado++;
+                    String[] parts3 = part[1].split(",");
+                    for(int k=0; k< parts3.length; k++){
+                        for(int l = 0;l < siguientes.size();l++){
+                            String[] parts4 = siguientes.get(l).split("-");
+                            if(parts3[k].equals(parts4[0])){
+                                transiciones.add(siguientes.get(l) + "-S" + cestado);
+                                //System.out.println(siguientes.get(l));
+                                l = siguientes.size();
+                            }
+                     
+                        }
+                    }
+                    estados.add("S" + cestado);
+                    cestado++;
+                }
+     
+        }
+              
+    }
+
+    public static void aceptacion(){
+        int acept = contI + 1;
+        for(int i= 0;i < transiciones.size() ;i++){
+            String[] part = transiciones.get(i).split("-");
+            String[] part2 = part[1].split(",");
+                for(int j= 0;j < part2.length; j++){
+                    if(Integer.parseInt(part2[j]) == acept){
+                        if(estadosaceptacion.contains(part[3]) == false){
+                            estadosaceptacion.add(part[3]);
+                        }
+                        
+                    }
+                }
+            
+            
+        }
+
+    }
+
+     
+
+    //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
+    public void syntax_error(Symbol s)
+    {
+        System.err.println("Error Sintactico en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador "+s.value + " no reconocido. Se ha recuperado del error." );
+        Errores nuevoE = new Errores("Error sintactico: recuperado", s.value.toString(), s.right+1, s.left+1);
+        proyecto.Interfaz.listaErrores.add(nuevoE);
+    }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+        System.err.println("Error Sintactico en la Línea " + (s.right+1)+ " Columna "+(s.left+1)+". Identificador " +s.value + " no reconocido.");
+        Errores nuevoE = new Errores("Error sintactico: no recuperado", s.value.toString(), s.right+1, s.left+1);
+        proyecto.Interfaz.listaErrores.add(nuevoE);
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------------------8
+:}
+
+action code {:
+:}
+
+// terminal [Tipo] listaterminales;
+terminal String suma, resta, mult, div, entero, decimal, letra, id, cadena, conj, tld, flecha, coma, puntocoma, porcentaje, dpuntos, llaveiz, llaveder, sconj, conc, or, inter, simbolo, comilla, comilla2, salto;
+
+// no terminal [Tipo] listanoterminales;
+non terminal Nodo INICIO, EXPRESION, BLOQUE1, DEFCONJ, DEFEXPR, NOTACION, NOTACION2, BLOQUE2, BLOQUE3, DEFCADENA;
+
+precedence left or;
+precedence left conc;
+precedence left suma, mult, inter;
+
+start with INICIO;
+
+INICIO::= llaveiz BLOQUE1 BLOQUE2 BLOQUE3 llaveder
+        |error;
+
+BLOQUE1::= DEFCONJ DEFEXPR;
+
+DEFCONJ::= DEFCONJ conj dpuntos id resta flecha NOTACION puntocoma 
+        |conj dpuntos id resta flecha NOTACION puntocoma
+        |error;
+
+NOTACION::= letra sconj letra
+        |entero sconj entero
+        |simbolo sconj simbolo
+        |letra sconj entero
+        |letra sconj simbolo
+        |entero sconj letra
+        |entero sconj simbolo
+        |simbolo sconj entero
+        |simbolo sconj letra
+        |letra NOTACION2
+        |entero NOTACION2
+        |simbolo NOTACION2;
+
+NOTACION2::= NOTACION2 coma letra
+        | NOTACION2 coma entero
+        | NOTACION2 coma simbolo
+        | coma letra
+        | coma entero
+        | coma simbolo;
+
+DEFEXPR::= DEFEXPR id resta flecha EXPRESION:valor {: //System.out.println("Valor " + valor.getValor());
+            parser.Raiz = valor;
+            graficarArbol(valor,"arbol" + Integer.toString(parser.contarbol));
+            parser.contarbol++;
+            //proyecto.Interfaz.list_of_names+=valor;
+            :} puntocoma
+           |id resta flecha EXPRESION:valor {: //System.out.println("Valor " + valor.getValor());
+            parser.Raiz = valor;
+            graficarArbol(valor,"arbol" + Integer.toString(parser.contarbol));
+            parser.contarbol++;
+            //proyecto.Interfaz.list_of_names+=valor;
+            :} puntocoma
+            |error;
+
+EXPRESION ::= suma EXPRESION:a {://RESULT=a; 
+            //System.out.println("Una o más veces " + a.getValor());
+            Nodo nuevaSuma = new Nodo(null, a, "+", parser.contId, " ", " " , " " , " ", " ");
+            parser.contId++;
+            RESULT = nuevaSuma;
+            if(nuevaSuma.getHder().getAN() == "AN"){
+            nuevaSuma.setAN("AN");
+            }else{
+            nuevaSuma.setAN("N");
+            }
+            nuevaSuma.setFirst(nuevaSuma.getHder().getFirst());
+            nuevaSuma.setLast(nuevaSuma.getHder().getLast());
+            primeros = nuevaSuma.getFirst();
+            ultimos = nuevaSuma.getLast();
+            nuevaSuma.setFollow(nuevaSuma.getHder().getLast() + "-" + nuevaSuma.getHder().getFirst());
+            siguientes(nuevaSuma.getHder().getLast(),nuevaSuma.getHder().getFirst());
+            //siguientes.add(nuevaSuma.getFollow());
+            //System.out.println("Follows: " + nuevaSuma.getFollow());
+            :} // EXPRESION ::= EXPRESION signcon EXPRESION EXPRESION
+
+            | mult EXPRESION:a {://RESULT=a; 
+            //System.out.println("Cero o más veces " + a.getValor());
+            Nodo nuevaMult = new Nodo(null, a, "*", parser.contId, " ", "A", " ", " ", " ");
+            parser.contId++;
+            RESULT = nuevaMult;
+            nuevaMult.setFirst(nuevaMult.getHder().getFirst());
+            nuevaMult.setLast(nuevaMult.getHder().getLast());
+            primeros = nuevaMult.getFirst();
+            ultimos = nuevaMult.getLast();
+            nuevaMult.setFollow(nuevaMult.getHder().getLast() + "-" + nuevaMult.getHder().getFirst());
+            siguientes(nuevaMult.getHder().getLast(),nuevaMult.getHder().getFirst());
+            //siguientes.add(nuevaMult.getFollow());
+            //System.out.println("Follows: " + nuevaMult.getFollow());
+            :}
+
+            | conc EXPRESION:a EXPRESION:b {://RESULT= a + b;
+            //System.out.println("Concatenacion " + a.getValor() + b.getValor());
+            Nodo nuevaConc = new Nodo(a, b, ".", parser.contId, " ", " ", " ", " ", " ");
+            parser.contId++;
+            RESULT = nuevaConc;
+            //System.out.println("Concatenacion " + nuevaConc.getHder().getAN() + "-" + nuevaConc.getHizq().getAN());
+            if(nuevaConc.getHder().getAN() == "A" && nuevaConc.getHizq().getAN() == "A"){
+                nuevaConc.setAN("A");
+            }else{
+                nuevaConc.setAN("N");
+            }
+            if(nuevaConc.getHizq().getAN() == "A"){
+                nuevaConc.setFirst(nuevaConc.getHizq().getFirst() + "," +  nuevaConc.getHder().getFirst());
+                primeros = nuevaConc.getFirst();
+            }else{
+                nuevaConc.setFirst(nuevaConc.getHizq().getFirst());
+                primeros = nuevaConc.getFirst();
+            }
+            //System.out.println("Anulabilidad " + nuevaConc.getHder().getAN());
+            if(nuevaConc.getHder().getAN() == "A"){
+                //System.out.println("Entrando a condicion si es anulable");
+                nuevaConc.setLast(nuevaConc.getHizq().getLast() + "," +  nuevaConc.getHder().getLast());
+                ultimos = nuevaConc.getLast();
+                //System.out.println(nuevaConc.getLast());
+            }else{
+                nuevaConc.setLast(nuevaConc.getHder().getLast());
+                ultimos = nuevaConc.getLast();
+                //System.out.println(nuevaConc.getLast());
+            }
+
+            nuevaConc.setFollow(nuevaConc.getHizq().getLast() + "-" + nuevaConc.getHder().getFirst());
+            siguientes(nuevaConc.getHizq().getLast(),nuevaConc.getHder().getFirst());
+            //siguientes.add(nuevaConc.getFollow());
+            //System.out.println("Follows: " + nuevaConc.getFollow());
+            :} 
+
+            | or EXPRESION:a EXPRESION:b {://RESULT=a + b; 
+            //System.out.println("Or " + a.getValor() + b.getValor());
+            Nodo nuevaOr = new Nodo(a, b, "\\|", parser.contId, " ", " ", " ", " ", " ");
+            parser.contId++;
+            RESULT = nuevaOr;
+            //System.out.println("Or " + nuevaOr.getHder().getAN() + "-" + nuevaOr.getHizq().getAN());
+            if(nuevaOr.getHder().getAN() == "A" || nuevaOr.getHizq().getAN() == "A"){
+            nuevaOr.setAN("A");
+            }else{
+            nuevaOr.setAN("N");
+            }
+            nuevaOr.setFirst(nuevaOr.getHizq().getFirst() + "," +  nuevaOr.getHder().getFirst());
+            nuevaOr.setLast(nuevaOr.getHizq().getLast() + "," +  nuevaOr.getHder().getLast());
+            primeros = nuevaOr.getFirst();
+            ultimos = nuevaOr.getLast();
+            :} 
+
+            | inter EXPRESION:a {://RESULT=a; 
+            //System.out.println("Cero o una vez " + a.getValor() );
+            Nodo nuevaInter = new Nodo(null, a, "?", parser.contId, " ", "A", " "," ", " ");
+            parser.contId++;
+            RESULT = nuevaInter;
+            nuevaInter.setFirst(nuevaInter.getHder().getFirst());
+            nuevaInter.setLast(nuevaInter.getHder().getLast());
+            primeros = nuevaInter.getFirst();
+            ultimos = nuevaInter.getLast();
+            :}  
+
+            | llaveiz id:val {://RESULT=val;
+            Nodo nuevoId = new Nodo(null, null, val, parser.contId, Integer.toString(parser.contI+1), "N" , Integer.toString(parser.contI+1), Integer.toString(parser.contI+1), " ");
+            hojas.add(Integer.toString(parser.contI + 1) + "-" + val);
+            parser.contId++;
+            parser.contI++;
+            RESULT = nuevoId;
+            :} llaveder
+
+            | cadena:val {://RESULT=val;
+            Nodo nuevaCad = new Nodo(null, null, val.replace("\"", "").replace("-", "─"), parser.contId, Integer.toString(parser.contI+1), "N", Integer.toString(parser.contI+1), Integer.toString(parser.contI+1), " ");
+            hojas.add(Integer.toString(parser.contI + 1) + "-" +  val.replace("\"", "").replace("-", "─"));
+            parser.contId++;
+            parser.contI++;
+            RESULT = nuevaCad;
+            :}
+
+            | comilla:val {://RESULT=val;
+            Nodo nuevaCom1 = new Nodo(null, null, val, parser.contId, Integer.toString(parser.contI+1), "N", Integer.toString(parser.contI+1), Integer.toString(parser.contI+1), " ");
+            hojas.add(Integer.toString(parser.contI + 1) + "-" + val);
+            parser.contId++;
+            parser.contI++;
+            RESULT = nuevaCom1;
+            :}
+
+            | comilla2:val {://RESULT=val;
+            Nodo nuevaCom2 = new Nodo(null, null, val, parser.contId, Integer.toString(parser.contI+1), "N", Integer.toString(parser.contI+1), Integer.toString(parser.contI+1), " ");
+            hojas.add(Integer.toString(parser.contI + 1) + "-" + val);
+            parser.contId++;
+            parser.contI++;
+            RESULT = nuevaCom2; 
+            :}
+
+            | salto:val {://RESULT=val;
+            Nodo nuevoSal = new Nodo(null, null,"\\" + val, parser.contId, Integer.toString(parser.contI+1), "N", Integer.toString(parser.contI+1), Integer.toString(parser.contI+1), " ");
+            hojas.add(Integer.toString(parser.contI + 1) + "-" + val);
+            parser.contId++;
+            parser.contI++;
+            RESULT = nuevoSal;
+            :}
+
+            |error; 
+
+BLOQUE2::= BLOQUE2 porcentaje porcentaje
+        | porcentaje porcentaje
+        |error;
+
+BLOQUE3::= DEFCADENA;
+
+DEFCADENA::= DEFCADENA id dpuntos cadena puntocoma
+        |id dpuntos cadena puntocoma
+        |error;
+
+/*LID::= LID comaa nombre:name {:App.Aplicacion.list_of_names+=name+"\n";:}
+    | nombre:name {:App.Aplicacion.list_of_names+=name+"\n";:};*/
+
+/*
+INICIO::= EXPRESION:valor {:
+    System.out.println(valor);
+    //proyecto.Interfaz.list_of_names+=valor;
+:};
+
+
+
+EXPRESION ::= suma EXPRESION:a EXPRESION:b {:RESULT=a+b;:} // EXPRESION ::= EXPRESION signcon EXPRESION EXPRESION
+            | resta EXPRESION:b EXPRESION:a  {:RESULT=a-b;:}
+            | mult EXPRESION:a EXPRESION:b {:RESULT=a*b;
+                //addNodo("mult",a,b)
+            :} // mult EXPRESION:a EXPRESION:b
+            | div EXPRESION:b EXPRESION:a {:RESULT=a/b;:}
+            | entero:val {:RESULT=new Double(val);:}
+            | decimal:val {:RESULT=new Double(val);:}
+            // | asteris EXPRESION
+            // | mas EXPRESION
+            // | punto EXPRESION EXPRESION <=> EXPRESION punto EXPRESION
+            ;
+//2+2*2.5+10*2*/
