@@ -32,11 +32,14 @@ decimal = [0-9]+ "." [0-9]+
 id ={letra}({letra}|"_"|[0-9])*
 simbolo =([!]|[#-}])
 cadena1 = "\"" ({letra}|{entero}|{simbolo}|{espacios})* "\""
-cadena2 = "\”" ({letra}|{entero}|{simbolo}|{espacios})* "\”"
+cadena2 = "\‘" ({letra}|{entero}|{simbolo}|{espacios})* "\‘"
 cadena3 = "\'" ({letra}|{entero}|{simbolo}|{espacios})* "\'"
-cadena = {cadena1}|{cadena2}|{cadena3}
+cadena4 = "\“" ({letra}|{entero}|{simbolo}|{espacios})* "\“"
+//cadena = {cadena1}
+cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 //suma = "+"
 //nombre = {letra}+
+//r'"((.)*?\"?)*?"'
 
 %{
     public void AddError(String tipo, String lexema, int fila, int columna){
@@ -46,27 +49,6 @@ cadena = {cadena1}|{cadena2}|{cadena3}
 %}
 
 %%
-
-/*<STRNG>{
-    [\"] {  String temporal=cadena; cadena=""; yybegin(YYINITIAL);
-        System.out.println("Cadena \"" + temporal + "\"" );
-        return new Symbol(sym.cadena, yycolumn,yyline, temporal);   }
-    [^\"] { cadena+=yytext(); }
-}
-
-<STRNG2>{
-    [\”] {  String temporal=cadena; cadena=""; yybegin(YYINITIAL);
-        System.out.println("Cadena \"" + temporal + "\"" );
-        return new Symbol(sym.cadena, yycolumn,yyline,temporal);   }
-    [^\”] { cadena+=yytext(); }
-}
-
-<STRNG3>{
-    [\'] {  String temporal=cadena; cadena=""; yybegin(YYINITIAL);
-        System.out.println("Cadena \'" + temporal + "\'" );
-        return new Symbol(sym.cadena, yycolumn,yyline,temporal);   }
-    [^\'] { cadena+=yytext(); }
-}*/
 
 <YYINITIAL> "#*"                {yybegin(COMENT_MULTI);}     // Si la entrada es un comentario inicia aqui
 <COMENT_MULTI> "*#"             {yybegin(YYINITIAL);}        // Si se acaba el comentario vuelve a YYINITIAL
@@ -97,8 +79,8 @@ cadena = {cadena1}|{cadena2}|{cadena3}
 "definirglobales" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.definirglobales,yycolumn,yyline,yytext());}
 "generarreporteestadistico" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.generarreporteestadistico,yycolumn,yyline,yytext());}
 "compare" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.compare,yycolumn,yyline,yytext());}
-"string" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.string,yycolumn,yyline,yytext());}
-"double" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.double,yycolumn,yyline,yytext());}
+"string" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.stringvar,yycolumn,yyline,yytext());}
+"double" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.doublevar,yycolumn,yyline,yytext());}
 "graficabarras" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.graficabarras,yycolumn,yyline,yytext());}
 "titulo" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.titulo,yycolumn,yyline,yytext());}
 "ejex" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.ejex,yycolumn,yyline,yytext());}
@@ -116,10 +98,6 @@ cadena = {cadena1}|{cadena2}|{cadena3}
 {decimal} {System.out.println("Decimal" + yytext());return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
 {id} {System.out.println("Id" + yytext());return new Symbol(sym.id,yycolumn,yyline,yytext());}
 {cadena} {System.out.println("Cadena" + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext());}
-"\"" {yybegin(STRNG);}
-"\”" {yybegin(STRNG2);}
-"\'" {yybegin(STRNG3);}
-
 
 //CUALQUIER ERROR:           SIMBOLOS NO DEFINIDOS DENTRO DEL LENGUAJE
 .   {

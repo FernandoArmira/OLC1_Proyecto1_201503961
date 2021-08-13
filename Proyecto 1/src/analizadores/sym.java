@@ -8,63 +8,69 @@ package analizadores;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int comilla = 25;
-  public static final int cadena = 10;
-  public static final int decimal = 7;
-  public static final int llaveiz = 18;
-  public static final int coma = 14;
-  public static final int flecha = 13;
-  public static final int mult = 4;
-  public static final int salto = 27;
-  public static final int inter = 23;
-  public static final int sconj = 20;
-  public static final int porcentaje = 16;
-  public static final int conj = 11;
-  public static final int or = 22;
-  public static final int resta = 3;
-  public static final int conc = 21;
-  public static final int div = 5;
+  public static final int cadena = 30;
+  public static final int decimal = 28;
+  public static final int llaveiz = 2;
+  public static final int coma = 7;
+  public static final int archivo = 26;
+  public static final int tituloy = 23;
+  public static final int titulox = 22;
+  public static final int stringvar = 16;
+  public static final int graficabarras = 18;
+  public static final int titulo = 19;
+  public static final int ejex = 20;
+  public static final int igual = 8;
   public static final int EOF = 0;
-  public static final int letra = 8;
-  public static final int simbolo = 24;
-  public static final int id = 9;
-  public static final int puntocoma = 15;
-  public static final int comilla2 = 26;
+  public static final int dolar = 12;
+  public static final int id = 29;
+  public static final int puntocoma = 4;
   public static final int error = 1;
-  public static final int entero = 6;
-  public static final int tld = 12;
-  public static final int dpuntos = 17;
-  public static final int suma = 2;
-  public static final int llaveder = 19;
+  public static final int pariz = 5;
+  public static final int definirglobales = 13;
+  public static final int graficapie = 24;
+  public static final int graficalineas = 25;
+  public static final int corder = 11;
+  public static final int coriz = 10;
+  public static final int parder = 6;
+  public static final int valores = 21;
+  public static final int dpuntos = 9;
+  public static final int llaveder = 3;
+  public static final int generarreporteestadistico = 14;
+  public static final int compare = 15;
+  public static final int puntajeespecifico = 27;
+  public static final int doublevar = 17;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "suma",
-  "resta",
-  "mult",
-  "div",
-  "entero",
-  "decimal",
-  "letra",
-  "id",
-  "cadena",
-  "conj",
-  "tld",
-  "flecha",
-  "coma",
-  "puntocoma",
-  "porcentaje",
-  "dpuntos",
   "llaveiz",
   "llaveder",
-  "sconj",
-  "conc",
-  "or",
-  "inter",
-  "simbolo",
-  "comilla",
-  "comilla2",
-  "salto"
+  "puntocoma",
+  "pariz",
+  "parder",
+  "coma",
+  "igual",
+  "dpuntos",
+  "coriz",
+  "corder",
+  "dolar",
+  "definirglobales",
+  "generarreporteestadistico",
+  "compare",
+  "stringvar",
+  "doublevar",
+  "graficabarras",
+  "titulo",
+  "ejex",
+  "valores",
+  "titulox",
+  "tituloy",
+  "graficapie",
+  "graficalineas",
+  "archivo",
+  "puntajeespecifico",
+  "decimal",
+  "id",
+  "cadena"
   };
 }
 

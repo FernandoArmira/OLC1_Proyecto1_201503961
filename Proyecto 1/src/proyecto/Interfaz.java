@@ -38,6 +38,7 @@ public class Interfaz extends javax.swing.JFrame {
      */
     public static String list_of_names="";
     public static ArrayList<Errores> listaErrores = new ArrayList<Errores>();
+    public static ArrayList<variables> listavariables = new ArrayList<variables>();
     public static String nombrearchivo = "";
     
     public Interfaz() {
@@ -323,6 +324,7 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
         list_of_names="";
         listaErrores.clear();
+        listavariables.clear();
         //jTextArea1.setText("");
         
         try {
