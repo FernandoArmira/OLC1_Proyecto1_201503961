@@ -22,8 +22,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 // Importaciones Jfreechart
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -169,6 +173,11 @@ public class Interfaz extends javax.swing.JFrame {
         jMenu4.add(jMenuItem2);
 
         jMenuItem3.setText("Tokens");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem3);
 
         jMenuItem4.setText("JSON");
@@ -348,35 +357,18 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        XYSeries series = new XYSeries("Producto A");
-
-        // Introduccion de datos
-        series.add(1, 1);
-        series.add(2, 6);
-        series.add(3, 3);
-        series.add(4, 10);
-
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Ventas 2014", // Título
-                "Tiempo (x)", // Etiqueta Coordenada X
-                "Cantidad", // Etiqueta Coordenada Y
-                dataset, // Datos
-                PlotOrientation.VERTICAL,
-                true, // Muestra la leyenda de los productos (Producto A)
-                false,
-                false
-        );
-
-        // Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Lineal", chart);
-        frame.pack();
-        frame.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            gbarras();
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -432,6 +424,53 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }
     
+    public void gbarras() throws IOException{
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        
+        int[ ] edad = {15, 13, 11};
+        
+        String [ ] nombre = {"Fernando", "Marz", "Jade"};
+        
+        for(int i = 0; i < edad.length; i++){
+            dataset.setValue(edad[i], "", nombre[i]);
+        }
+        
+        /*
+        dataset.setValue(6, "", "Jordi");
+        //dataset.setValue(7, "2014", "Jordi");
+        
+        dataset.setValue(8, "", "Cristina");
+        //dataset.setValue(5, "2014", "Cristina");
+        
+        dataset.setValue(12, "", "Pedro");
+        //dataset.setValue(9, "2014", "Pedro");*/
+        
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Comparación Ventas 2013-2014", // Titulo
+                "Vendedores", // Titulo ejex
+                "Ventas", // Titulo ejey
+                dataset, 
+                PlotOrientation.VERTICAL,
+                true, 
+                false, 
+                false
+        );
+        
+        //Mostramos la grafica en pantalla
+        ChartFrame frame = new ChartFrame("Ejemplo Grafica de Barras", chart);
+        frame.pack();
+        frame.setVisible(true);
+        
+        int width = 640; /* Width of the image */
+        int height = 480; /* Height of the image */ 
+        File BarChart = new File( "BarChart.jpeg" );
+        ChartUtilities.saveChartAsJPEG( BarChart , chart , width , height );
+
+
+    
+    }
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

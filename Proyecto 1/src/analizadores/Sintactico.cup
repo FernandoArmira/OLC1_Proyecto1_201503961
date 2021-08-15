@@ -37,7 +37,7 @@ action code {:
 terminal String llaveiz, llaveder, puntocoma, pariz, parder, coma, igual, dpuntos, coriz, corder, dolar, definirglobales, generarreporteestadistico, compare, stringvar, doublevar, graficabarras, titulo, ejex, valores, titulox, tituloy, graficapie, graficalineas, archivo, puntajeespecifico, decimal, id, cadena;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS;
+non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJEESPECIFICO, ARREGLOV2;
 //non terminal Nodo INICIO, EXPRESION, BLOQUE1, DEFCONJ, DEFEXPR, NOTACION, NOTACION2, BLOQUE2, BLOQUE3, DEFCADENA;
 
 //precedence left or;
@@ -50,8 +50,10 @@ INICIO::= INSTRUCCION;
 
 INSTRUCCION ::= INSTRUCCION BLOQUEGLOBALES
         | INSTRUCCION BLOQUEARCHIVOS
+        | INSTRUCCION BLOQUEGBARRAS
         | BLOQUEGLOBALES
         | BLOQUEARCHIVOS
+        | BLOQUEGBARRAS
         |error;
 
 BLOQUEGLOBALES ::= definirglobales llaveiz CUERPOGLOBALES llaveder;
@@ -65,23 +67,63 @@ VARSTRING ::= stringvar id:a igual cadena:b puntocoma {:System.out.println("--- 
 Addvariable(a,b,"String");
 :};
 
+
 VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {:System.out.println("--- Variable: " + a + " Valor: " + b);
 Addvariable(a,b,"Double");
-:};
+:}
+        | doublevar id igual BPUNTAJEESPECIFICO puntocoma;
 
 BLOQUEARCHIVOS ::= generarreporteestadistico llaveiz CUERPOARCHIVOS llaveder;
 
 CUERPOARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System.out.println("--- Archivo A: " + a + " Archivo B: " + b);:};
 
+BLOQUEGBARRAS ::= graficabarras llaveiz CUERPOGBARRAS llaveder;
+
+CUERPOGBARRAS ::= BTITULO BEJEX BVALORES BTITULOX BTITULOY;
+
+BTITULO ::= titulo dpuntos id puntocoma
+        | titulo dpuntos cadena puntocoma;
+
+BEJEX ::= ejex dpuntos coriz ARREGLO corder puntocoma;
+
+ARREGLO ::= cadena ARREGLO2
+        | id ARREGLO2;
+
+ARREGLO2 ::= ARREGLO2 coma cadena
+        | ARREGLO2 coma id
+        | coma cadena
+        | coma id;
+
+BVALORES ::= valores dpuntos coriz ARREGLOV corder puntocoma;
+
+ARREGLOV ::= cadena ARREGLOV2
+        | id ARREGLOV2
+        | BPUNTAJEESPECIFICO;
+
+BPUNTAJEESPECIFICO ::= dolar llaveiz puntajeespecifico coma cadena coma cadena coma cadena llaveder;
+
+ARREGLOV2 ::= ARREGLOV2 coma cadena
+        | ARREGLOV2 coma id
+        | ARREGLOV2 coma BPUNTAJEESPECIFICO
+        | coma cadena
+        | coma id
+        | coma BPUNTAJEESPECIFICO;
+
+BTITULOX ::= titulox dpuntos cadena puntocoma
+        | titulox dpuntos id puntocoma;
+
+BTITULOY ::= tituloy dpuntos cadena puntocoma
+        | tituloy dpuntos id puntocoma;
+
 
 /*
         
-        | INSTRUCCION BLOQUEGBARRAS
+        
         | INSTRUCCION BLOQUEGPIE
         | INSTRUCCION BLOQUEGLINEAS
 
         
-        | BLOQUEGBARRAS
+        
         | BLOQUEGPIE
         | BLOQUEGLINEAS
 

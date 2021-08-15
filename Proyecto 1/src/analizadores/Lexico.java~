@@ -49,8 +49,8 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\1\46\1\45\1\53\1\33\1\34\1\35\1\42\1\62\1\37\1\56"+
     "\1\3\1\43\1\54\1\40\1\44\1\51\1\3\1\41\1\50\1\52"+
     "\1\55\1\60\1\3\1\57\1\61\1\3\1\20\1\7\1\21\7\0"+
-    "\1\16\252\0\2\36\115\0\1\47\u1e98\0\1\11\3\0\1\13\13\0"+
-    "\1\16\1\16\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
+    "\1\16\252\0\2\36\115\0\1\47\u1e98\0\1\11\3\0\1\13\1\13"+
+    "\12\0\1\16\1\16\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
 
   /** 
    * Translates characters to character classes
@@ -515,7 +515,7 @@ public class Lexico implements java_cup.runtime.Scanner {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 238) {
+    while (i < 240) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
