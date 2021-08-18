@@ -97,7 +97,7 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 
 {decimal} {System.out.println("Decimal" + yytext());return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
 {id} {System.out.println("Id" + yytext());return new Symbol(sym.id,yycolumn,yyline,yytext());}
-{cadena} {System.out.println("Cadena" + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext());}
+{cadena} {System.out.println("Cadena" + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));}
 
 //CUALQUIER ERROR:           SIMBOLOS NO DEFINIDOS DENTRO DEL LENGUAJE
 .   {

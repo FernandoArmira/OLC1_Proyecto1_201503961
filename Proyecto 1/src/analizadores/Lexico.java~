@@ -965,7 +965,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             // fall through
           case 53: break;
           case 18: 
-            { System.out.println("Cadena" + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext());
+            { System.out.println("Cadena" + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));
             } 
             // fall through
           case 54: break;

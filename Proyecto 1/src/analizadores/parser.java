@@ -11,6 +11,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.io.File;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -209,6 +220,57 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
   
+    public static String titulografica = "";
+    public static String titulograficax = "";
+    public static String titulograficay = "";
+    public static ArrayList<String> valoresx = new ArrayList();
+    public static ArrayList<String> valoresy = new ArrayList();
+    public static int contgbarras = 1;
+    
+    public static void gbarras(String titulo, String titulox, String tituloy, String nombre) throws IOException{
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        
+        double [ ] edad = {0.8, 0.7, 0, 0, 0.6, 0.9};
+        
+        //String [ ] nombre = {"Fernando", "Marz", "Jade", "Juan", "Maria", "Pedro"};
+
+        for(int i = 0; i < valoresx.size(); i++){
+            System.out.println(valoresx.get(i) + " " + valoresy.get(i));
+        }
+        
+        for(int i = 0; i < valoresx.size(); i++){
+            dataset.setValue(Double.parseDouble(valoresy.get(i)), "", valoresx.get(i));
+        }
+        
+
+        
+        JFreeChart chart = ChartFactory.createBarChart(
+                titulo, // Titulo
+                titulox, // Titulo ejex
+                tituloy, // Titulo ejey
+                dataset, 
+                PlotOrientation.VERTICAL,
+                true, 
+                false, 
+                false
+        );
+        
+        //Mostramos la grafica en pantalla
+        ChartFrame frame = new ChartFrame("Ejemplo Grafica de Barras", chart);
+        frame.pack();
+        frame.setVisible(true);
+
+
+        //Crear imaagen de la grafica
+        int width = 640; // Width of the image 
+        int height = 480; // Height of the image 
+        File BarChart = new File( nombre + ".jpeg" );
+        ChartUtilities.saveChartAsJPEG( BarChart , chart , width , height );
+
+        valoresx.clear();
+        valoresy.clear();
+    }
 
     public void Addvariable(String variable, String valor, String tipo){
         variables nuevov= new variables(variable, valor, tipo);
@@ -400,8 +462,7 @@ class CUP$parser$actions {
 		int bright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		System.out.println("--- Variable: " + a + " Valor: " + b);
-Addvariable(a,b,"String");
-
+    Addvariable(a,b,"String");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VARSTRING",8, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -417,8 +478,7 @@ Addvariable(a,b,"String");
 		int bright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		System.out.println("--- Variable: " + a + " Valor: " + b);
-Addvariable(a,b,"Double");
-
+    Addvariable(a,b,"Double");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VARDOUBLE",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -469,7 +529,9 @@ Addvariable(a,b,"Double");
           case 20: // CUERPOGBARRAS ::= BTITULO BEJEX BVALORES BTITULOX BTITULOY 
             {
               Nodo RESULT =null;
-
+		System.out.println("Generar grafico de barras");
+    gbarras(titulografica, titulograficax, titulograficay, "BarChart" + Integer.toString(parser.contgbarras));
+    parser.contgbarras++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOGBARRAS",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -478,7 +540,21 @@ Addvariable(a,b,"Double");
           case 21: // BTITULO ::= titulo dpuntos id puntocoma 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Titulo: " + a);
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+            System.out.println("Existe la variable");
+            titulografica = proyecto.Interfaz.listavariables.get(i).getvalor();
+            i = proyecto.Interfaz.listavariables.size();
+        }else{
+            System.out.println("No existe la variable");
+        }
+    }
+    valoresx.add("");
+    valoresy.add("");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BTITULO",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -487,7 +563,12 @@ Addvariable(a,b,"Double");
           case 22: // BTITULO ::= titulo dpuntos cadena puntocoma 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Titulo: " + a);
+    titulografica = a;
+    valoresx.add("");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BTITULO",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -505,7 +586,11 @@ Addvariable(a,b,"Double");
           case 24: // ARREGLO ::= cadena ARREGLO2 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Valorx: " + a);
+    valoresx.set(0,a);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLO",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -514,7 +599,24 @@ Addvariable(a,b,"Double");
           case 25: // ARREGLO ::= id ARREGLO2 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Valorx: " + a);
+    int estado = 0;
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+            System.out.println("Existe la variable");
+            valoresx.set(0,proyecto.Interfaz.listavariables.get(i).getvalor());
+            i = proyecto.Interfaz.listavariables.size();
+            estado = 1;
+        }else{
+            System.out.println("No existe la variable");
+        }      
+    }
+        if(estado == 0){
+            valoresx.add("-");
+        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLO",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -523,7 +625,11 @@ Addvariable(a,b,"Double");
           case 26: // ARREGLO2 ::= ARREGLO2 coma cadena 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valorx: " + a);
+    valoresx.add(a);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLO2",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -532,7 +638,24 @@ Addvariable(a,b,"Double");
           case 27: // ARREGLO2 ::= ARREGLO2 coma id 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valorx: " + a);
+        int estado = 0;
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+            System.out.println("Existe la variable");
+            valoresx.add(proyecto.Interfaz.listavariables.get(i).getvalor());
+            i = proyecto.Interfaz.listavariables.size();
+            estado = 1;
+        }else{
+            System.out.println("No existe la variable");
+        }
+    }
+    if(estado == 0){
+            valoresx.add("-");
+        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLO2",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -541,7 +664,11 @@ Addvariable(a,b,"Double");
           case 28: // ARREGLO2 ::= coma cadena 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valorx: " + a);
+    valoresx.add(a);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLO2",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -550,7 +677,24 @@ Addvariable(a,b,"Double");
           case 29: // ARREGLO2 ::= coma id 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valorx: " + a);
+        int estado = 0;
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+            System.out.println("Existe la variable");
+            valoresx.add(proyecto.Interfaz.listavariables.get(i).getvalor());
+            i = proyecto.Interfaz.listavariables.size();
+            estado = 1;
+        }else{
+            System.out.println("No existe la variable");
+        }
+    }
+        if(estado == 0){
+            valoresx.add("-");
+        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLO2",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -568,7 +712,11 @@ Addvariable(a,b,"Double");
           case 31: // ARREGLOV ::= cadena ARREGLOV2 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Valory: " + a);
+    valoresy.set(0,a);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -577,7 +725,24 @@ Addvariable(a,b,"Double");
           case 32: // ARREGLOV ::= id ARREGLOV2 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Valory: " + a);
+    int estado = 0;
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+            System.out.println("Existe la variable");
+            valoresy.set(0,proyecto.Interfaz.listavariables.get(i).getvalor());
+            i = proyecto.Interfaz.listavariables.size();
+            estado = 1;
+        }else{
+            System.out.println("No existe la variable");
+        }      
+    }
+        if(estado == 0){
+            valoresy.add("0");
+        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV",19, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -586,7 +751,8 @@ Addvariable(a,b,"Double");
           case 33: // ARREGLOV ::= BPUNTAJEESPECIFICO 
             {
               Nodo RESULT =null;
-
+		System.out.println("--- Valory: PE");
+    valoresy.set(0,"0");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -604,7 +770,11 @@ Addvariable(a,b,"Double");
           case 35: // ARREGLOV2 ::= ARREGLOV2 coma cadena 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valory: " + a);
+    valoresy.add(a);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV2",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -613,7 +783,24 @@ Addvariable(a,b,"Double");
           case 36: // ARREGLOV2 ::= ARREGLOV2 coma id 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valory: " + a);
+    int estado = 0;
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+            System.out.println("Existe la variable");
+            valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
+            i = proyecto.Interfaz.listavariables.size();
+            estado = 1;
+        }else{
+            System.out.println("No existe la variable");
+        }
+    }
+    if(estado == 0){
+            valoresy.add("0");
+        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV2",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -622,7 +809,8 @@ Addvariable(a,b,"Double");
           case 37: // ARREGLOV2 ::= ARREGLOV2 coma BPUNTAJEESPECIFICO 
             {
               Nodo RESULT =null;
-
+		System.out.println("--- Valory: PE");
+    valoresy.add("0");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV2",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -631,7 +819,11 @@ Addvariable(a,b,"Double");
           case 38: // ARREGLOV2 ::= coma cadena 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valory: " + a);
+    valoresy.add(a);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV2",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -640,7 +832,24 @@ Addvariable(a,b,"Double");
           case 39: // ARREGLOV2 ::= coma id 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		System.out.println("--- Valory: " + a);
+    int estado = 0;
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+            System.out.println("Existe la variable");
+            valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
+            i = proyecto.Interfaz.listavariables.size();
+            estado = 1;
+        }else{
+            System.out.println("No existe la variable");
+        }
+    }
+    if(estado == 0){
+            valoresy.add("0");
+        }
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV2",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -649,7 +858,8 @@ Addvariable(a,b,"Double");
           case 40: // ARREGLOV2 ::= coma BPUNTAJEESPECIFICO 
             {
               Nodo RESULT =null;
-
+		System.out.println("--- Valory: PE");
+    valoresy.add("0");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ARREGLOV2",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -658,7 +868,11 @@ Addvariable(a,b,"Double");
           case 41: // BTITULOX ::= titulox dpuntos cadena puntocoma 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Titulox: " + a);
+    titulograficax = a;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BTITULOX",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -667,7 +881,20 @@ Addvariable(a,b,"Double");
           case 42: // BTITULOX ::= titulox dpuntos id puntocoma 
             {
               Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Titulox: " + a);
 
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+    if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+        System.out.println("Existe la variable");
+        titulograficax = proyecto.Interfaz.listavariables.get(i).getvalor();
+        i = proyecto.Interfaz.listavariables.size();
+    }else{
+        System.out.println("No existe la variable");
+    }
+}
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BTITULOX",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -676,7 +903,11 @@ Addvariable(a,b,"Double");
           case 43: // BTITULOY ::= tituloy dpuntos cadena puntocoma 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Tituloy: " + a);
+    titulograficay = a;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BTITULOY",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -685,7 +916,19 @@ Addvariable(a,b,"Double");
           case 44: // BTITULOY ::= tituloy dpuntos id puntocoma 
             {
               Nodo RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		System.out.println("--- Tituloy: " + a);
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+    if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+        System.out.println("Existe la variable");
+        titulograficay = proyecto.Interfaz.listavariables.get(i).getvalor();
+        i = proyecto.Interfaz.listavariables.size();
+    }else{
+        System.out.println("No existe la variable");
+    }
+}
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BTITULOY",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

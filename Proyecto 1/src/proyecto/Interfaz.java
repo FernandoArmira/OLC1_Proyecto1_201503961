@@ -357,12 +357,12 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        try {
+        /*try {
             // TODO add your handling code here:
             gbarras();
         } catch (IOException ex) {
             Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -378,6 +378,7 @@ public class Interfaz extends javax.swing.JFrame {
         FileWriter fichero = null;
                 PrintWriter pw = null;
                 try {
+                    
                     fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\ERRORES_201503961\\" + nombre+ ".html");
                     pw = new PrintWriter(fichero);
                     //comenzamos a escribir el html
@@ -424,6 +425,7 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }
     
+    /*
     public void gbarras() throws IOException{
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -436,15 +438,7 @@ public class Interfaz extends javax.swing.JFrame {
             dataset.setValue(edad[i], "", nombre[i]);
         }
         
-        /*
-        dataset.setValue(6, "", "Jordi");
-        //dataset.setValue(7, "2014", "Jordi");
-        
-        dataset.setValue(8, "", "Cristina");
-        //dataset.setValue(5, "2014", "Cristina");
-        
-        dataset.setValue(12, "", "Pedro");
-        //dataset.setValue(9, "2014", "Pedro");*/
+
         
         JFreeChart chart = ChartFactory.createBarChart(
                 "Comparación Ventas 2013-2014", // Titulo
@@ -462,14 +456,15 @@ public class Interfaz extends javax.swing.JFrame {
         frame.pack();
         frame.setVisible(true);
         
-        int width = 640; /* Width of the image */
-        int height = 480; /* Height of the image */ 
+        int width = 640; // Width of the image 
+        int height = 480; // Height of the image 
         File BarChart = new File( "BarChart.jpeg" );
         ChartUtilities.saveChartAsJPEG( BarChart , chart , width , height );
 
 
     
     }
+    */
 
     
     public static void main(String args[]) {
