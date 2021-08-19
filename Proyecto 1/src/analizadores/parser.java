@@ -22,6 +22,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.data.general.DefaultPieDataset;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -239,6 +240,7 @@ public class parser extends java_cup.runtime.lr_parser {
     public static ArrayList<String> valoresx = new ArrayList();
     public static ArrayList<String> valoresy = new ArrayList();
     public static int contgbarras = 1;
+    public static int contgpie = 1;
     
 // Grafica de barras
     public static void gbarras(String titulo, String titulox, String tituloy, String nombre) throws IOException{
@@ -282,6 +284,56 @@ public class parser extends java_cup.runtime.lr_parser {
 
         valoresx.clear();
         valoresy.clear();
+    }
+
+// Grafica de pie
+    public static void gpie(String titulo, String nombre) throws IOException{
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+
+        double valortotal = 0;
+        for(int i = 0; i < valoresy.size(); i++){
+            //System.out.println(valoresy.get(i));
+            valortotal = valortotal + Double.parseDouble(valoresy.get(i));
+        }
+        
+        System.out.println(valortotal);
+
+        double nuevovalor = 0;
+        for(int i = 0; i < valoresy.size(); i++){
+            //System.out.println(valoresy.get(i));
+            nuevovalor = Double.parseDouble(valoresy.get(i)) * 100 / valortotal;
+            valoresy.set(i,String.valueOf(nuevovalor));
+            //System.out.println(valoresy.get(i));
+        }
+        
+        for(int i = 0; i < valoresx.size(); i++){
+            pieDataset.setValue(valoresx.get(i), Double.parseDouble(valoresy.get(i)));
+        }
+
+        /*pieDataset.setValue("PSOE", new Integer(31));
+        pieDataset.setValue("PP", new Integer(34));
+        pieDataset.setValue("PODEMOS", new Integer(25));
+        pieDataset.setValue("IU", new Integer(8));
+        pieDataset.setValue("Otros", new Integer(3));*/
+        
+        JFreeChart chart = ChartFactory.createPieChart(
+                titulo,
+                pieDataset,
+                true,
+                true,
+                false
+        );
+
+        //Mostramos la grafica en pantalla
+        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
+        frame.pack();
+        frame.setVisible(true);
+
+         //Crear imaagen de la grafica
+        int width = 640; // Width of the image 
+        int height = 480; // Height of the image 
+        File PieChart = new File( nombre + ".jpeg" );
+        ChartUtilities.saveChartAsJPEG( PieChart , chart , width , height );
     }
 
 // Variables globales del lenguaje fca
@@ -542,7 +594,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
 		//System.out.println("--- Variable: " + a + " Valor: " + b);
-    Addvariable(a,"PE","Double");
+    Addvariable(a,"0","Double");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VARDOUBLE",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1001,7 +1053,10 @@ class CUP$parser$actions {
           case 48: // CUERPOGPIE ::= BTITULO BEJEX BVALORES 
             {
               Nodo RESULT =null;
-
+		System.out.println("--- Generar grafico de pie");
+    gpie(titulografica,"PieChart" + Integer.toString(parser.contgpie));
+    parser.contgpie++;
+    
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOGPIE",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
