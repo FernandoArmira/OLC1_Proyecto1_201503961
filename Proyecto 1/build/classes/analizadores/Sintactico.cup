@@ -19,7 +19,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.general.DefaultPieDataset;
-
+import org.jfree.data.xy.XYDataset;
 
 parser code
 {:  
@@ -125,6 +125,40 @@ parser code
         ChartUtilities.saveChartAsJPEG( PieChart , chart , width , height );
     }
 
+// Grafica de lineas
+    public static void glineas(){
+        final XYSeries serie1 = new XYSeries("Fernando Alonso");
+	serie1.add(1, 131.78);
+	serie1.add(2, 129.95);
+	serie1.add(3, 128.16);
+	serie1.add(4, 125.91);
+	serie1.add(5, 130.44);
+		
+	final XYSeries serie2 = new XYSeries("Jaime Alguersuari");
+	serie2.add(1, 100.16);
+	serie2.add(2, 150.32);
+	serie2.add(3, 130.86);
+	serie2.add(4, 110.02);
+	serie2.add(5, 90.45);
+		
+	final XYSeriesCollection collection = new XYSeriesCollection();
+	collection.addSeries(serie1);
+	collection.addSeries(serie2);
+        
+        JFreeChart chart = 
+        ChartFactory.createXYLineChart("Sesiones en Adictos al Trabajo",  
+        "Meses","Sesiones",collection,PlotOrientation.VERTICAL,
+        false,
+        false, 
+        true                // Show legend
+        );
+        
+        //Mostramos la grafica en pantalla
+        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
+        frame.pack();
+        frame.setVisible(true);
+    } 
+
 // Variables globales del lenguaje fca
     public void Addvariable(String variable, String valor, String tipo){
         variables nuevov= new variables(variable, valor, tipo);
@@ -174,7 +208,7 @@ action code {:
 terminal String llaveiz, llaveder, puntocoma, pariz, parder, coma, igual, dpuntos, coriz, corder, dolar, definirglobales, generarreporteestadistico, compare, stringvar, doublevar, graficabarras, titulo, ejex, valores, titulox, tituloy, graficapie, graficalineas, archivo, puntajeespecifico, decimal, id, cadena;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJEESPECIFICO, ARREGLOV2, CUERPOGPIE;
+non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJEESPECIFICO, ARREGLOV2, CUERPOGPIE, CUERPOGLINEAS, BARCHIVO;
 
 //precedence left or;
 //precedence left conc;
@@ -188,10 +222,12 @@ INSTRUCCION ::= INSTRUCCION BLOQUEGLOBALES
         | INSTRUCCION BLOQUEARCHIVOS
         | INSTRUCCION BLOQUEGBARRAS
         | INSTRUCCION BLOQUEGPIE
+        | INSTRUCCION BLOQUEGLINEAS
         | BLOQUEGLOBALES
         | BLOQUEARCHIVOS
         | BLOQUEGBARRAS
         | BLOQUEGPIE
+        | BLOQUEGLINEAS
         |error;
 
 BLOQUEGLOBALES ::= definirglobales llaveiz CUERPOGLOBALES llaveder;
@@ -364,16 +400,16 @@ BTITULOX ::= titulox dpuntos cadena:a puntocoma{://System.out.println("--- Titul
         titulograficax = proyecto.Interfaz.listavariables.get(i).getvalor();
         i = proyecto.Interfaz.listavariables.size();
     }else{
-        System.out.println("No existe la variable");
+        //System.out.println("No existe la variable");
     }
 }:};
 
-BTITULOY ::= tituloy dpuntos cadena:a puntocoma{:System.out.println("--- Tituloy: " + a);
+BTITULOY ::= tituloy dpuntos cadena:a puntocoma{://System.out.println("--- Tituloy: " + a);
     titulograficay = a;:}
-        | tituloy dpuntos id:a puntocoma{:System.out.println("--- Tituloy: " + a);
+        | tituloy dpuntos id:a puntocoma{://System.out.println("--- Tituloy: " + a);
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
     if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-        System.out.println("Existe la variable");
+        //System.out.println("Existe la variable");
         titulograficay = proyecto.Interfaz.listavariables.get(i).getvalor();
         i = proyecto.Interfaz.listavariables.size();
     }else{
@@ -388,20 +424,28 @@ CUERPOGPIE ::= BTITULO BEJEX BVALORES{:System.out.println("--- Generar grafico d
     parser.contgpie++;
     :};
 
+BLOQUEGLINEAS ::= graficalineas llaveiz CUERPOGLINEAS llaveder;
 
+CUERPOGLINEAS ::= BTITULO BARCHIVO{:System.out.println("--- Generar grafico de lineas");
+    glineas();
+    //gpie(titulografica,"PieChart" + Integer.toString(parser.contgpie));
+    //parser.contgpie++;
+    :};
 
+BARCHIVO ::= archivo dpuntos id:a puntocoma{://System.out.println("--- Archivo resumen: " + a);
+    for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
+    if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+        //System.out.println("Existe la variable");
+        //titulograficay = proyecto.Interfaz.listavariables.get(i).getvalor();
+        i = proyecto.Interfaz.listavariables.size();
+    }else{
+        //System.out.println("No existe la variable");
+    }
+}:}
+        | archivo dpuntos cadena:a puntocoma{:System.out.println("--- Archivo resumen: " + a);:};
+// Resumen del archivo
+ 
 
-
-
-
-/*
-        
- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
-        
-        | INSTRUCCION BLOQUEGLINEAS
-        | BLOQUEGLINEAS
-
-*/
 
 /*LID::= LID comaa nombre:name {:App.Aplicacion.list_of_names+=name+"\n";:}
     | nombre:name {:App.Aplicacion.list_of_names+=name+"\n";:};
