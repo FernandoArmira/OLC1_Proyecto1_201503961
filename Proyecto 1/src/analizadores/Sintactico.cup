@@ -28,23 +28,22 @@ parser code
     public static ArrayList<String> valoresy = new ArrayList();
     public static int contgbarras = 1;
     
+// Grafica de barras
     public static void gbarras(String titulo, String titulox, String tituloy, String nombre) throws IOException{
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         
-        double [ ] edad = {0.8, 0.7, 0, 0, 0.6, 0.9};
+        //double [ ] edad = {0.8, 0.7, 0, 0, 0.6, 0.9};
         
         //String [ ] nombre = {"Fernando", "Marz", "Jade", "Juan", "Maria", "Pedro"};
 
-        for(int i = 0; i < valoresx.size(); i++){
+        /*for(int i = 0; i < valoresx.size(); i++){
             System.out.println(valoresx.get(i) + " " + valoresy.get(i));
-        }
+        }*/
         
         for(int i = 0; i < valoresx.size(); i++){
             dataset.setValue(Double.parseDouble(valoresy.get(i)), "", valoresx.get(i));
         }
-        
-
         
         JFreeChart chart = ChartFactory.createBarChart(
                 titulo, // Titulo
@@ -73,9 +72,30 @@ parser code
         valoresy.clear();
     }
 
+// Variables globales del lenguaje fca
     public void Addvariable(String variable, String valor, String tipo){
         variables nuevov= new variables(variable, valor, tipo);
-        proyecto.Interfaz.listavariables.add(nuevov);
+        
+        int estadovar = 0;
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!111" + nuevov.variable);
+        if(proyecto.Interfaz.listavariables.size() <= 0){
+            proyecto.Interfaz.listavariables.add(nuevov);
+        }else{
+            for(int i=0;i<proyecto.Interfaz.listavariables.size();i++){
+                if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(nuevov.variable)){
+                    estadovar = 1;
+                    i = proyecto.Interfaz.listavariables.size();
+                }
+            }
+
+            if(estadovar == 0){
+                proyecto.Interfaz.listavariables.add(nuevov);
+            }
+
+        }
+        
+
+        
     }
 
     //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
@@ -101,8 +121,7 @@ action code {:
 terminal String llaveiz, llaveder, puntocoma, pariz, parder, coma, igual, dpuntos, coriz, corder, dolar, definirglobales, generarreporteestadistico, compare, stringvar, doublevar, graficabarras, titulo, ejex, valores, titulox, tituloy, graficapie, graficalineas, archivo, puntajeespecifico, decimal, id, cadena;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJEESPECIFICO, ARREGLOV2;
-//non terminal Nodo INICIO, EXPRESION, BLOQUE1, DEFCONJ, DEFEXPR, NOTACION, NOTACION2, BLOQUE2, BLOQUE3, DEFCADENA;
+non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJEESPECIFICO, ARREGLOV2, CUERPOGPIE;
 
 //precedence left or;
 //precedence left conc;
@@ -115,9 +134,11 @@ INICIO::= INSTRUCCION;
 INSTRUCCION ::= INSTRUCCION BLOQUEGLOBALES
         | INSTRUCCION BLOQUEARCHIVOS
         | INSTRUCCION BLOQUEGBARRAS
+        | INSTRUCCION BLOQUEGPIE
         | BLOQUEGLOBALES
         | BLOQUEARCHIVOS
         | BLOQUEGBARRAS
+        | BLOQUEGPIE
         |error;
 
 BLOQUEGLOBALES ::= definirglobales llaveiz CUERPOGLOBALES llaveder;
@@ -127,13 +148,13 @@ CUERPOGLOBALES ::= CUERPOGLOBALES VARSTRING
                 | VARSTRING
                 | VARDOUBLE;
 
-VARSTRING ::= stringvar id:a igual cadena:b puntocoma {:System.out.println("--- Variable: " + a + " Valor: " + b);
+VARSTRING ::= stringvar id:a igual cadena:b puntocoma {://System.out.println("--- Variable: " + a + " Valor: " + b);
     Addvariable(a,b,"String");:};
 
-
-VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {:System.out.println("--- Variable: " + a + " Valor: " + b);
+VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {://System.out.println("--- Variable: " + a + " Valor: " + b);
     Addvariable(a,b,"Double");:}
-        | doublevar id igual BPUNTAJEESPECIFICO puntocoma;
+        | doublevar id:a igual BPUNTAJEESPECIFICO puntocoma{://System.out.println("--- Variable: " + a + " Valor: " + b);
+    Addvariable(a,"PE","Double");:};
 
 BLOQUEARCHIVOS ::= generarreporteestadistico llaveiz CUERPOARCHIVOS llaveder;
 
@@ -142,75 +163,75 @@ CUERPOARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System
 
 BLOQUEGBARRAS ::= graficabarras llaveiz CUERPOGBARRAS llaveder; 
 
-CUERPOGBARRAS ::= BTITULO BEJEX BVALORES BTITULOX BTITULOY{:System.out.println("Generar grafico de barras");
+CUERPOGBARRAS ::= BTITULO BEJEX BVALORES BTITULOX BTITULOY{:System.out.println("--- Generar grafico de barras");
     gbarras(titulografica, titulograficax, titulograficay, "BarChart" + Integer.toString(parser.contgbarras));
     parser.contgbarras++;:};
     
-BTITULO ::= titulo dpuntos id:a puntocoma {:System.out.println("--- Titulo: " + a);
+BTITULO ::= titulo dpuntos id:a puntocoma {://System.out.println("--- Titulo: " + a);
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-            System.out.println("Existe la variable");
+            //System.out.println("Existe la variable");
             titulografica = proyecto.Interfaz.listavariables.get(i).getvalor();
             i = proyecto.Interfaz.listavariables.size();
         }else{
-            System.out.println("No existe la variable");
+            //System.out.println("No existe la variable");
         }
     }
     valoresx.add("");
     valoresy.add("");:}
-        | titulo dpuntos cadena:a puntocoma{:System.out.println("--- Titulo: " + a);
+        | titulo dpuntos cadena:a puntocoma{://System.out.println("--- Titulo: " + a);
     titulografica = a;
     valoresx.add("");:};
 
 BEJEX ::= ejex dpuntos coriz ARREGLO corder puntocoma;
 
-ARREGLO ::= cadena:a ARREGLO2 {:System.out.println("--- Valorx: " + a);
+ARREGLO ::= cadena:a ARREGLO2 {://System.out.println("--- Valorx: " + a);
     valoresx.set(0,a);:}
-        | id:a ARREGLO2{:System.out.println("--- Valorx: " + a);
+        | id:a ARREGLO2{://System.out.println("--- Valorx: " + a);
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-            System.out.println("Existe la variable");
+            //System.out.println("Existe la variable");
             valoresx.set(0,proyecto.Interfaz.listavariables.get(i).getvalor());
             i = proyecto.Interfaz.listavariables.size();
             estado = 1;
         }else{
-            System.out.println("No existe la variable");
+            //System.out.println("No existe la variable");
         }      
     }
         if(estado == 0){
             valoresx.add("-");
         }:};
 
-ARREGLO2 ::= ARREGLO2 coma cadena:a{:System.out.println("--- Valorx: " + a);
+ARREGLO2 ::= ARREGLO2 coma cadena:a{://System.out.println("--- Valorx: " + a);
     valoresx.add(a);:}
-        | ARREGLO2 coma id:a{:System.out.println("--- Valorx: " + a);
+        | ARREGLO2 coma id:a{://System.out.println("--- Valorx: " + a);
         int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-            System.out.println("Existe la variable");
+            //System.out.println("Existe la variable");
             valoresx.add(proyecto.Interfaz.listavariables.get(i).getvalor());
             i = proyecto.Interfaz.listavariables.size();
             estado = 1;
         }else{
-            System.out.println("No existe la variable");
+            //System.out.println("No existe la variable");
         }
     }
     if(estado == 0){
             valoresx.add("-");
         }:}
-        | coma cadena:a{:System.out.println("--- Valorx: " + a);
+        | coma cadena:a{://System.out.println("--- Valorx: " + a);
     valoresx.add(a);:}
-        | coma id:a{:System.out.println("--- Valorx: " + a);
+        | coma id:a{://System.out.println("--- Valorx: " + a);
         int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-            System.out.println("Existe la variable");
+            //System.out.println("Existe la variable");
             valoresx.add(proyecto.Interfaz.listavariables.get(i).getvalor());
             i = proyecto.Interfaz.listavariables.size();
             estado = 1;
         }else{
-            System.out.println("No existe la variable");
+            //System.out.println("No existe la variable");
         }
     }
         if(estado == 0){
@@ -219,74 +240,74 @@ ARREGLO2 ::= ARREGLO2 coma cadena:a{:System.out.println("--- Valorx: " + a);
 
 BVALORES ::= valores dpuntos coriz ARREGLOV corder puntocoma;
 
-ARREGLOV ::= cadena:a ARREGLOV2{:System.out.println("--- Valory: " + a);
+ARREGLOV ::= cadena:a ARREGLOV2{://System.out.println("--- Valory: " + a);
     valoresy.set(0,a);:}
-        | id:a ARREGLOV2{:System.out.println("--- Valory: " + a);
+        | id:a ARREGLOV2{://System.out.println("--- Valory: " + a);
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-            System.out.println("Existe la variable");
+            //System.out.println("Existe la variable");
             valoresy.set(0,proyecto.Interfaz.listavariables.get(i).getvalor());
             i = proyecto.Interfaz.listavariables.size();
             estado = 1;
         }else{
-            System.out.println("No existe la variable");
+            //System.out.println("No existe la variable");
         }      
     }
         if(estado == 0){
             valoresy.add("0");
         }:}
-        | BPUNTAJEESPECIFICO{:System.out.println("--- Valory: PE");
+        | BPUNTAJEESPECIFICO{://System.out.println("--- Valory: PE");
     valoresy.set(0,"0");:};
 
 BPUNTAJEESPECIFICO ::= dolar llaveiz puntajeespecifico coma cadena coma cadena coma cadena llaveder;
 
-ARREGLOV2 ::= ARREGLOV2 coma cadena:a {:System.out.println("--- Valory: " + a);
+ARREGLOV2 ::= ARREGLOV2 coma cadena:a {://System.out.println("--- Valory: " + a);
     valoresy.add(a);:}
-        | ARREGLOV2 coma id:a {:System.out.println("--- Valory: " + a);
+        | ARREGLOV2 coma id:a {://System.out.println("--- Valory: " + a);
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-            System.out.println("Existe la variable");
+            //System.out.println("Existe la variable");
             valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
             i = proyecto.Interfaz.listavariables.size();
             estado = 1;
         }else{
-            System.out.println("No existe la variable");
+            //System.out.println("No existe la variable");
         }
     }
     if(estado == 0){
             valoresy.add("0");
         }:}
-        | ARREGLOV2 coma BPUNTAJEESPECIFICO {:System.out.println("--- Valory: PE");
+        | ARREGLOV2 coma BPUNTAJEESPECIFICO {://System.out.println("--- Valory: PE");
     valoresy.add("0");:}
-        | coma cadena:a {:System.out.println("--- Valory: " + a);
+        | coma cadena:a {://System.out.println("--- Valory: " + a);
     valoresy.add(a);:}
-        | coma id:a {:System.out.println("--- Valory: " + a);
+        | coma id:a {://System.out.println("--- Valory: " + a);
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-            System.out.println("Existe la variable");
+            //System.out.println("Existe la variable");
             valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
             i = proyecto.Interfaz.listavariables.size();
             estado = 1;
         }else{
-            System.out.println("No existe la variable");
+            //System.out.println("No existe la variable");
         }
     }
     if(estado == 0){
             valoresy.add("0");
         }:}
-        | coma BPUNTAJEESPECIFICO{:System.out.println("--- Valory: PE");
+        | coma BPUNTAJEESPECIFICO{://System.out.println("--- Valory: PE");
     valoresy.add("0");:};
 
-BTITULOX ::= titulox dpuntos cadena:a puntocoma{:System.out.println("--- Titulox: " + a);
+BTITULOX ::= titulox dpuntos cadena:a puntocoma{://System.out.println("--- Titulox: " + a);
     titulograficax = a;:}
-        | titulox dpuntos id:a puntocoma{:System.out.println("--- Titulox: " + a);
+        | titulox dpuntos id:a puntocoma{://System.out.println("--- Titulox: " + a);
 
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
     if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
-        System.out.println("Existe la variable");
+        //System.out.println("Existe la variable");
         titulograficax = proyecto.Interfaz.listavariables.get(i).getvalor();
         i = proyecto.Interfaz.listavariables.size();
     }else{
@@ -303,10 +324,13 @@ BTITULOY ::= tituloy dpuntos cadena:a puntocoma{:System.out.println("--- Tituloy
         titulograficay = proyecto.Interfaz.listavariables.get(i).getvalor();
         i = proyecto.Interfaz.listavariables.size();
     }else{
-        System.out.println("No existe la variable");
+        //System.out.println("No existe la variable");
     }
 }:};
 
+BLOQUEGPIE ::= graficapie llaveiz CUERPOGPIE llaveder;
+
+CUERPOGPIE ::= BTITULO BEJEX BVALORES;
 
 
 
@@ -317,9 +341,8 @@ BTITULOY ::= tituloy dpuntos cadena:a puntocoma{:System.out.println("--- Tituloy
 /*
         
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
-        | INSTRUCCION BLOQUEGPIE
+        
         | INSTRUCCION BLOQUEGLINEAS
-        | BLOQUEGPIE
         | BLOQUEGLINEAS
 
 */

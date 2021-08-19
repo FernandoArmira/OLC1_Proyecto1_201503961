@@ -342,6 +342,11 @@ public class Interfaz extends javax.swing.JFrame {
             sintactico = new analizadores.parser(new analizadores.Lexico(new StringReader(path)));
             sintactico.parse();
             //jTextArea3.setText(list_of_names);
+            System.out.println("------------------------------Variables----------------------------------");
+            for(int i=0;i<listavariables.size();i++){
+                System.out.println(listavariables.get(i).variable + " " + listavariables.get(i).valor);
+            }
+            
         } catch (Exception e) {
         }
         
