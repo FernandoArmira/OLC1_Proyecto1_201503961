@@ -216,7 +216,7 @@ non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBA
 
 start with INICIO;
 
-INICIO::= INSTRUCCION;
+INICIO::= generarreporteestadistico llaveiz INSTRUCCION llaveder;
 
 INSTRUCCION ::= INSTRUCCION BLOQUEGLOBALES
         | INSTRUCCION BLOQUEARCHIVOS
@@ -245,10 +245,13 @@ VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {://System.out.println("-
         | doublevar id:a igual BPUNTAJEESPECIFICO puntocoma{://System.out.println("--- Variable: " + a + " Valor: " + b);
     Addvariable(a,"0","Double");:};
 
-BLOQUEARCHIVOS ::= generarreporteestadistico llaveiz CUERPOARCHIVOS llaveder;
+//BLOQUEARCHIVOS ::= generarreporteestadistico llaveiz CUERPOARCHIVOS llaveder;
 
-CUERPOARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System.out.println("--- Archivo A: " + a + " Archivo B: " + b);:};
+//CUERPOARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System.out.println("--- Archivo A: " + a + " Archivo B: " + b);:};
 //Buscar arcivos para luego analizarlos
+
+BLOQUEARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System.out.println("--- Archivo A: " + a + " Archivo B: " + b);:};
+
 
 BLOQUEGBARRAS ::= graficabarras llaveiz CUERPOGBARRAS llaveder; 
 
