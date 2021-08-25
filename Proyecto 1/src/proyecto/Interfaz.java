@@ -48,6 +48,7 @@ public class Interfaz extends javax.swing.JFrame {
     public Interfaz() {
         initComponents();
         jTextField1.setVisible(false);
+        //jTextArea2.setVisible(false);
     }
 
     /**

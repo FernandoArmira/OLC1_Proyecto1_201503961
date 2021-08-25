@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.StringReader;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
@@ -255,8 +258,10 @@ public class parser extends java_cup.runtime.lr_parser {
     public static String titulografica = "";
     public static String titulograficax = "";
     public static String titulograficay = "";
+    public static String direccionA = "";
     public static ArrayList<String> valoresx = new ArrayList();
     public static ArrayList<String> valoresy = new ArrayList();
+    public static ArrayList<String> archivos = new ArrayList();
     public static int contgbarras = 1;
     public static int contgpie = 1;
     
@@ -302,6 +307,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
         valoresx.clear();
         valoresy.clear();
+        archivos.clear();
+
     }
 
 // Grafica de pie
@@ -411,6 +418,75 @@ public class parser extends java_cup.runtime.lr_parser {
         }
         
 
+        
+    }
+
+// Ejecutar analizadores para el lenguaje javascript
+    public void ejecutar(String direccion){
+
+        try {
+            File archivo = null;
+            FileReader fr = null;
+            BufferedReader br = null;
+
+            //archivo = new File ("C:\\Users\\Fernando Armira\\Documents\\pruebajs.txt");
+            archivo = new File (direccion);
+            fr = new FileReader(archivo);
+            br = new BufferedReader(fr);
+            String linea = br.readLine();
+
+            String texto = "";
+
+            while(linea != null){
+                texto = texto + linea + "\n";
+                linea = br.readLine();     
+            }
+
+            analizadores2.parser sintactico;
+            sintactico = new analizadores2.parser(new analizadores2.Lexico(new StringReader(texto)));
+            sintactico.parse();            
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void listar(String direccion){
+        File carpeta = new File(direccion);
+        String[] listado = carpeta.list();
+        if (listado == null || listado.length == 0) {
+            System.out.println("No hay elementos dentro de la carpeta actual");
+        return;
+        }
+        else {
+            for (int i=0; i< listado.length; i++) {
+                System.out.println(listado[i]);
+                samename(direccion, listado[i]);
+            }
+        }
+    }
+
+    public void samename(String direccion, String nombre){
+        int estadovar = 0;
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!111" + nuevov.variable);
+        if(archivos.size() <= 0){
+            archivos.add(nombre);
+        }else{
+            for(int i=0;i<archivos.size();i++){
+                if(archivos.get(i).equals(nombre)){
+                    System.out.println("Archivo con el mismo nombre: " + nombre);
+                    System.out.println("Analizar: " + direccionA+nombre);
+                    ejecutar(direccionA+ "\\" +nombre);
+                    ejecutar(direccion+ "\\" + nombre);
+                    estadovar = 1;
+                    i = archivos.size();
+                }
+            }
+
+            if(estadovar == 0){
+                archivos.add(nombre);
+            }
+
+        }
         
     }
 
@@ -679,7 +755,13 @@ class CUP$parser$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		System.out.println("--- Archivo A: " + a + " Archivo B: " + b);
+		System.out.println("--- Proyecto A: " + a + " Proyecto B: " + b);
+    direccionA=a;
+    listar(a);
+    listar(b);
+    //ejecutar();
+    System.out.println("-------------------------------------------------------------------------------------------------------");
+    
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BLOQUEARCHIVOS",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
