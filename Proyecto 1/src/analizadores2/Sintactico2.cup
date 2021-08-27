@@ -23,141 +23,6 @@ import org.jfree.data.xy.XYDataset;
 
 parser code
 {:  
-    public static String titulografica = "";
-    public static String titulograficax = "";
-    public static String titulograficay = "";
-    public static ArrayList<String> valoresx = new ArrayList();
-    public static ArrayList<String> valoresy = new ArrayList();
-    public static int contgbarras = 1;
-    public static int contgpie = 1;
-    
-// Grafica de barras
-    public static void gbarras(String titulo, String titulox, String tituloy, String nombre) throws IOException{
-        
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        //double [ ] edad = {0.8, 0.7, 0, 0, 0.6, 0.9};
-        
-        //String [ ] nombre = {"Fernando", "Marz", "Jade", "Juan", "Maria", "Pedro"};
-
-        /*for(int i = 0; i < valoresx.size(); i++){
-            System.out.println(valoresx.get(i) + " " + valoresy.get(i));
-        }*/
-        
-        for(int i = 0; i < valoresx.size(); i++){
-            dataset.setValue(Double.parseDouble(valoresy.get(i)), "", valoresx.get(i));
-        }
-        
-        JFreeChart chart = ChartFactory.createBarChart(
-                titulo, // Titulo
-                titulox, // Titulo ejex
-                tituloy, // Titulo ejey
-                dataset, 
-                PlotOrientation.VERTICAL,
-                true, 
-                false, 
-                false
-        );
-        
-        //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica de Barras", chart);
-        frame.pack();
-        frame.setVisible(true);
-
-
-        //Crear imaagen de la grafica
-        int width = 640; // Width of the image 
-        int height = 480; // Height of the image 
-        File BarChart = new File( nombre + ".jpeg" );
-        ChartUtilities.saveChartAsJPEG( BarChart , chart , width , height );
-
-        valoresx.clear();
-        valoresy.clear();
-    }
-
-// Grafica de pie
-    public static void gpie(String titulo, String nombre) throws IOException{
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-
-        double valortotal = 0;
-        for(int i = 0; i < valoresy.size(); i++){
-            //System.out.println(valoresy.get(i));
-            valortotal = valortotal + Double.parseDouble(valoresy.get(i));
-        }
-        
-        System.out.println(valortotal);
-
-        double nuevovalor = 0;
-        for(int i = 0; i < valoresy.size(); i++){
-            //System.out.println(valoresy.get(i));
-            nuevovalor = Double.parseDouble(valoresy.get(i)) * 100 / valortotal;
-            valoresy.set(i,String.valueOf(nuevovalor));
-            //System.out.println(valoresy.get(i));
-        }
-        
-        for(int i = 0; i < valoresx.size(); i++){
-            pieDataset.setValue(valoresx.get(i), Double.parseDouble(valoresy.get(i)));
-        }
-
-        /*pieDataset.setValue("PSOE", new Integer(31));
-        pieDataset.setValue("PP", new Integer(34));
-        pieDataset.setValue("PODEMOS", new Integer(25));
-        pieDataset.setValue("IU", new Integer(8));
-        pieDataset.setValue("Otros", new Integer(3));*/
-        
-        JFreeChart chart = ChartFactory.createPieChart(
-                titulo,
-                pieDataset,
-                true,
-                true,
-                false
-        );
-
-        //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
-        frame.pack();
-        frame.setVisible(true);
-
-         //Crear imaagen de la grafica
-        int width = 640; // Width of the image 
-        int height = 480; // Height of the image 
-        File PieChart = new File( nombre + ".jpeg" );
-        ChartUtilities.saveChartAsJPEG( PieChart , chart , width , height );
-    }
-
-// Grafica de lineas
-    public static void glineas(){
-        final XYSeries serie1 = new XYSeries("Fernando Alonso");
-	serie1.add(1, 131.78);
-	serie1.add(2, 129.95);
-	serie1.add(3, 128.16);
-	serie1.add(4, 125.91);
-	serie1.add(5, 130.44);
-		
-	final XYSeries serie2 = new XYSeries("Jaime Alguersuari");
-	serie2.add(1, 100.16);
-	serie2.add(2, 150.32);
-	serie2.add(3, 130.86);
-	serie2.add(4, 110.02);
-	serie2.add(5, 90.45);
-		
-	final XYSeriesCollection collection = new XYSeriesCollection();
-	collection.addSeries(serie1);
-	collection.addSeries(serie2);
-        
-        JFreeChart chart = 
-        ChartFactory.createXYLineChart("Sesiones en Adictos al Trabajo",  
-        "Meses","Sesiones",collection,PlotOrientation.VERTICAL,
-        false,
-        false, 
-        true                // Show legend
-        );
-        
-        //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
-        frame.pack();
-        frame.setVisible(true);
-    } 
 
 // Variables globales del lenguaje fca
     public void Addvariable(String variable, String valor, String tipo){
@@ -205,10 +70,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String decimal, id, cadena;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJEESPECIFICO, ARREGLOV2, CUERPOGPIE, CUERPOGLINEAS, BARCHIVO, EXPRESION;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR;
 
 //precedence left or;
 //precedence left conc;
@@ -218,8 +83,26 @@ start with INICIO;
 
 INICIO::= INSTRUCCION;
 
-INSTRUCCION ::= INSTRUCCION EXPRESION
+INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
+            | INSTRUCCION VARIABLES puntocoma
+            | INSTRUCCION EXPRESION 
+            | INSTRUCCION VARIABLES
+            | VARIABLES puntocoma
+            | EXPRESION puntocoma
+            | VARIABLES 
             | EXPRESION;
+
+VARIABLES ::= PRVARIABLES id igual VALOR;
+
+PRVARIABLES ::= var
+            | let
+            | constvar;
+
+VALOR ::= entero
+        | decimal
+        | cadena
+        | truevar
+        | falsevar;
 
 EXPRESION ::= cadena
             | id

@@ -49,9 +49,13 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\007\000\002\002\004\000\002\002\003\000\002\003" +
-    "\004\000\002\003\003\000\002\033\003\000\002\033\003" +
-    "\000\002\033\003" });
+    "\000\026\000\002\002\004\000\002\002\003\000\002\003" +
+    "\005\000\002\003\005\000\002\003\004\000\002\003\004" +
+    "\000\002\003\004\000\002\003\004\000\002\003\003\000" +
+    "\002\003\003\000\002\005\006\000\002\006\003\000\002" +
+    "\006\003\000\002\006\003\000\002\007\003\000\002\007" +
+    "\003\000\002\007\003\000\002\007\003\000\002\007\003" +
+    "\000\002\004\003\000\002\004\003\000\002\004\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -59,14 +63,39 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\011\000\010\004\004\005\011\006\005\001\002\000" +
-    "\012\002\ufffb\004\ufffb\005\ufffb\006\ufffb\001\002\000\012" +
-    "\002\ufffd\004\ufffd\005\ufffd\006\ufffd\001\002\000\012\002" +
-    "\000\004\004\005\011\006\005\001\002\000\012\002\ufffe" +
-    "\004\ufffe\005\ufffe\006\ufffe\001\002\000\004\002\012\001" +
-    "\002\000\012\002\ufffc\004\ufffc\005\ufffc\006\ufffc\001\002" +
-    "\000\004\002\001\001\002\000\012\002\uffff\004\uffff\005" +
-    "\uffff\006\uffff\001\002" });
+    "\000\033\000\016\005\012\006\006\007\010\012\016\013" +
+    "\007\014\014\001\002\000\004\006\026\001\002\000\020" +
+    "\002\000\005\012\006\006\007\010\012\016\013\007\014" +
+    "\014\001\002\000\022\002\uffed\005\uffed\006\uffed\007\uffed" +
+    "\011\uffed\012\uffed\013\uffed\014\uffed\001\002\000\004\006" +
+    "\ufff5\001\002\000\022\002\uffee\005\uffee\006\uffee\007\uffee" +
+    "\011\uffee\012\uffee\013\uffee\014\uffee\001\002\000\004\002" +
+    "\021\001\002\000\022\002\uffec\005\uffec\006\uffec\007\uffec" +
+    "\011\uffec\012\uffec\013\uffec\014\uffec\001\002\000\022\002" +
+    "\ufff9\005\ufff9\006\ufff9\007\ufff9\011\020\012\ufff9\013\ufff9" +
+    "\014\ufff9\001\002\000\004\006\ufff4\001\002\000\022\002" +
+    "\ufff8\005\ufff8\006\ufff8\007\ufff8\011\017\012\ufff8\013\ufff8" +
+    "\014\ufff8\001\002\000\004\006\ufff6\001\002\000\020\002" +
+    "\ufffa\005\ufffa\006\ufffa\007\ufffa\012\ufffa\013\ufffa\014\ufffa" +
+    "\001\002\000\020\002\ufffb\005\ufffb\006\ufffb\007\ufffb\012" +
+    "\ufffb\013\ufffb\014\ufffb\001\002\000\004\002\001\001\002" +
+    "\000\022\002\ufffc\005\ufffc\006\ufffc\007\ufffc\011\025\012" +
+    "\ufffc\013\ufffc\014\ufffc\001\002\000\022\002\ufffd\005\ufffd" +
+    "\006\ufffd\007\ufffd\011\024\012\ufffd\013\ufffd\014\ufffd\001" +
+    "\002\000\020\002\uffff\005\uffff\006\uffff\007\uffff\012\uffff" +
+    "\013\uffff\014\uffff\001\002\000\020\002\ufffe\005\ufffe\006" +
+    "\ufffe\007\ufffe\012\ufffe\013\ufffe\014\ufffe\001\002\000\004" +
+    "\010\027\001\002\000\014\004\031\005\030\007\033\015" +
+    "\032\016\034\001\002\000\022\002\ufff2\005\ufff2\006\ufff2" +
+    "\007\ufff2\011\ufff2\012\ufff2\013\ufff2\014\ufff2\001\002\000" +
+    "\022\002\ufff3\005\ufff3\006\ufff3\007\ufff3\011\ufff3\012\ufff3" +
+    "\013\ufff3\014\ufff3\001\002\000\022\002\ufff0\005\ufff0\006" +
+    "\ufff0\007\ufff0\011\ufff0\012\ufff0\013\ufff0\014\ufff0\001\002" +
+    "\000\022\002\ufff1\005\ufff1\006\ufff1\007\ufff1\011\ufff1\012" +
+    "\ufff1\013\ufff1\014\ufff1\001\002\000\022\002\uffef\005\uffef" +
+    "\006\uffef\007\uffef\011\uffef\012\uffef\013\uffef\014\uffef\001" +
+    "\002\000\022\002\ufff7\005\ufff7\006\ufff7\007\ufff7\011\ufff7" +
+    "\012\ufff7\013\ufff7\014\ufff7\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -74,10 +103,16 @@ public class parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\011\000\010\002\007\003\005\033\006\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\033\012\001\001" +
+    "\000\033\000\014\002\010\003\004\004\014\005\012\006" +
+    "\003\001\001\000\002\001\001\000\010\004\022\005\021" +
+    "\006\003\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001" });
+    "\002\001\001\000\002\001\001\000\004\007\034\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -116,141 +151,6 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
   
-    public static String titulografica = "";
-    public static String titulograficax = "";
-    public static String titulograficay = "";
-    public static ArrayList<String> valoresx = new ArrayList();
-    public static ArrayList<String> valoresy = new ArrayList();
-    public static int contgbarras = 1;
-    public static int contgpie = 1;
-    
-// Grafica de barras
-    public static void gbarras(String titulo, String titulox, String tituloy, String nombre) throws IOException{
-        
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        //double [ ] edad = {0.8, 0.7, 0, 0, 0.6, 0.9};
-        
-        //String [ ] nombre = {"Fernando", "Marz", "Jade", "Juan", "Maria", "Pedro"};
-
-        /*for(int i = 0; i < valoresx.size(); i++){
-            System.out.println(valoresx.get(i) + " " + valoresy.get(i));
-        }*/
-        
-        for(int i = 0; i < valoresx.size(); i++){
-            dataset.setValue(Double.parseDouble(valoresy.get(i)), "", valoresx.get(i));
-        }
-        
-        JFreeChart chart = ChartFactory.createBarChart(
-                titulo, // Titulo
-                titulox, // Titulo ejex
-                tituloy, // Titulo ejey
-                dataset, 
-                PlotOrientation.VERTICAL,
-                true, 
-                false, 
-                false
-        );
-        
-        //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica de Barras", chart);
-        frame.pack();
-        frame.setVisible(true);
-
-
-        //Crear imaagen de la grafica
-        int width = 640; // Width of the image 
-        int height = 480; // Height of the image 
-        File BarChart = new File( nombre + ".jpeg" );
-        ChartUtilities.saveChartAsJPEG( BarChart , chart , width , height );
-
-        valoresx.clear();
-        valoresy.clear();
-    }
-
-// Grafica de pie
-    public static void gpie(String titulo, String nombre) throws IOException{
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-
-        double valortotal = 0;
-        for(int i = 0; i < valoresy.size(); i++){
-            //System.out.println(valoresy.get(i));
-            valortotal = valortotal + Double.parseDouble(valoresy.get(i));
-        }
-        
-        System.out.println(valortotal);
-
-        double nuevovalor = 0;
-        for(int i = 0; i < valoresy.size(); i++){
-            //System.out.println(valoresy.get(i));
-            nuevovalor = Double.parseDouble(valoresy.get(i)) * 100 / valortotal;
-            valoresy.set(i,String.valueOf(nuevovalor));
-            //System.out.println(valoresy.get(i));
-        }
-        
-        for(int i = 0; i < valoresx.size(); i++){
-            pieDataset.setValue(valoresx.get(i), Double.parseDouble(valoresy.get(i)));
-        }
-
-        /*pieDataset.setValue("PSOE", new Integer(31));
-        pieDataset.setValue("PP", new Integer(34));
-        pieDataset.setValue("PODEMOS", new Integer(25));
-        pieDataset.setValue("IU", new Integer(8));
-        pieDataset.setValue("Otros", new Integer(3));*/
-        
-        JFreeChart chart = ChartFactory.createPieChart(
-                titulo,
-                pieDataset,
-                true,
-                true,
-                false
-        );
-
-        //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
-        frame.pack();
-        frame.setVisible(true);
-
-         //Crear imaagen de la grafica
-        int width = 640; // Width of the image 
-        int height = 480; // Height of the image 
-        File PieChart = new File( nombre + ".jpeg" );
-        ChartUtilities.saveChartAsJPEG( PieChart , chart , width , height );
-    }
-
-// Grafica de lineas
-    public static void glineas(){
-        final XYSeries serie1 = new XYSeries("Fernando Alonso");
-	serie1.add(1, 131.78);
-	serie1.add(2, 129.95);
-	serie1.add(3, 128.16);
-	serie1.add(4, 125.91);
-	serie1.add(5, 130.44);
-		
-	final XYSeries serie2 = new XYSeries("Jaime Alguersuari");
-	serie2.add(1, 100.16);
-	serie2.add(2, 150.32);
-	serie2.add(3, 130.86);
-	serie2.add(4, 110.02);
-	serie2.add(5, 90.45);
-		
-	final XYSeriesCollection collection = new XYSeriesCollection();
-	collection.addSeries(serie1);
-	collection.addSeries(serie2);
-        
-        JFreeChart chart = 
-        ChartFactory.createXYLineChart("Sesiones en Adictos al Trabajo",  
-        "Meses","Sesiones",collection,PlotOrientation.VERTICAL,
-        false,
-        false, 
-        true                // Show legend
-        );
-        
-        //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
-        frame.pack();
-        frame.setVisible(true);
-    } 
 
 // Variables globales del lenguaje fca
     public void Addvariable(String variable, String valor, String tipo){
@@ -345,7 +245,25 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // INSTRUCCION ::= INSTRUCCION EXPRESION 
+          case 2: // INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCION",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // INSTRUCCION ::= INSTRUCCION VARIABLES puntocoma 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCION",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // INSTRUCCION ::= INSTRUCCION EXPRESION 
             {
               Nodo RESULT =null;
 
@@ -354,7 +272,34 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // INSTRUCCION ::= EXPRESION 
+          case 5: // INSTRUCCION ::= INSTRUCCION VARIABLES 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCION",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 6: // INSTRUCCION ::= VARIABLES puntocoma 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCION",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // INSTRUCCION ::= EXPRESION puntocoma 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCION",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // INSTRUCCION ::= VARIABLES 
             {
               Nodo RESULT =null;
 
@@ -363,29 +308,119 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // EXPRESION ::= cadena 
+          case 9: // INSTRUCCION ::= EXPRESION 
             {
               Nodo RESULT =null;
 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",25, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCION",1, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // EXPRESION ::= id 
+          case 10: // VARIABLES ::= PRVARIABLES id igual VALOR 
             {
               Nodo RESULT =null;
 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",25, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("VARIABLES",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // EXPRESION ::= decimal 
+          case 11: // PRVARIABLES ::= var 
             {
               Nodo RESULT =null;
 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",25, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("PRVARIABLES",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 12: // PRVARIABLES ::= let 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("PRVARIABLES",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // PRVARIABLES ::= constvar 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("PRVARIABLES",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 14: // VALOR ::= entero 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("VALOR",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // VALOR ::= decimal 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("VALOR",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 16: // VALOR ::= cadena 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("VALOR",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 17: // VALOR ::= truevar 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("VALOR",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 18: // VALOR ::= falsevar 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("VALOR",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 19: // EXPRESION ::= cadena 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 20: // EXPRESION ::= id 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 21: // EXPRESION ::= decimal 
+            {
+              Nodo RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 

@@ -8,17 +8,33 @@ package analizadores2;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int decimal = 2;
-  public static final int cadena = 4;
-  public static final int error = 1;
+  public static final int falsevar = 12;
+  public static final int id = 4;
+  public static final int puntocoma = 7;
+  public static final int let = 9;
+  public static final int truevar = 11;
+  public static final int cadena = 5;
+  public static final int decimal = 3;
   public static final int EOF = 0;
-  public static final int id = 3;
+  public static final int entero = 2;
+  public static final int error = 1;
+  public static final int constvar = 10;
+  public static final int var = 8;
+  public static final int igual = 6;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
+  "entero",
   "decimal",
   "id",
-  "cadena"
+  "cadena",
+  "igual",
+  "puntocoma",
+  "var",
+  "let",
+  "constvar",
+  "truevar",
+  "falsevar"
   };
 }
 

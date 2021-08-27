@@ -23,6 +23,7 @@ import proyecto.*;
     
 %init}
 
+//cierre = [\n|";"]
 blancos = [ \t\r\n]+
 espacios = [ \t\r]+
 
@@ -50,12 +51,12 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 
 %%
 
-<YYINITIAL> "#*"                {yybegin(COMENT_MULTI);}     // Si la entrada es un comentario inicia aqui
-<COMENT_MULTI> "*#"             {yybegin(YYINITIAL);}        // Si se acaba el comentario vuelve a YYINITIAL
+<YYINITIAL> "/*"                {yybegin(COMENT_MULTI);}     // Si la entrada es un comentario inicia aqui
+<COMENT_MULTI> "*/"             {yybegin(YYINITIAL);}        // Si se acaba el comentario vuelve a YYINITIAL
 <COMENT_MULTI> .                {}
 <COMENT_MULTI> [ \t\r\n\f]      {}
 
-<YYINITIAL> "##"                {yybegin(COMENT_SIMPLE);}   // Si la entrada es comentario simple inicia aqui
+<YYINITIAL> "//"                {yybegin(COMENT_SIMPLE);}   // Si la entrada es comentario simple inicia aqui
 <COMENT_SIMPLE> [^"\n"]         {}                          // 
 <COMENT_SIMPLE> "\n"            {yybegin(YYINITIAL);}       // aqui sale del estado
 
@@ -65,14 +66,20 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 //"," {return new Symbol(sym.comaa,yycolumn,yyline,yytext());}
 //"," {return new Symbol(sym.comaa,yycolumn,yyline,yytext());}
 
+"=" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.igual,yycolumn,yyline,yytext());}
+";" {System.out.println("********************Simbolo " + yytext());return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());}
+"var" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.var,yycolumn,yyline,yytext());}
+"let" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.let,yycolumn,yyline,yytext());}
+"const" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.constvar,yycolumn,yyline,yytext());}
+"true" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.truevar,yycolumn,yyline,yytext());}
+"false" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.falsevar,yycolumn,yyline,yytext());}
+
 /*
 "{" {System.out.println("Simbolo" + yytext());return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());}
 "}" {System.out.println("Simbolo" + yytext());return new Symbol(sym.llaveder,yycolumn,yyline,yytext());}
-";" {System.out.println("Simbolo" + yytext());return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());}
 "(" {System.out.println("Simbolo" + yytext());return new Symbol(sym.pariz,yycolumn,yyline,yytext());}
 ")" {System.out.println("Simbolo" + yytext());return new Symbol(sym.parder,yycolumn,yyline,yytext());}
 "," {System.out.println("Simbolo" + yytext());return new Symbol(sym.coma,yycolumn,yyline,yytext());}
-"=" {System.out.println("Simbolo" + yytext());return new Symbol(sym.igual,yycolumn,yyline,yytext());}
 ":" {System.out.println("Simbolo" + yytext());return new Symbol(sym.dpuntos,yycolumn,yyline,yytext());}
 "[" {System.out.println("Simbolo" + yytext());return new Symbol(sym.coriz,yycolumn,yyline,yytext());}
 "]" {System.out.println("Simbolo" + yytext());return new Symbol(sym.corder,yycolumn,yyline,yytext());}
@@ -97,6 +104,8 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 \n {yycolumn=1;}
 {blancos} {/*Se ignoran*/}
 
+//{cierre} {return new Symbol(sym.cierre);}
+{entero} {System.out.println("******************** Entero " + yytext());return new Symbol(sym.entero,yycolumn,yyline,yytext());}
 {decimal} {System.out.println("******************** Decimal " + yytext());return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
 {id} {System.out.println("******************** Id " + yytext());return new Symbol(sym.id,yycolumn,yyline,yytext());}
 {cadena} {System.out.println("******************** Cadena " + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));}

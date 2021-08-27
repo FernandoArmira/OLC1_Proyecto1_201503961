@@ -336,8 +336,10 @@ public class Interfaz extends javax.swing.JFrame {
         listaErrores.clear();
         listavariables.clear();
         //jTextArea1.setText("");
+        analizadores.parser.archivos.clear();
         
         try {
+            System.out.println("Ejecutando analisis .....................................................");
             String path = jTextArea1.getText();
             analizadores.parser sintactico;
             sintactico = new analizadores.parser(new analizadores.Lexico(new StringReader(path)));

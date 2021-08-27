@@ -307,7 +307,6 @@ public class parser extends java_cup.runtime.lr_parser {
 
         valoresx.clear();
         valoresy.clear();
-        archivos.clear();
 
     }
 
@@ -474,7 +473,7 @@ public class parser extends java_cup.runtime.lr_parser {
             for(int i=0;i<archivos.size();i++){
                 if(archivos.get(i).equals(nombre)){
                     System.out.println("Archivo con el mismo nombre: " + nombre);
-                    System.out.println("Analizar: " + direccionA+nombre);
+                    //System.out.println("Analizar: " + direccionA+nombre);
                     ejecutar(direccionA+ "\\" +nombre);
                     ejecutar(direccion+ "\\" + nombre);
                     estadovar = 1;
@@ -551,7 +550,7 @@ class CUP$parser$actions {
           case 1: // INICIO ::= generarreporteestadistico llaveiz INSTRUCCION llaveder 
             {
               Nodo RESULT =null;
-
+		//System.out.println("............................................Ejecutando analisis");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

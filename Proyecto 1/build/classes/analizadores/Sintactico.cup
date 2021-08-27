@@ -79,7 +79,6 @@ parser code
 
         valoresx.clear();
         valoresy.clear();
-        archivos.clear();
 
     }
 
@@ -131,6 +130,10 @@ parser code
         int height = 480; // Height of the image 
         File PieChart = new File( nombre + ".jpeg" );
         ChartUtilities.saveChartAsJPEG( PieChart , chart , width , height );
+
+        valoresx.clear();
+        valoresy.clear();
+
     }
 
 // Grafica de lineas
@@ -246,7 +249,7 @@ parser code
             for(int i=0;i<archivos.size();i++){
                 if(archivos.get(i).equals(nombre)){
                     System.out.println("Archivo con el mismo nombre: " + nombre);
-                    System.out.println("Analizar: " + direccionA+nombre);
+                    //System.out.println("Analizar: " + direccionA+nombre);
                     ejecutar(direccionA+ "\\" +nombre);
                     ejecutar(direccion+ "\\" + nombre);
                     estadovar = 1;
@@ -293,7 +296,7 @@ non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBA
 
 start with INICIO;
 
-INICIO::= generarreporteestadistico llaveiz INSTRUCCION llaveder;
+INICIO::= generarreporteestadistico llaveiz INSTRUCCION llaveder{://System.out.println("............................................Ejecutando analisis");:};
 
 INSTRUCCION ::= INSTRUCCION BLOQUEGLOBALES
         | INSTRUCCION BLOQUEARCHIVOS
