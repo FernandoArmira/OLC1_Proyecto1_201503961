@@ -11,9 +11,11 @@ public class sym {
   public static final int cadena = 5;
   public static final int decimal = 3;
   public static final int llaveiz = 16;
+  public static final int forpr = 22;
   public static final int imprimir = 20;
   public static final int falsevar = 12;
   public static final int constvar = 10;
+  public static final int menos = 24;
   public static final int igual = 6;
   public static final int EOF = 0;
   public static final int truevar = 11;
@@ -26,6 +28,7 @@ public class sym {
   public static final int ifpr = 13;
   public static final int entero = 2;
   public static final int parder = 15;
+  public static final int mas = 23;
   public static final int diferente = 21;
   public static final int menorq = 18;
   public static final int var = 8;
@@ -52,7 +55,10 @@ public class sym {
   "menorq",
   "elsepr",
   "imprimir",
-  "diferente"
+  "diferente",
+  "forpr",
+  "mas",
+  "menos"
   };
 }
 

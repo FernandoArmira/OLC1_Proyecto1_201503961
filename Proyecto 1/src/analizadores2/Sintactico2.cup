@@ -60,10 +60,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION;
 
 //precedence left or;
 //precedence left conc;
@@ -76,17 +76,23 @@ INICIO::= INSTRUCCION;
 INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | INSTRUCCION VARIABLES puntocoma
             | INSTRUCCION PRINTCONSOLE puntocoma
+            | INSTRUCCION ASIGNACION puntocoma
             | INSTRUCCION EXPRESION 
             | INSTRUCCION VARIABLES
             | INSTRUCCION IF
+            | INSTRUCCION FOR
             | INSTRUCCION PRINTCONSOLE
+            | INSTRUCCION ASIGNACION
             | VARIABLES puntocoma
             | EXPRESION puntocoma
             | PRINTCONSOLE puntocoma
+            | ASIGNACION puntocoma
             | VARIABLES 
             | EXPRESION
             | IF
-            | PRINTCONSOLE;
+            | FOR
+            | PRINTCONSOLE
+            | ASIGNACION;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
@@ -140,3 +146,17 @@ ELSEIF ::= ELSEIF CUERPOELSEIF
         | CUERPOELSEIF;
 
 CUERPOELSEIF ::= elsepr ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder; 
+
+FOR ::= forpr pariz SETTINGFOR parder llaveiz CUERPOFOR llaveder;
+
+SETTINGFOR ::= INICIOFOR puntocoma RELACIONAL puntocoma INCFOR;
+
+INICIOFOR ::= VARIABLES
+        | ASIGNACION;
+
+ASIGNACION ::= id igual EXPRESION;
+
+INCFOR ::= id mas mas
+        | id menos menos;
+
+CUERPOFOR ::= INSTRUCCION;
