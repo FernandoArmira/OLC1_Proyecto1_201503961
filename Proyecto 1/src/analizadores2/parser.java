@@ -151,32 +151,22 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
   
+    
 
-// Variables globales del lenguaje fca
-    public void Addvariable(String variable, String valor, String tipo){
-        variables nuevov= new variables(variable, valor, tipo);
+// Variables lenguaje JS
+    public void Addvariable(String variable, String archivo){
+        //variablesJS nuevov= new variablesJS(variable, archivo);
+        variablesJS nuevov= new variablesJS(variable, archivo);
         
-        int estadovar = 0;
-        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!111" + nuevov.variable);
-        if(proyecto.Interfaz.listavariables.size() <= 0){
-            proyecto.Interfaz.listavariables.add(nuevov);
-        }else{
-            for(int i=0;i<proyecto.Interfaz.listavariables.size();i++){
-                if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(nuevov.variable)){
-                    estadovar = 1;
-                    i = proyecto.Interfaz.listavariables.size();
+            for(int i=0;i<proyecto.Interfaz.variablestemp.size();i++){
+                if(proyecto.Interfaz.variablestemp.get(i).equals(variable)){
+                    proyecto.Interfaz.listavariablesjs.add(nuevov);
+                    i = proyecto.Interfaz.variablestemp.size();
                 }
-            }
-
-            if(estadovar == 0){
-                proyecto.Interfaz.listavariables.add(nuevov);
             }
 
         }
         
-
-        
-    }
 
     //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
     public void syntax_error(Symbol s)
@@ -320,6 +310,19 @@ class CUP$parser$actions {
           case 10: // VARIABLES ::= PRVARIABLES id igual VALOR 
             {
               Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		//System.out.println("Variables");
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.variablestemp.add(a);
+        System.out.println("Archivo A");
+    } else {
+
+        Addvariable(a,proyecto.Interfaz.nombrearchivojs);
+        System.out.println("Archivo B");
+
+    }
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VARIABLES",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }

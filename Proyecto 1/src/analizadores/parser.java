@@ -358,6 +358,10 @@ public class parser extends java_cup.runtime.lr_parser {
         int height = 480; // Height of the image 
         File PieChart = new File( nombre + ".jpeg" );
         ChartUtilities.saveChartAsJPEG( PieChart , chart , width , height );
+
+        valoresx.clear();
+        valoresy.clear();
+
     }
 
 // Grafica de lineas
@@ -474,7 +478,10 @@ public class parser extends java_cup.runtime.lr_parser {
                 if(archivos.get(i).equals(nombre)){
                     System.out.println("Archivo con el mismo nombre: " + nombre);
                     //System.out.println("Analizar: " + direccionA+nombre);
+                    proyecto.Interfaz.nombrearchivojs = nombre;
+                    proyecto.Interfaz.archivoa = true;
                     ejecutar(direccionA+ "\\" +nombre);
+                    proyecto.Interfaz.archivoa = false;
                     ejecutar(direccion+ "\\" + nombre);
                     estadovar = 1;
                     i = archivos.size();
@@ -755,6 +762,8 @@ class CUP$parser$actions {
 		int bright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		System.out.println("--- Proyecto A: " + a + " Proyecto B: " + b);
+    proyecto.Interfaz.variablestemp.clear();
+    proyecto.Interfaz.comentariostemp.clear();
     direccionA=a;
     listar(a);
     listar(b);

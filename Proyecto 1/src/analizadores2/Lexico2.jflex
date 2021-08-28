@@ -6,6 +6,7 @@ import proyecto.*;
 
 %{
     String cadena="";
+    String comentario = "";
 
 %}
 
@@ -51,14 +52,42 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 
 %%
 
-<YYINITIAL> "/*"                {yybegin(COMENT_MULTI);}     // Si la entrada es un comentario inicia aqui
-<COMENT_MULTI> "*/"             {yybegin(YYINITIAL);}        // Si se acaba el comentario vuelve a YYINITIAL
-<COMENT_MULTI> .                {}
+<YYINITIAL> "/*"                {yybegin(COMENT_MULTI); comentario = "";}     // Si la entrada es un comentario inicia aqui
+<COMENT_MULTI> "*/"             {yybegin(YYINITIAL); 
+    System.out.println(comentario.trim());
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.comentariostemp.add(comentario.trim());
+    } else {
+        comentarioJS nuevov= new comentarioJS(comentario.trim(), proyecto.Interfaz.nombrearchivojs);
+        
+            for(int i=0;i<proyecto.Interfaz.comentariostemp.size();i++){
+                if(proyecto.Interfaz.comentariostemp.get(i).equals(comentario.trim())){
+                    proyecto.Interfaz.listacomentariosjs.add(nuevov);
+                    i = proyecto.Interfaz.comentariostemp.size();
+                }
+            }
+
+    }}        // Si se acaba el comentario vuelve a YYINITIAL
+<COMENT_MULTI> .                {comentario = comentario + yytext();}
 <COMENT_MULTI> [ \t\r\n\f]      {}
 
-<YYINITIAL> "//"                {yybegin(COMENT_SIMPLE);}   // Si la entrada es comentario simple inicia aqui
-<COMENT_SIMPLE> [^"\n"]         {}                          // 
-<COMENT_SIMPLE> "\n"            {yybegin(YYINITIAL);}       // aqui sale del estado
+<YYINITIAL> "//"                {yybegin(COMENT_SIMPLE); comentario = "";}   // Si la entrada es comentario simple inicia aqui
+<COMENT_SIMPLE> [^"\n"]         {comentario = comentario + yytext();}                          // 
+<COMENT_SIMPLE> "\n"            {yybegin(YYINITIAL); 
+    System.out.println(comentario.trim());
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.comentariostemp.add(comentario.trim());
+    } else {
+        comentarioJS nuevov= new comentarioJS(comentario.trim(), proyecto.Interfaz.nombrearchivojs);
+        
+            for(int i=0;i<proyecto.Interfaz.comentariostemp.size();i++){
+                if(proyecto.Interfaz.comentariostemp.get(i).equals(comentario.trim())){
+                    proyecto.Interfaz.listacomentariosjs.add(nuevov);
+                    i = proyecto.Interfaz.comentariostemp.size();
+                }
+            }
+
+    }}       // aqui sale del estado
 
 <YYINITIAL>{
 //"(" {return new Symbol(sym.aparen,yycolumn,yyline,yytext());}

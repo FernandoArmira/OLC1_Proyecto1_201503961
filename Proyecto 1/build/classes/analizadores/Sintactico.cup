@@ -250,7 +250,10 @@ parser code
                 if(archivos.get(i).equals(nombre)){
                     System.out.println("Archivo con el mismo nombre: " + nombre);
                     //System.out.println("Analizar: " + direccionA+nombre);
+                    proyecto.Interfaz.nombrearchivojs = nombre;
+                    proyecto.Interfaz.archivoa = true;
                     ejecutar(direccionA+ "\\" +nombre);
+                    proyecto.Interfaz.archivoa = false;
                     ejecutar(direccion+ "\\" + nombre);
                     estadovar = 1;
                     i = archivos.size();
@@ -331,6 +334,8 @@ VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {://System.out.println("-
 //Buscar arcivos para luego analizarlos
 
 BLOQUEARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System.out.println("--- Proyecto A: " + a + " Proyecto B: " + b);
+    proyecto.Interfaz.variablestemp.clear();
+    proyecto.Interfaz.comentariostemp.clear();
     direccionA=a;
     listar(a);
     listar(b);

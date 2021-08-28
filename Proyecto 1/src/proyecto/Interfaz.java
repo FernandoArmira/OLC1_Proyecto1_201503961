@@ -44,6 +44,13 @@ public class Interfaz extends javax.swing.JFrame {
     public static ArrayList<Errores> listaErrores = new ArrayList<Errores>();
     public static ArrayList<variables> listavariables = new ArrayList<variables>();
     public static String nombrearchivo = "";
+    public static Boolean archivoa = false;
+    public static String nombrearchivojs = "";
+    public static ArrayList<String> variablestemp = new ArrayList();
+    public static ArrayList<variablesJS> listavariablesjs = new ArrayList<variablesJS>();
+    public static ArrayList<String> comentariostemp = new ArrayList();
+    public static ArrayList<comentarioJS> listacomentariosjs = new ArrayList<comentarioJS>();
+    
     
     public Interfaz() {
         initComponents();
@@ -348,6 +355,16 @@ public class Interfaz extends javax.swing.JFrame {
             System.out.println("------------------------------Variables----------------------------------");
             for(int i=0;i<listavariables.size();i++){
                 System.out.println(listavariables.get(i).variable + " " + listavariables.get(i).valor);
+            }
+            
+            System.out.println("-----------------------------VariablesJS----------------------------------");
+            for(int i=0;i<listavariablesjs.size();i++){
+                System.out.println(listavariablesjs.get(i).variable + " " + listavariablesjs.get(i).archivo);
+            }
+            
+            System.out.println("----------------------------ComentariosJS---------------------------------");
+            for(int i=0;i<listacomentariosjs.size();i++){
+                System.out.println(listacomentariosjs.get(i).comentario + " " + listavariablesjs.get(i).archivo);
             }
             
         } catch (Exception e) {
