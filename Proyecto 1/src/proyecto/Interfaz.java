@@ -367,6 +367,10 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println(listacomentariosjs.get(i).comentario + " " + listavariablesjs.get(i).archivo);
             }
             
+            /*if(true == true){
+               System.out.println("a");
+            }*/
+            
         } catch (Exception e) {
         }
         

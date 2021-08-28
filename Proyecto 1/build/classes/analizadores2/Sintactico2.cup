@@ -60,10 +60,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF;
 
 //precedence left or;
 //precedence left conc;
@@ -75,12 +75,18 @@ INICIO::= INSTRUCCION;
 
 INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | INSTRUCCION VARIABLES puntocoma
+            | INSTRUCCION PRINTCONSOLE puntocoma
             | INSTRUCCION EXPRESION 
             | INSTRUCCION VARIABLES
+            | INSTRUCCION IF
+            | INSTRUCCION PRINTCONSOLE
             | VARIABLES puntocoma
             | EXPRESION puntocoma
+            | PRINTCONSOLE puntocoma
             | VARIABLES 
-            | EXPRESION;
+            | EXPRESION
+            | IF
+            | PRINTCONSOLE;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
@@ -106,5 +112,31 @@ VALOR ::= entero
 
 EXPRESION ::= cadena
             | id
-            | decimal;
+            | entero
+            | decimal
+            | truevar
+            | falsevar;
 
+IF ::= ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder
+    | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSE
+    | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSEIF
+    | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSEIF ELSE;
+
+CONDICION ::= RELACIONAL;
+
+RELACIONAL ::= EXPRESION igual igual EXPRESION
+        | EXPRESION menorq EXPRESION
+        | EXPRESION diferente EXPRESION;
+
+CUERPOIF ::= INSTRUCCION;
+
+ELSE ::= elsepr llaveiz CUERPOELSE llaveder;
+
+CUERPOELSE ::= INSTRUCCION;
+
+PRINTCONSOLE ::= imprimir pariz EXPRESION parder;
+
+ELSEIF ::= ELSEIF CUERPOELSEIF
+        | CUERPOELSEIF;
+
+CUERPOELSEIF ::= elsepr ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder; 
