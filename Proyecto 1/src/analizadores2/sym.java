@@ -33,6 +33,8 @@ public class sym {
   public static final int menorq = 18;
   public static final int var = 8;
   public static final int llaveder = 17;
+  public static final int dopr = 26;
+  public static final int whilepr = 25;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -58,7 +60,9 @@ public class sym {
   "diferente",
   "forpr",
   "mas",
-  "menos"
+  "menos",
+  "whilepr",
+  "dopr"
   };
 }
 

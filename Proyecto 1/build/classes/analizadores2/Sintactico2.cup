@@ -60,10 +60,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE;
 
 //precedence left or;
 //precedence left conc;
@@ -77,22 +77,28 @@ INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | INSTRUCCION VARIABLES puntocoma
             | INSTRUCCION PRINTCONSOLE puntocoma
             | INSTRUCCION ASIGNACION puntocoma
+            | INSTRUCCION DOWHILE puntocoma
             | INSTRUCCION EXPRESION 
             | INSTRUCCION VARIABLES
             | INSTRUCCION IF
             | INSTRUCCION FOR
+            | INSTRUCCION WHILE
             | INSTRUCCION PRINTCONSOLE
             | INSTRUCCION ASIGNACION
+            | INSTRUCCION DOWHILE
             | VARIABLES puntocoma
             | EXPRESION puntocoma
             | PRINTCONSOLE puntocoma
             | ASIGNACION puntocoma
+            | DOWHILE puntocoma
             | VARIABLES 
             | EXPRESION
             | IF
             | FOR
+            | WHILE
             | PRINTCONSOLE
-            | ASIGNACION;
+            | ASIGNACION
+            | DOWHILE;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
@@ -132,7 +138,8 @@ CONDICION ::= RELACIONAL;
 
 RELACIONAL ::= EXPRESION igual igual EXPRESION
         | EXPRESION menorq EXPRESION
-        | EXPRESION diferente EXPRESION;
+        | EXPRESION diferente EXPRESION
+        | EXPRESION menorq igual EXPRESION;
 
 CUERPOIF ::= INSTRUCCION;
 
@@ -160,3 +167,9 @@ INCFOR ::= id mas mas
         | id menos menos;
 
 CUERPOFOR ::= INSTRUCCION;
+
+WHILE ::= whilepr pariz RELACIONAL parder llaveiz CUERPOWHILE llaveder;
+
+CUERPOWHILE ::= INSTRUCCION;
+
+DOWHILE ::= dopr llaveiz CUERPOWHILE llaveder whilepr pariz RELACIONAL parder;
