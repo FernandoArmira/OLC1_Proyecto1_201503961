@@ -60,10 +60,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE ;
 
 //precedence left or;
 //precedence left conc;
@@ -83,6 +83,7 @@ INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | INSTRUCCION IF
             | INSTRUCCION FOR
             | INSTRUCCION WHILE
+            | INSTRUCCION SWITCH
             | INSTRUCCION PRINTCONSOLE
             | INSTRUCCION ASIGNACION
             | INSTRUCCION DOWHILE
@@ -96,11 +97,23 @@ INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | IF
             | FOR
             | WHILE
+            | SWITCH
             | PRINTCONSOLE
             | ASIGNACION
             | DOWHILE;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.variablestemp.add(a);
+        System.out.println("Archivo A");
+    } else {
+
+        Addvariable(a,proyecto.Interfaz.nombrearchivojs);
+        System.out.println("Archivo B");
+
+    }
+:}
+    |PRVARIABLES id:a {://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
         System.out.println("Archivo A");
@@ -173,3 +186,12 @@ WHILE ::= whilepr pariz RELACIONAL parder llaveiz CUERPOWHILE llaveder;
 CUERPOWHILE ::= INSTRUCCION;
 
 DOWHILE ::= dopr llaveiz CUERPOWHILE llaveder whilepr pariz RELACIONAL parder;
+
+SWITCH ::= switchpr pariz id parder llaveiz CUERPOSWITCH FINALSWITCH llaveder;
+
+CUERPOSWITCH ::= CUERPOSWITCH casepr EXPRESION dpuntos CUERPOCASE breakpr puntocoma
+        | casepr EXPRESION dpuntos CUERPOCASE breakpr puntocoma;
+
+CUERPOCASE ::= INSTRUCCION;
+
+FINALSWITCH ::= defaultpr dpuntos CUERPOCASE;

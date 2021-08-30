@@ -101,6 +101,7 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 "+" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.mas,yycolumn,yyline,yytext());}
 "-" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.menos,yycolumn,yyline,yytext());}
 ";" {System.out.println("********************Simbolo " + yytext());return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());}
+":" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.dpuntos,yycolumn,yyline,yytext());}
 "(" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.pariz,yycolumn,yyline,yytext());}
 ")" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.parder,yycolumn,yyline,yytext());}
 "{" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());}
@@ -116,13 +117,16 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 "for" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.forpr,yycolumn,yyline,yytext());}
 "while" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.whilepr,yycolumn,yyline,yytext());}
 "do" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.dopr,yycolumn,yyline,yytext());}
+"switch" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.switchpr,yycolumn,yyline,yytext());}
+"case" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.casepr,yycolumn,yyline,yytext());}
+"break" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.breakpr,yycolumn,yyline,yytext());}
+"default" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.defaultpr,yycolumn,yyline,yytext());}
 
 
 
 
 /*
 "," {System.out.println("Simbolo" + yytext());return new Symbol(sym.coma,yycolumn,yyline,yytext());}
-":" {System.out.println("Simbolo" + yytext());return new Symbol(sym.dpuntos,yycolumn,yyline,yytext());}
 "[" {System.out.println("Simbolo" + yytext());return new Symbol(sym.coriz,yycolumn,yyline,yytext());}
 "]" {System.out.println("Simbolo" + yytext());return new Symbol(sym.corder,yycolumn,yyline,yytext());}
 "$" {System.out.println("Simbolo" + yytext());return new Symbol(sym.dolar,yycolumn,yyline,yytext());}
