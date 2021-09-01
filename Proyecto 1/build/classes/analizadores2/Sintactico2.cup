@@ -60,7 +60,7 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual;
 
 // no terminal [Tipo] listanoterminales;
 non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO;
@@ -70,6 +70,10 @@ non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR,
 //precedence left suma, mult, inter;
 
 //precedence left or;
+precedence left orpr;
+precedence left andpr;
+precedence right notpr;
+precedence left digual, diferente, menorq, menorigual, mayorq, mayorigual;
 precedence left mas, menos, porcentaje;
 precedence left por, div;
 precedence left pot;
@@ -154,7 +158,9 @@ EXPRESION ::= cadena
             | EXPRESION pot EXPRESION
             | EXPRESION porcentaje EXPRESION
             | menos EXPRESION
-            | pariz EXPRESION parder;
+            | pariz EXPRESION parder
+            | RELACIONAL
+            | LOGICO;
 
 IF ::= ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder
     | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSE
@@ -164,12 +170,12 @@ IF ::= ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder
 CONDICION ::= RELACIONAL
             | LOGICO;
 
-RELACIONAL ::= EXPRESION igual igual EXPRESION
+RELACIONAL ::= EXPRESION digual EXPRESION
         | EXPRESION diferente EXPRESION
         | EXPRESION menorq EXPRESION
-        | EXPRESION menorq igual EXPRESION
+        | EXPRESION menorigual EXPRESION
         | EXPRESION mayorq EXPRESION
-        | EXPRESION mayorq igual EXPRESION;
+        | EXPRESION mayorigual EXPRESION;
 
 CUERPOIF ::= INSTRUCCION;
 
@@ -217,7 +223,5 @@ FINALSWITCH ::= defaultpr dpuntos CUERPOCASE;
 
 LOGICO ::= EXPRESION andpr EXPRESION
         | EXPRESION orpr EXPRESION
-        | notpr EXPRESION
-        | RELACIONAL andpr RELACIONAL
-        | RELACIONAL orpr RELACIONAL
-        | notpr RELACIONAL;
+        | notpr EXPRESION;
+

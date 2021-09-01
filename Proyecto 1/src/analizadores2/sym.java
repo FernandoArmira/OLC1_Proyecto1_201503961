@@ -36,13 +36,16 @@ public class sym {
   public static final int ifpr = 13;
   public static final int entero = 2;
   public static final int switchpr = 27;
+  public static final int menorigual = 40;
   public static final int pot = 37;
   public static final int por = 36;
   public static final int orpr = 34;
   public static final int llaveiz = 16;
   public static final int id = 4;
   public static final int forpr = 22;
+  public static final int mayorigual = 41;
   public static final int diferente = 21;
+  public static final int digual = 42;
   public static final int puntocoma = 7;
   public static final int div = 38;
   public static final int defaultpr = 30;
@@ -88,7 +91,10 @@ public class sym {
   "por",
   "pot",
   "div",
-  "porcentaje"
+  "porcentaje",
+  "menorigual",
+  "mayorigual",
+  "digual"
   };
 }
 
