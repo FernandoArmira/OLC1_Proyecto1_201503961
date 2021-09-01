@@ -63,7 +63,7 @@ action code {:
 terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC;
 
 //precedence left or;
 //precedence left conc;
@@ -88,6 +88,8 @@ INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | INSTRUCCION PRINTCONSOLE puntocoma
             | INSTRUCCION ASIGNACION puntocoma
             | INSTRUCCION DOWHILE puntocoma
+            | INSTRUCCION INC puntocoma
+            | INSTRUCCION DEC puntocoma
             | INSTRUCCION EXPRESION 
             | INSTRUCCION VARIABLES
             | INSTRUCCION IF
@@ -97,11 +99,15 @@ INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | INSTRUCCION PRINTCONSOLE
             | INSTRUCCION ASIGNACION
             | INSTRUCCION DOWHILE
+            | INSTRUCCION INC
+            | INSTRUCCION DEC
             | VARIABLES puntocoma
             | EXPRESION puntocoma
             | PRINTCONSOLE puntocoma
             | ASIGNACION puntocoma
             | DOWHILE puntocoma
+            | INC puntocoma
+            | DEC puntocoma
             | VARIABLES 
             | EXPRESION
             | IF
@@ -110,7 +116,30 @@ INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | SWITCH
             | PRINTCONSOLE
             | ASIGNACION
-            | DOWHILE;
+            | DOWHILE
+            | INC
+            | DEC;
+
+INSTRUCCIONL ::= VARIABLES puntocoma
+            | EXPRESION puntocoma
+            | PRINTCONSOLE puntocoma
+            | ASIGNACION puntocoma
+            | DOWHILE puntocoma
+            | breakpr puntocoma
+            | INC puntocoma
+            | DEC puntocoma
+            | VARIABLES 
+            | EXPRESION
+            | IF
+            | FOR
+            | WHILE
+            | SWITCH
+            | PRINTCONSOLE
+            | ASIGNACION
+            | DOWHILE
+            | INC
+            | DEC
+            | breakpr;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
@@ -177,11 +206,13 @@ RELACIONAL ::= EXPRESION digual EXPRESION
         | EXPRESION mayorq EXPRESION
         | EXPRESION mayorigual EXPRESION;
 
-CUERPOIF ::= INSTRUCCION;
+CUERPOIF ::= CUERPOIF INSTRUCCIONL
+        | INSTRUCCIONL;
 
 ELSE ::= elsepr llaveiz CUERPOELSE llaveder;
 
-CUERPOELSE ::= INSTRUCCION;
+CUERPOELSE ::= CUERPOELSE INSTRUCCIONL
+           | INSTRUCCIONL;
 
 PRINTCONSOLE ::= imprimir pariz EXPRESION parder;
 
@@ -202,12 +233,14 @@ ASIGNACION ::= id igual EXPRESION;
 INCFOR ::= id mas mas
         | id menos menos;
 
-CUERPOFOR ::= INSTRUCCION;
+CUERPOFOR ::= CUERPOFOR INSTRUCCIONL
+            | INSTRUCCIONL;
 
 WHILE ::= whilepr pariz RELACIONAL parder llaveiz CUERPOWHILE llaveder
         | whilepr pariz LOGICO parder llaveiz CUERPOWHILE llaveder;
 
-CUERPOWHILE ::= INSTRUCCION;
+CUERPOWHILE ::= CUERPOWHILE INSTRUCCIONL
+            | INSTRUCCIONL;
 
 DOWHILE ::= dopr llaveiz CUERPOWHILE llaveder whilepr pariz RELACIONAL parder
         | dopr llaveiz CUERPOWHILE llaveder whilepr pariz LOGICO parder;
@@ -225,3 +258,6 @@ LOGICO ::= EXPRESION andpr EXPRESION
         | EXPRESION orpr EXPRESION
         | notpr EXPRESION;
 
+INC ::= EXPRESION mas mas;
+
+DEC ::= EXPRESION menos menos;
