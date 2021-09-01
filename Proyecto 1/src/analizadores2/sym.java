@@ -13,6 +13,7 @@ public class sym {
   public static final int whilepr = 25;
   public static final int breakpr = 29;
   public static final int mayorq = 32;
+  public static final int coma = 43;
   public static final int llaveder = 17;
   public static final int igual = 6;
   public static final int notpr = 35;
@@ -43,6 +44,7 @@ public class sym {
   public static final int llaveiz = 16;
   public static final int id = 4;
   public static final int forpr = 22;
+  public static final int requirepr = 44;
   public static final int mayorigual = 41;
   public static final int diferente = 21;
   public static final int digual = 42;
@@ -94,7 +96,9 @@ public class sym {
   "porcentaje",
   "menorigual",
   "mayorigual",
-  "digual"
+  "digual",
+  "coma",
+  "requirepr"
   };
 }
 

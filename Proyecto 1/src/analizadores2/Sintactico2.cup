@@ -60,10 +60,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual, coma, requirepr;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC, CALLM, CUERPOMETODO, CUERPOMETODO2, IMPORT;
 
 //precedence left or;
 //precedence left conc;
@@ -83,14 +83,13 @@ start with INICIO;
 
 INICIO::= INSTRUCCION;
 
-INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
-            | INSTRUCCION VARIABLES puntocoma
+INSTRUCCION ::= INSTRUCCION VARIABLES puntocoma
             | INSTRUCCION PRINTCONSOLE puntocoma
             | INSTRUCCION ASIGNACION puntocoma
             | INSTRUCCION DOWHILE puntocoma
             | INSTRUCCION INC puntocoma
             | INSTRUCCION DEC puntocoma
-            | INSTRUCCION EXPRESION 
+            | INSTRUCCION CALLM puntocoma
             | INSTRUCCION VARIABLES
             | INSTRUCCION IF
             | INSTRUCCION FOR
@@ -101,35 +100,15 @@ INSTRUCCION ::= INSTRUCCION EXPRESION puntocoma
             | INSTRUCCION DOWHILE
             | INSTRUCCION INC
             | INSTRUCCION DEC
+            | INSTRUCCION CALLM
             | VARIABLES puntocoma
-            | EXPRESION puntocoma
             | PRINTCONSOLE puntocoma
             | ASIGNACION puntocoma
             | DOWHILE puntocoma
             | INC puntocoma
             | DEC puntocoma
+            | CALLM puntocoma
             | VARIABLES 
-            | EXPRESION
-            | IF
-            | FOR
-            | WHILE
-            | SWITCH
-            | PRINTCONSOLE
-            | ASIGNACION
-            | DOWHILE
-            | INC
-            | DEC;
-
-INSTRUCCIONL ::= VARIABLES puntocoma
-            | EXPRESION puntocoma
-            | PRINTCONSOLE puntocoma
-            | ASIGNACION puntocoma
-            | DOWHILE puntocoma
-            | breakpr puntocoma
-            | INC puntocoma
-            | DEC puntocoma
-            | VARIABLES 
-            | EXPRESION
             | IF
             | FOR
             | WHILE
@@ -139,6 +118,27 @@ INSTRUCCIONL ::= VARIABLES puntocoma
             | DOWHILE
             | INC
             | DEC
+            | CALLM;
+
+INSTRUCCIONL ::= VARIABLES puntocoma
+            | PRINTCONSOLE puntocoma
+            | ASIGNACION puntocoma
+            | DOWHILE puntocoma
+            | breakpr puntocoma
+            | INC puntocoma
+            | DEC puntocoma
+            | CALLM puntocoma
+            | VARIABLES 
+            | IF
+            | FOR
+            | WHILE
+            | SWITCH
+            | PRINTCONSOLE
+            | ASIGNACION
+            | DOWHILE
+            | INC
+            | DEC
+            | CALLM
             | breakpr;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
@@ -172,7 +172,8 @@ VALOR ::= entero
         | decimal
         | cadena
         | truevar
-        | falsevar;
+        | falsevar
+        | IMPORT;
 
 EXPRESION ::= cadena
             | id
@@ -261,3 +262,14 @@ LOGICO ::= EXPRESION andpr EXPRESION
 INC ::= EXPRESION mas mas;
 
 DEC ::= EXPRESION menos menos;
+
+CALLM ::= id pariz parder
+        | id pariz CUERPOMETODO parder;
+
+CUERPOMETODO ::= EXPRESION
+            | EXPRESION CUERPOMETODO2;
+
+CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION
+                | coma EXPRESION;
+
+IMPORT ::= requirepr pariz cadena parder;
