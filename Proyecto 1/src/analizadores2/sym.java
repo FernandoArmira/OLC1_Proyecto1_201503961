@@ -8,38 +8,46 @@ package analizadores2;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int cadena = 5;
-  public static final int decimal = 3;
-  public static final int llaveiz = 16;
-  public static final int forpr = 22;
-  public static final int imprimir = 20;
-  public static final int falsevar = 12;
-  public static final int constvar = 10;
-  public static final int defaultpr = 30;
-  public static final int menos = 24;
-  public static final int igual = 6;
-  public static final int EOF = 0;
   public static final int truevar = 11;
-  public static final int id = 4;
-  public static final int casepr = 28;
-  public static final int puntocoma = 7;
-  public static final int let = 9;
-  public static final int switchpr = 27;
-  public static final int elsepr = 19;
-  public static final int error = 1;
-  public static final int pariz = 14;
-  public static final int ifpr = 13;
-  public static final int breakpr = 29;
-  public static final int entero = 2;
-  public static final int parder = 15;
-  public static final int mas = 23;
-  public static final int diferente = 21;
-  public static final int menorq = 18;
-  public static final int var = 8;
-  public static final int dpuntos = 31;
-  public static final int llaveder = 17;
-  public static final int dopr = 26;
+  public static final int imprimir = 20;
   public static final int whilepr = 25;
+  public static final int breakpr = 29;
+  public static final int mayorq = 32;
+  public static final int llaveder = 17;
+  public static final int igual = 6;
+  public static final int notpr = 35;
+  public static final int andpr = 33;
+  public static final int dpuntos = 31;
+  public static final int parder = 15;
+  public static final int let = 9;
+  public static final int casepr = 28;
+  public static final int elsepr = 19;
+  public static final int pariz = 14;
+  public static final int constvar = 10;
+  public static final int falsevar = 12;
+  public static final int dopr = 26;
+  public static final int menos = 24;
+  public static final int porcentaje = 39;
+  public static final int var = 8;
+  public static final int EOF = 0;
+  public static final int mas = 23;
+  public static final int menorq = 18;
+  public static final int error = 1;
+  public static final int ifpr = 13;
+  public static final int entero = 2;
+  public static final int switchpr = 27;
+  public static final int pot = 37;
+  public static final int por = 36;
+  public static final int orpr = 34;
+  public static final int llaveiz = 16;
+  public static final int id = 4;
+  public static final int forpr = 22;
+  public static final int diferente = 21;
+  public static final int puntocoma = 7;
+  public static final int div = 38;
+  public static final int defaultpr = 30;
+  public static final int decimal = 3;
+  public static final int cadena = 5;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -72,7 +80,15 @@ public class sym {
   "casepr",
   "breakpr",
   "defaultpr",
-  "dpuntos"
+  "dpuntos",
+  "mayorq",
+  "andpr",
+  "orpr",
+  "notpr",
+  "por",
+  "pot",
+  "div",
+  "porcentaje"
   };
 }
 

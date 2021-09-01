@@ -60,14 +60,20 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE ;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO;
 
 //precedence left or;
 //precedence left conc;
 //precedence left suma, mult, inter;
+
+//precedence left or;
+precedence left mas, menos, porcentaje;
+precedence left por, div;
+precedence left pot;
+
 
 start with INICIO;
 
@@ -140,19 +146,30 @@ EXPRESION ::= cadena
             | entero
             | decimal
             | truevar
-            | falsevar;
+            | falsevar
+            | EXPRESION mas EXPRESION
+            | EXPRESION menos EXPRESION
+            | EXPRESION por EXPRESION
+            | EXPRESION div EXPRESION
+            | EXPRESION pot EXPRESION
+            | EXPRESION porcentaje EXPRESION
+            | menos EXPRESION
+            | pariz EXPRESION parder;
 
 IF ::= ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder
     | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSE
     | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSEIF
     | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSEIF ELSE;
 
-CONDICION ::= RELACIONAL;
+CONDICION ::= RELACIONAL
+            | LOGICO;
 
 RELACIONAL ::= EXPRESION igual igual EXPRESION
-        | EXPRESION menorq EXPRESION
         | EXPRESION diferente EXPRESION
-        | EXPRESION menorq igual EXPRESION;
+        | EXPRESION menorq EXPRESION
+        | EXPRESION menorq igual EXPRESION
+        | EXPRESION mayorq EXPRESION
+        | EXPRESION mayorq igual EXPRESION;
 
 CUERPOIF ::= INSTRUCCION;
 
@@ -181,11 +198,13 @@ INCFOR ::= id mas mas
 
 CUERPOFOR ::= INSTRUCCION;
 
-WHILE ::= whilepr pariz RELACIONAL parder llaveiz CUERPOWHILE llaveder;
+WHILE ::= whilepr pariz RELACIONAL parder llaveiz CUERPOWHILE llaveder
+        | whilepr pariz LOGICO parder llaveiz CUERPOWHILE llaveder;
 
 CUERPOWHILE ::= INSTRUCCION;
 
-DOWHILE ::= dopr llaveiz CUERPOWHILE llaveder whilepr pariz RELACIONAL parder;
+DOWHILE ::= dopr llaveiz CUERPOWHILE llaveder whilepr pariz RELACIONAL parder
+        | dopr llaveiz CUERPOWHILE llaveder whilepr pariz LOGICO parder;
 
 SWITCH ::= switchpr pariz id parder llaveiz CUERPOSWITCH FINALSWITCH llaveder;
 
@@ -195,3 +214,10 @@ CUERPOSWITCH ::= CUERPOSWITCH casepr EXPRESION dpuntos CUERPOCASE breakpr puntoc
 CUERPOCASE ::= INSTRUCCION;
 
 FINALSWITCH ::= defaultpr dpuntos CUERPOCASE;
+
+LOGICO ::= EXPRESION andpr EXPRESION
+        | EXPRESION orpr EXPRESION
+        | notpr EXPRESION
+        | RELACIONAL andpr RELACIONAL
+        | RELACIONAL orpr RELACIONAL
+        | notpr RELACIONAL;
