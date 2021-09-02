@@ -50,7 +50,15 @@ public class Interfaz extends javax.swing.JFrame {
     public static ArrayList<variablesJS> listavariablesjs = new ArrayList<variablesJS>();
     public static ArrayList<String> comentariostemp = new ArrayList();
     public static ArrayList<comentarioJS> listacomentariosjs = new ArrayList<comentarioJS>();
-    
+    public static ArrayList<String> clasestemp = new ArrayList();
+    public static ArrayList<clasesJS> listaclasesjs = new ArrayList<clasesJS>();
+    public static Boolean activarclase = false;
+    public static int cerrarclase = 0;
+    public static int inicioclase = 0;
+    public static int finalclase = 0;
+    public static int totallclasea = 0;
+    public static int totallclase = 0;
+
     
     public Interfaz() {
         initComponents();
@@ -365,6 +373,11 @@ public class Interfaz extends javax.swing.JFrame {
             System.out.println("----------------------------ComentariosJS---------------------------------");
             for(int i=0;i<listacomentariosjs.size();i++){
                 System.out.println(listacomentariosjs.get(i).comentario + " " + listavariablesjs.get(i).archivo);
+            }
+            
+            System.out.println("-------------------------------ClasesJS------------------------------------");
+            for(int i=0;i<listaclasesjs.size();i++){
+                System.out.println(listaclasesjs.get(i).clase + " " + listaclasesjs.get(i).archivo);
             }
             
             /*if(true == true){

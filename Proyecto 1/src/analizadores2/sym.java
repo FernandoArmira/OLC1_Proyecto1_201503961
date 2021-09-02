@@ -37,6 +37,7 @@ public class sym {
   public static final int ifpr = 13;
   public static final int entero = 2;
   public static final int switchpr = 27;
+  public static final int classpr = 45;
   public static final int menorigual = 40;
   public static final int pot = 37;
   public static final int por = 36;
@@ -98,7 +99,8 @@ public class sym {
   "mayorigual",
   "digual",
   "coma",
-  "requirepr"
+  "requirepr",
+  "classpr"
   };
 }
 

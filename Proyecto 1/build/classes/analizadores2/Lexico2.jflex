@@ -113,8 +113,32 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 "," {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.coma,yycolumn,yyline,yytext());}
 "(" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.pariz,yycolumn,yyline,yytext());}
 ")" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.parder,yycolumn,yyline,yytext());}
-"{" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());}
-"}" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.llaveder,yycolumn,yyline,yytext());}
+"{" {System.out.println("********************Simbolo" + yytext());
+    if(proyecto.Interfaz.activarclase == true){
+        proyecto.Interfaz.cerrarclase++;
+        proyecto.Interfaz.inicioclase = yyline;
+    }
+    return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());
+    
+}
+"}" {System.out.println("********************Simbolo" + yytext());
+    if(proyecto.Interfaz.activarclase == true){
+        proyecto.Interfaz.cerrarclase--;
+    }
+    if(proyecto.Interfaz.cerrarclase == 0){
+        proyecto.Interfaz.activarclase = false;
+        proyecto.Interfaz.finalclase = yyline;
+        System.out.println("Fin clase");
+        System.out.println(proyecto.Interfaz.inicioclase);
+        System.out.println(proyecto.Interfaz.finalclase);
+        proyecto.Interfaz.totallclase = proyecto.Interfaz.finalclase - proyecto.Interfaz.inicioclase;
+        System.out.println(proyecto.Interfaz.totallclase);
+        
+        if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.totallclasea = proyecto.Interfaz.totallclase;
+        }
+    }
+    return new Symbol(sym.llaveder,yycolumn,yyline,yytext());}
 "&&" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.andpr,yycolumn,yyline,yytext());}
 "||" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.orpr,yycolumn,yyline,yytext());}
 "!" {System.out.println("********************Simbolo" + yytext());return new Symbol(sym.notpr,yycolumn,yyline,yytext());}
@@ -134,8 +158,9 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 "break" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.breakpr,yycolumn,yyline,yytext());}
 "default" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.defaultpr,yycolumn,yyline,yytext());}
 "require" {System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.requirepr,yycolumn,yyline,yytext());}
-
-
+"class" {System.out.println("********************Palabra reservada " + yytext());
+    proyecto.Interfaz.activarclase = true;
+    return new Symbol(sym.classpr,yycolumn,yyline,yytext());}
 
 
 /*

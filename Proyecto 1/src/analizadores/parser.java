@@ -764,6 +764,7 @@ class CUP$parser$actions {
 		System.out.println("--- Proyecto A: " + a + " Proyecto B: " + b);
     proyecto.Interfaz.variablestemp.clear();
     proyecto.Interfaz.comentariostemp.clear();
+    proyecto.Interfaz.clasestemp.clear();
     direccionA=a;
     listar(a);
     listar(b);

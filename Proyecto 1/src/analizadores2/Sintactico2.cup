@@ -38,6 +38,21 @@ parser code
             }
 
         }
+
+    public void Addclase(String clase, String archivo){
+        //variablesJS nuevov= new variablesJS(variable, archivo);
+        clasesJS nuevov= new clasesJS(clase, archivo);
+        
+            for(int i=0;i<proyecto.Interfaz.clasestemp.size();i++){
+                if(proyecto.Interfaz.clasestemp.get(i).equals(clase)){
+                    if(proyecto.Interfaz.totallclasea == proyecto.Interfaz.totallclase){
+                        proyecto.Interfaz.listaclasesjs.add(nuevov);
+                    }        
+                    i = proyecto.Interfaz.clasestemp.size();
+                }
+            }
+
+        }
         
 
     //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
@@ -60,10 +75,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual, coma, requirepr;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual, coma, requirepr, classpr;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC, CALLM, CUERPOMETODO, CUERPOMETODO2, IMPORT;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC, CALLM, CUERPOMETODO, CUERPOMETODO2, IMPORT, CLASS, CUERPOCLASE;
 
 //precedence left or;
 //precedence left conc;
@@ -95,6 +110,7 @@ INSTRUCCION ::= INSTRUCCION VARIABLES puntocoma
             | INSTRUCCION FOR
             | INSTRUCCION WHILE
             | INSTRUCCION SWITCH
+            | INSTRUCCION CLASS
             | INSTRUCCION PRINTCONSOLE
             | INSTRUCCION ASIGNACION
             | INSTRUCCION DOWHILE
@@ -113,6 +129,7 @@ INSTRUCCION ::= INSTRUCCION VARIABLES puntocoma
             | FOR
             | WHILE
             | SWITCH
+            | CLASS
             | PRINTCONSOLE
             | ASIGNACION
             | DOWHILE
@@ -273,3 +290,18 @@ CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION
                 | coma EXPRESION;
 
 IMPORT ::= requirepr pariz cadena parder;
+
+CLASS ::= classpr id:a pariz parder llaveiz CUERPOCLASE  llaveder{://System.out.println("Variables");
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.clasestemp.add(a);
+        //System.out.println("Archivo A");
+    } else {
+        Addclase(a,proyecto.Interfaz.nombrearchivojs);
+        //System.out.println("Archivo B");
+
+    }
+:};
+
+CUERPOCLASE ::= INSTRUCCION;
+
+ 

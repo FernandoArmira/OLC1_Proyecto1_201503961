@@ -336,6 +336,7 @@ VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {://System.out.println("-
 BLOQUEARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System.out.println("--- Proyecto A: " + a + " Proyecto B: " + b);
     proyecto.Interfaz.variablestemp.clear();
     proyecto.Interfaz.comentariostemp.clear();
+    proyecto.Interfaz.clasestemp.clear();
     direccionA=a;
     listar(a);
     listar(b);
