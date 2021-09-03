@@ -51,12 +51,12 @@ public class Interfaz extends javax.swing.JFrame {
     public static ArrayList<String> comentariostemp = new ArrayList();
     public static ArrayList<comentarioJS> listacomentariosjs = new ArrayList<comentarioJS>();
     public static ArrayList<String> clasestemp = new ArrayList();
+    public static ArrayList<Integer> claseslineastemp = new ArrayList();
     public static ArrayList<clasesJS> listaclasesjs = new ArrayList<clasesJS>();
     public static Boolean activarclase = false;
     public static int cerrarclase = 0;
     public static int inicioclase = 0;
     public static int finalclase = 0;
-    public static int totallclasea = 0;
     public static int totallclase = 0;
 
     

@@ -896,8 +896,8 @@ public class Lexico implements java_cup.runtime.Scanner {
             { System.out.println("********************Simbolo" + yytext());
     if(proyecto.Interfaz.activarclase == true){
         proyecto.Interfaz.cerrarclase--;
-    }
-    if(proyecto.Interfaz.cerrarclase == 0){
+
+        if(proyecto.Interfaz.cerrarclase == 0){
         proyecto.Interfaz.activarclase = false;
         proyecto.Interfaz.finalclase = yyline;
         System.out.println("Fin clase");
@@ -905,11 +905,14 @@ public class Lexico implements java_cup.runtime.Scanner {
         System.out.println(proyecto.Interfaz.finalclase);
         proyecto.Interfaz.totallclase = proyecto.Interfaz.finalclase - proyecto.Interfaz.inicioclase;
         System.out.println(proyecto.Interfaz.totallclase);
+        proyecto.Interfaz.claseslineastemp.add(proyecto.Interfaz.totallclase);
         
-        if(proyecto.Interfaz.archivoa == true){
+        /*if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.totallclasea = proyecto.Interfaz.totallclase;
-        }
+        }*/
     }
+    }
+    
     return new Symbol(sym.llaveder,yycolumn,yyline,yytext());
             } 
             // fall through

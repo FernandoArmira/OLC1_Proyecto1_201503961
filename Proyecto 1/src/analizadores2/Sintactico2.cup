@@ -45,7 +45,7 @@ parser code
         
             for(int i=0;i<proyecto.Interfaz.clasestemp.size();i++){
                 if(proyecto.Interfaz.clasestemp.get(i).equals(clase)){
-                    if(proyecto.Interfaz.totallclasea == proyecto.Interfaz.totallclase){
+                    if(proyecto.Interfaz.totallclase == proyecto.Interfaz.claseslineastemp.get(i)){
                         proyecto.Interfaz.listaclasesjs.add(nuevov);
                     }        
                     i = proyecto.Interfaz.clasestemp.size();
@@ -78,7 +78,7 @@ action code {:
 terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual, coma, requirepr, classpr;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC, CALLM, CUERPOMETODO, CUERPOMETODO2, IMPORT, CLASS, CUERPOCLASE;
+non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC, CALLM, CUERPOMETODO, CUERPOMETODO2, IMPORT, CLASS, CUERPOCLASE, METODO, METODOBODY;
 
 //precedence left or;
 //precedence left conc;
@@ -145,6 +145,7 @@ INSTRUCCIONL ::= VARIABLES puntocoma
             | INC puntocoma
             | DEC puntocoma
             | CALLM puntocoma
+            | METODO puntocoma
             | VARIABLES 
             | IF
             | FOR
@@ -156,6 +157,7 @@ INSTRUCCIONL ::= VARIABLES puntocoma
             | INC
             | DEC
             | CALLM
+            | METODO
             | breakpr;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
@@ -302,6 +304,12 @@ CLASS ::= classpr id:a pariz parder llaveiz CUERPOCLASE  llaveder{://System.out.
     }
 :};
 
-CUERPOCLASE ::= INSTRUCCION;
+CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL
+            | INSTRUCCIONL;
 
- 
+METODO ::= id pariz parder llaveiz METODOBODY llaveder
+        | id pariz CUERPOMETODO parder llaveiz METODOBODY llaveder;
+
+METODOBODY ::= METODOBODY INSTRUCCIONL
+            | INSTRUCCIONL;
+

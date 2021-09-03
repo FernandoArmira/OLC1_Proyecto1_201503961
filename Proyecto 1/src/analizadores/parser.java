@@ -765,6 +765,7 @@ class CUP$parser$actions {
     proyecto.Interfaz.variablestemp.clear();
     proyecto.Interfaz.comentariostemp.clear();
     proyecto.Interfaz.clasestemp.clear();
+    proyecto.Interfaz.claseslineastemp.clear();
     direccionA=a;
     listar(a);
     listar(b);
