@@ -282,14 +282,14 @@ INC ::= EXPRESION mas mas;
 
 DEC ::= EXPRESION menos menos;
 
-CALLM ::= id pariz parder
-        | id pariz CUERPOMETODO parder;
+CALLM ::= id pariz parder {:proyecto.Interfaz.numparametros = 0;:}
+        | id pariz CUERPOMETODO parder{:proyecto.Interfaz.numparametros = 0;:};
 
-CUERPOMETODO ::= EXPRESION
-            | EXPRESION CUERPOMETODO2;
+CUERPOMETODO ::= EXPRESION{:proyecto.Interfaz.numparametros++;:}
+            | EXPRESION CUERPOMETODO2{:proyecto.Interfaz.numparametros++;:};
 
-CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION
-                | coma EXPRESION;
+CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION{:proyecto.Interfaz.numparametros++;:}
+                | coma EXPRESION{:proyecto.Interfaz.numparametros++;:};
 
 IMPORT ::= requirepr pariz cadena parder;
 
@@ -307,9 +307,47 @@ CLASS ::= classpr id:a pariz parder llaveiz CUERPOCLASE  llaveder{://System.out.
 CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL
             | INSTRUCCIONL;
 
-METODO ::= id pariz parder llaveiz METODOBODY llaveder
-        | id pariz CUERPOMETODO parder llaveiz METODOBODY llaveder;
+METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.metodostempA.add(a);
+        proyecto.Interfaz.metodosparamtempA.add(0);
+        proyecto.Interfaz.metodoslineastempA.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosA.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo A");
+    } else {
+        proyecto.Interfaz.metodostempB.add(a);
+        proyecto.Interfaz.metodosparamtempB.add(0);
+        proyecto.Interfaz.metodoslineastempB.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosB.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo B");
 
-METODOBODY ::= METODOBODY INSTRUCCIONL
-            | INSTRUCCIONL;
+    }
+:}
+        | id:a pariz CUERPOMETODO parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.metodostempA.add(a);
+        proyecto.Interfaz.metodosparamtempA.add(proyecto.Interfaz.numparametros);
+        proyecto.Interfaz.metodoslineastempA.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosA.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo A");
+    } else {
+        proyecto.Interfaz.metodostempB.add(a);
+        proyecto.Interfaz.metodosparamtempB.add(proyecto.Interfaz.numparametros);
+        proyecto.Interfaz.metodoslineastempB.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosB.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo B");
+
+    }
+:};
+
+METODOBODY ::= METODOBODY INSTRUCCIONL {:proyecto.Interfaz.numlineas++;:}
+            | INSTRUCCIONL {:proyecto.Interfaz.numlineas++;:};
 

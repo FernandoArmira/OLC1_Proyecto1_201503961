@@ -2411,7 +2411,7 @@ class CUP$parser$actions {
           case 135: // CALLM ::= id pariz parder 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numparametros = 0;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CALLM",32, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2420,7 +2420,7 @@ class CUP$parser$actions {
           case 136: // CALLM ::= id pariz CUERPOMETODO parder 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numparametros = 0;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CALLM",32, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2429,7 +2429,7 @@ class CUP$parser$actions {
           case 137: // CUERPOMETODO ::= EXPRESION 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numparametros++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOMETODO",33, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2438,7 +2438,7 @@ class CUP$parser$actions {
           case 138: // CUERPOMETODO ::= EXPRESION CUERPOMETODO2 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numparametros++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOMETODO",33, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2447,7 +2447,7 @@ class CUP$parser$actions {
           case 139: // CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numparametros++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOMETODO2",34, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2456,7 +2456,7 @@ class CUP$parser$actions {
           case 140: // CUERPOMETODO2 ::= coma EXPRESION 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numparametros++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOMETODO2",34, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2513,6 +2513,28 @@ class CUP$parser$actions {
           case 145: // METODO ::= id pariz parder llaveiz METODOBODY llaveder 
             {
               Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		//System.out.println("Metodos");
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.metodostempA.add(a);
+        proyecto.Interfaz.metodosparamtempA.add(0);
+        proyecto.Interfaz.metodoslineastempA.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosA.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo A");
+    } else {
+        proyecto.Interfaz.metodostempB.add(a);
+        proyecto.Interfaz.metodosparamtempB.add(0);
+        proyecto.Interfaz.metodoslineastempB.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosB.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo B");
+
+    }
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("METODO",38, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2522,6 +2544,28 @@ class CUP$parser$actions {
           case 146: // METODO ::= id pariz CUERPOMETODO parder llaveiz METODOBODY llaveder 
             {
               Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
+		//System.out.println("Metodos");
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.metodostempA.add(a);
+        proyecto.Interfaz.metodosparamtempA.add(proyecto.Interfaz.numparametros);
+        proyecto.Interfaz.metodoslineastempA.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosA.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo A");
+    } else {
+        proyecto.Interfaz.metodostempB.add(a);
+        proyecto.Interfaz.metodosparamtempB.add(proyecto.Interfaz.numparametros);
+        proyecto.Interfaz.metodoslineastempB.add(proyecto.Interfaz.numlineas);
+        proyecto.Interfaz.archivometodosB.add(proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.numparametros = 0;
+        proyecto.Interfaz.numlineas = 0;
+        //System.out.println("Archivo B");
+
+    }
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("METODO",38, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -2531,7 +2575,7 @@ class CUP$parser$actions {
           case 147: // METODOBODY ::= METODOBODY INSTRUCCIONL 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numlineas++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("METODOBODY",39, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2540,7 +2584,7 @@ class CUP$parser$actions {
           case 148: // METODOBODY ::= INSTRUCCIONL 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numlineas++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("METODOBODY",39, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

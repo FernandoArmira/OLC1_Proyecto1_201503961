@@ -58,6 +58,18 @@ public class Interfaz extends javax.swing.JFrame {
     public static int inicioclase = 0;
     public static int finalclase = 0;
     public static int totallclase = 0;
+    //Metodos
+    public static ArrayList<String> metodostempA = new ArrayList();
+    public static ArrayList<Integer> metodosparamtempA = new ArrayList();
+    public static ArrayList<Integer> metodoslineastempA = new ArrayList();
+    public static ArrayList<String> archivometodosA = new ArrayList();
+    public static ArrayList<String> metodostempB = new ArrayList();
+    public static ArrayList<Integer> metodosparamtempB = new ArrayList();
+    public static ArrayList<Integer> metodoslineastempB = new ArrayList();
+    public static ArrayList<String> archivometodosB = new ArrayList();
+    public static ArrayList<metodosJS> listametodosjs = new ArrayList<metodosJS>();
+    public static int numparametros = 0;
+    public static int numlineas = 0;
 
     
     public Interfaz() {
@@ -380,6 +392,22 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println(listaclasesjs.get(i).clase + " " + listaclasesjs.get(i).archivo);
             }
             
+            System.out.println("------------------------------MetodosJS-------------------------------------");
+            for(int i=0;i<metodostempA.size();i++){
+                System.out.println(metodostempA.get(i) + " " + metodosparamtempA.get(i) + " " + metodoslineastempA.get(i) + " " + archivometodosA.get(i));
+            }
+            
+            for(int i=0;i<metodostempB.size();i++){
+                System.out.println(metodostempB.get(i) + " " + metodosparamtempB.get(i) + " " + metodoslineastempB.get(i) + " " + archivometodosB.get(i));
+            }
+            
+            puntajemetodos();
+            
+            System.out.println("-------------------------------Puntaje MetodosJS------------------------------------");
+            for(int i=0;i<listametodosjs.size();i++){
+                System.out.println(listametodosjs.get(i).metodo + " " + listametodosjs.get(i).archivo + " " + listametodosjs.get(i).id + " " + listametodosjs.get(i).lineas + " " + listametodosjs.get(i).parametros);
+            }
+            
             /*if(true == true){
                System.out.println("a");
             }*/
@@ -465,6 +493,132 @@ public class Interfaz extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public void puntajemetodos(){
+        double pid;
+        double pparam;
+        double plineas;
+        
+        // Metodos Archivos Proyecto B
+        
+        for(int i=0;i<metodostempB.size();i++){
+                int estado = 0;
+                String idmetodo = metodostempB.get(i);
+                for(int j=0;j<metodostempA.size();j++){
+                    if(idmetodo.equals(metodostempB.get(j))){
+                        pid = 0.4;
+                        if(metodosparamtempB.get(i) == metodosparamtempA.get(j)){
+                            pparam = 0.3;
+                        } else {
+                            pparam = 0;
+                        }
+                        
+                        if(metodoslineastempB.get(i) == metodoslineastempA.get(j)){
+                            plineas = 0.3;
+                        } else {
+                            plineas = 0;
+                        }
+                        
+                        j = metodostempA.size();
+                        estado = 1;
+                        
+                        metodosJS nuevov= new metodosJS(idmetodo, archivometodosB.get(i),pid, pparam, plineas);
+                        listametodosjs.add(nuevov);
+                        
+                    }
+                             
+                }
+                
+                if(estado == 0){
+                    
+                    pid = 0;
+                    
+                    int estado2 = 0;
+                    for(int j=0;j<metodoslineastempA.size();j++){
+                        if(metodoslineastempB.get(i) == metodoslineastempA.get(j)){
+                            
+                            plineas = 0.3;
+                            
+                            if(metodosparamtempB.get(i) == metodosparamtempA.get(j)){
+                                pparam = 0.3;
+                            }
+                            else {
+                                pparam = 0;
+                            }
+                            
+                            j = metodoslineastempA.size();
+                            estado2 = 1;
+                        
+                            metodosJS nuevov= new metodosJS(idmetodo, archivometodosB.get(i),pid, pparam, plineas);
+                            listametodosjs.add(nuevov);
+     
+                        }                        
+                    }
+                    
+                    if(estado2 == 0){
+                        plineas = 0;
+                        pparam = 0;
+                        
+                        metodosJS nuevov= new metodosJS(idmetodo, archivometodosB.get(i),pid, pparam, plineas);
+                        listametodosjs.add(nuevov);
+                    }
+                
+                }
+    
+        }
+        
+        // Metodos Archivo A
+        for(int i=0;i<metodostempA.size();i++){
+            int estado0 = 0;
+            String idmetodo = metodostempA.get(i);
+                for(int j=0;j<listametodosjs.size();j++){
+                    if(metodostempA.get(i).equals(listametodosjs.get(j).metodo)){
+                        estado0 = 1;
+                        j = listametodosjs.size();
+                    }  
+                }
+                
+            if(estado0 == 0){
+                
+                pid = 0;
+                    
+                    int estado2 = 0;
+                    for(int j=0;j<metodoslineastempB.size();j++){
+                        if(metodoslineastempA.get(i) == metodoslineastempB.get(j)){
+                            
+                            plineas = 0.3;
+                            
+                            if(metodosparamtempA.get(i) == metodosparamtempB.get(j)){
+                                pparam = 0.3;
+                            }
+                            else {
+                                pparam = 0;
+                            }
+                            
+                            j = metodoslineastempB.size();
+                            estado2 = 1;
+                        
+                            metodosJS nuevov= new metodosJS(idmetodo, archivometodosA.get(i),pid, pparam, plineas);
+                            listametodosjs.add(nuevov);
+     
+                        }                        
+                    }
+                    
+                    if(estado2 == 0){
+                        plineas = 0;
+                        pparam = 0;
+                        
+                        metodosJS nuevov= new metodosJS(idmetodo, archivometodosA.get(i),pid, pparam, plineas);
+                        listametodosjs.add(nuevov);
+                    }
+                
+                
+            }
+            
+            
+        }
+    
     }
     
     /*
