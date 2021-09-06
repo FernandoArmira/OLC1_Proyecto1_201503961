@@ -161,6 +161,7 @@ INSTRUCCIONL ::= VARIABLES puntocoma
             | breakpr;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
+    proyecto.Interfaz.variablesg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
         System.out.println("Archivo A");
@@ -172,6 +173,7 @@ VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
     }
 :}
     |PRVARIABLES id:a {://System.out.println("Variables");
+    proyecto.Interfaz.variablesg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
         System.out.println("Archivo A");
@@ -294,6 +296,7 @@ CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION{:proyecto.Interfaz.numparametros+
 IMPORT ::= requirepr pariz cadena parder;
 
 CLASS ::= classpr id:a pariz parder llaveiz CUERPOCLASE  llaveder{://System.out.println("Variables");
+    proyecto.Interfaz.clasesg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.clasestempA.add(a);
         proyecto.Interfaz.claseslineastempA.add(proyecto.Interfaz.numlineasc);
@@ -320,6 +323,7 @@ CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL{:proyecto.Interfaz.numlineasc++;:}
             | INSTRUCCIONL{:proyecto.Interfaz.numlineasc++;:};
 
 METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
+    proyecto.Interfaz.metodosg++;
     proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" + a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);
@@ -341,6 +345,7 @@ METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("
     }
 :}
         | id:a pariz CUERPOMETODO parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
+        proyecto.Interfaz.metodosg++;
         proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" +  a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);

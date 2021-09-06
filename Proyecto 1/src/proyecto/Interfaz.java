@@ -79,6 +79,12 @@ public class Interfaz extends javax.swing.JFrame {
     public static int numparametros = 0;
     public static int numlineas = 0;
 
+    //Puntaje general
+    public static int comentariosg = 0;
+    public static int variablesg = 0;
+    public static int metodosg = 0;
+    public static int clasesg = 0;
+    public static double puntajegeneral = 0;
     
     public Interfaz() {
         initComponents();
@@ -427,6 +433,12 @@ public class Interfaz extends javax.swing.JFrame {
             for(int i=0;i<listaclasesjs.size();i++){
                 System.out.println(listaclasesjs.get(i).clase + " " + listaclasesjs.get(i).archivo + " " + listaclasesjs.get(i).id + " "  + listaclasesjs.get(i).parametros + " " + listaclasesjs.get(i).lineas );
             }
+             
+            System.out.println("-------------------------------Puntaje General------------------------------------");
+           
+            puntajegeneral();
+            
+            System.out.println(puntajegeneral);
             
             //+ metodosparamtempA.get(i) + " " + metodoslineastempA.get(i) + " "
             /*for(int i=0;i<listaclasesjs.size();i++){
@@ -794,6 +806,55 @@ public class Interfaz extends javax.swing.JFrame {
         
     }
     
+    //Puntaje general
+    public void puntajegeneral(){
+        float pcom = 0;
+        float pvar = 0;
+        float pmet = 0;
+        float pcla = 0;
+        
+        int metodos = 0;
+        int clases = 0;
+        
+      
+        pcom = ((float)listacomentariosjs.size()/(float)comentariosg)*(float)0.2;
+        /*System.out.println(listacomentariosjs.size());
+        System.out.println(comentariosg);
+        System.out.println(pcom);*/
+        pvar = ((float)listavariablesjs.size()/(float)variablesg)*(float)0.2;
+        
+        for(int i=0;i<listametodosjs.size();i++){
+            double puntaje = 0;
+            puntaje = listametodosjs.get(i).id + listametodosjs.get(i).lineas + listametodosjs.get(i).parametros;
+            //System.out.println(listametodosjs.get(i).metodo + " " + listametodosjs.get(i).archivo + " " + listametodosjs.get(i).id + " " + listametodosjs.get(i).lineas + " " + listametodosjs.get(i).parametros);
+            
+            if(puntaje >= 0.60){
+                metodos++;
+            }
+        }
+        
+        pmet = ((float)metodos/(float)metodosg)*(float)0.3;
+        
+        for(int i=0;i<listaclasesjs.size();i++){
+            double puntaje = 0;
+            puntaje = listaclasesjs.get(i).id + listaclasesjs.get(i).lineas + listaclasesjs.get(i).parametros;
+            //System.out.println(listametodosjs.get(i).metodo + " " + listametodosjs.get(i).archivo + " " + listametodosjs.get(i).id + " " + listametodosjs.get(i).lineas + " " + listametodosjs.get(i).parametros);
+            
+            if(puntaje >= 0.60){
+                clases++;
+            }
+        }
+        
+        pcla = ((float)clases/(float)clasesg)*(float)0.3;
+        
+        puntajegeneral = pcom + pvar + pmet + pcla;
+        
+        /*System.out.println("---");
+        System.out.println(pcom);
+        System.out.println(pvar);
+        System.out.println(pmet);
+        System.out.println(pcla);*/
+    }  
     /*
     public void gbarras() throws IOException{
         

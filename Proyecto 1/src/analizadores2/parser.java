@@ -1732,6 +1732,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		//System.out.println("Variables");
+    proyecto.Interfaz.variablesg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
         System.out.println("Archivo A");
@@ -1754,6 +1755,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		//System.out.println("Variables");
+    proyecto.Interfaz.variablesg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
         System.out.println("Archivo A");
@@ -2478,6 +2480,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		//System.out.println("Variables");
+    proyecto.Interfaz.clasesg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.clasestempA.add(a);
         proyecto.Interfaz.claseslineastempA.add(proyecto.Interfaz.numlineasc);
@@ -2529,6 +2532,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		//System.out.println("Metodos");
+    proyecto.Interfaz.metodosg++;
     proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" + a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);
@@ -2561,6 +2565,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
 		//System.out.println("Metodos");
+        proyecto.Interfaz.metodosg++;
         proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" +  a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);

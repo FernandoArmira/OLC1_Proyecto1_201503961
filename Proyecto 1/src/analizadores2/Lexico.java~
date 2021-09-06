@@ -900,6 +900,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 23: 
             { yybegin(YYINITIAL); 
     System.out.println(comentario.trim());
+    proyecto.Interfaz.comentariosg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.comentariostemp.add(comentario.trim());
     } else {

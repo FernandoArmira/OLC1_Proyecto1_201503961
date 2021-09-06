@@ -55,6 +55,7 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 <YYINITIAL> "/*"                {yybegin(COMENT_MULTI); comentario = "";}     // Si la entrada es un comentario inicia aqui
 <COMENT_MULTI> "*/"             {yybegin(YYINITIAL); 
     System.out.println(comentario.trim());
+    proyecto.Interfaz.comentariosg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.comentariostemp.add(comentario.trim());
     } else {
@@ -75,6 +76,7 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 <COMENT_SIMPLE> [^"\n"]         {comentario = comentario + yytext();}                          // 
 <COMENT_SIMPLE> "\n"            {yybegin(YYINITIAL); 
     System.out.println(comentario.trim());
+    proyecto.Interfaz.comentariosg++;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.comentariostemp.add(comentario.trim());
     } else {
