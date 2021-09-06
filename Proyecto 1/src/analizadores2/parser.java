@@ -1102,7 +1102,7 @@ public class parser extends java_cup.runtime.lr_parser {
 
         }
 
-    public void Addclase(String clase, String archivo){
+    /*public void Addclase(String clase, String archivo){
         //variablesJS nuevov= new variablesJS(variable, archivo);
         clasesJS nuevov= new clasesJS(clase, archivo);
         
@@ -1115,7 +1115,7 @@ public class parser extends java_cup.runtime.lr_parser {
                 }
             }
 
-        }
+        }*/
         
 
     //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
@@ -2479,12 +2479,24 @@ class CUP$parser$actions {
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		//System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
-        proyecto.Interfaz.clasestemp.add(a);
+        proyecto.Interfaz.clasestempA.add(a);
+        proyecto.Interfaz.claseslineastempA.add(proyecto.Interfaz.numlineasc);
+        proyecto.Interfaz.numlineasc = 0;
+        proyecto.Interfaz.clasesmetodostempA.add(proyecto.Interfaz.metodosc);
+        proyecto.Interfaz.metodosc = "";
+        proyecto.Interfaz.archivoclasesA.add(proyecto.Interfaz.nombrearchivojs);
+
         //System.out.println("Archivo A");
     } else {
-        Addclase(a,proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.clasestempB.add(a);
+        proyecto.Interfaz.claseslineastempB.add(proyecto.Interfaz.numlineasc);
+        proyecto.Interfaz.numlineasc = 0;
+        proyecto.Interfaz.clasesmetodostempB.add(proyecto.Interfaz.metodosc);
+        proyecto.Interfaz.metodosc = "";
+        proyecto.Interfaz.archivoclasesB.add(proyecto.Interfaz.nombrearchivojs);
+        //Addclase(a,proyecto.Interfaz.nombrearchivojs);
         //System.out.println("Archivo B");
-
+        
     }
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CLASS",36, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -2495,7 +2507,7 @@ class CUP$parser$actions {
           case 143: // CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numlineasc++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOCLASE",37, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2504,7 +2516,7 @@ class CUP$parser$actions {
           case 144: // CUERPOCLASE ::= INSTRUCCIONL 
             {
               Nodo RESULT =null;
-
+		proyecto.Interfaz.numlineasc++;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CUERPOCLASE",37, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2517,6 +2529,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
 		//System.out.println("Metodos");
+    proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" + a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);
         proyecto.Interfaz.metodosparamtempA.add(0);
@@ -2548,6 +2561,7 @@ class CUP$parser$actions {
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
 		//System.out.println("Metodos");
+        proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" +  a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);
         proyecto.Interfaz.metodosparamtempA.add(proyecto.Interfaz.numparametros);

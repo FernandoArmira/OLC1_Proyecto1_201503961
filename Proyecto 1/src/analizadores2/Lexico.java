@@ -883,37 +883,12 @@ public class Lexico implements java_cup.runtime.Scanner {
             // fall through
           case 71: break;
           case 20: 
-            { System.out.println("********************Simbolo" + yytext());
-    if(proyecto.Interfaz.activarclase == true){
-        proyecto.Interfaz.cerrarclase++;
-        proyecto.Interfaz.inicioclase = yyline;
-    }
-    return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());
+            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());
             } 
             // fall through
           case 72: break;
           case 21: 
-            { System.out.println("********************Simbolo" + yytext());
-    if(proyecto.Interfaz.activarclase == true){
-        proyecto.Interfaz.cerrarclase--;
-
-        if(proyecto.Interfaz.cerrarclase == 0){
-        proyecto.Interfaz.activarclase = false;
-        proyecto.Interfaz.finalclase = yyline;
-        System.out.println("Fin clase");
-        System.out.println(proyecto.Interfaz.inicioclase);
-        System.out.println(proyecto.Interfaz.finalclase);
-        proyecto.Interfaz.totallclase = proyecto.Interfaz.finalclase - proyecto.Interfaz.inicioclase;
-        System.out.println(proyecto.Interfaz.totallclase);
-        proyecto.Interfaz.claseslineastemp.add(proyecto.Interfaz.totallclase);
-        
-        /*if(proyecto.Interfaz.archivoa == true){
-        proyecto.Interfaz.totallclasea = proyecto.Interfaz.totallclase;
-        }*/
-    }
-    }
-    
-    return new Symbol(sym.llaveder,yycolumn,yyline,yytext());
+            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.llaveder,yycolumn,yyline,yytext());
             } 
             // fall through
           case 73: break;
@@ -1042,9 +1017,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             // fall through
           case 95: break;
           case 44: 
-            { System.out.println("********************Palabra reservada " + yytext());
-    proyecto.Interfaz.activarclase = true;
-    return new Symbol(sym.classpr,yycolumn,yyline,yytext());
+            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.classpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 96: break;

@@ -46,18 +46,26 @@ public class Interfaz extends javax.swing.JFrame {
     public static String nombrearchivo = "";
     public static Boolean archivoa = false;
     public static String nombrearchivojs = "";
+    
+    //Comentarios y variables
     public static ArrayList<String> variablestemp = new ArrayList();
     public static ArrayList<variablesJS> listavariablesjs = new ArrayList<variablesJS>();
     public static ArrayList<String> comentariostemp = new ArrayList();
     public static ArrayList<comentarioJS> listacomentariosjs = new ArrayList<comentarioJS>();
-    public static ArrayList<String> clasestemp = new ArrayList();
-    public static ArrayList<Integer> claseslineastemp = new ArrayList();
+    
+    //Clases
+    public static ArrayList<String> clasestempA = new ArrayList();
+    public static ArrayList<Integer> claseslineastempA = new ArrayList();
+    public static ArrayList<String> clasesmetodostempA = new ArrayList();
+    public static ArrayList<String> archivoclasesA = new ArrayList();
+    public static ArrayList<String> clasestempB = new ArrayList();
+    public static ArrayList<Integer> claseslineastempB = new ArrayList();
+    public static ArrayList<String> clasesmetodostempB = new ArrayList();
+    public static ArrayList<String> archivoclasesB = new ArrayList();
     public static ArrayList<clasesJS> listaclasesjs = new ArrayList<clasesJS>();
-    public static Boolean activarclase = false;
-    public static int cerrarclase = 0;
-    public static int inicioclase = 0;
-    public static int finalclase = 0;
-    public static int totallclase = 0;
+    public static int numlineasc = 0;
+    public static String metodosc = "";
+    
     //Metodos
     public static ArrayList<String> metodostempA = new ArrayList();
     public static ArrayList<Integer> metodosparamtempA = new ArrayList();
@@ -387,11 +395,6 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println(listacomentariosjs.get(i).comentario + " " + listavariablesjs.get(i).archivo);
             }
             
-            System.out.println("-------------------------------ClasesJS------------------------------------");
-            for(int i=0;i<listaclasesjs.size();i++){
-                System.out.println(listaclasesjs.get(i).clase + " " + listaclasesjs.get(i).archivo);
-            }
-            
             System.out.println("------------------------------MetodosJS-------------------------------------");
             for(int i=0;i<metodostempA.size();i++){
                 System.out.println(metodostempA.get(i) + " " + metodosparamtempA.get(i) + " " + metodoslineastempA.get(i) + " " + archivometodosA.get(i));
@@ -407,6 +410,28 @@ public class Interfaz extends javax.swing.JFrame {
             for(int i=0;i<listametodosjs.size();i++){
                 System.out.println(listametodosjs.get(i).metodo + " " + listametodosjs.get(i).archivo + " " + listametodosjs.get(i).id + " " + listametodosjs.get(i).lineas + " " + listametodosjs.get(i).parametros);
             }
+            
+            System.out.println("-------------------------------ClasesJS------------------------------------");
+            
+            for(int i=0;i<clasestempA.size();i++){
+                System.out.println(clasestempA.get(i) + " "  + archivoclasesA.get(i)+ " " + clasesmetodostempA.get(i) + " " + claseslineastempA.get(i) + " ");
+            }
+          
+            for(int i=0;i<clasestempB.size();i++){
+                System.out.println(clasestempB.get(i) + " "  + archivoclasesB.get(i)+ " " + clasesmetodostempB.get(i) + " " + claseslineastempB.get(i) + " ");
+            }
+            
+            puntajeclases();
+            
+            System.out.println("-------------------------------Puntaje ClaseJS------------------------------------");
+            for(int i=0;i<listaclasesjs.size();i++){
+                System.out.println(listaclasesjs.get(i).clase + " " + listaclasesjs.get(i).archivo + " " + listaclasesjs.get(i).id + " "  + listaclasesjs.get(i).parametros + " " + listaclasesjs.get(i).lineas );
+            }
+            
+            //+ metodosparamtempA.get(i) + " " + metodoslineastempA.get(i) + " "
+            /*for(int i=0;i<listaclasesjs.size();i++){
+                System.out.println(listaclasesjs.get(i).clase + " " + listaclasesjs.get(i).archivo);
+            }*/
             
             /*if(true == true){
                System.out.println("a");
@@ -506,7 +531,7 @@ public class Interfaz extends javax.swing.JFrame {
                 int estado = 0;
                 String idmetodo = metodostempB.get(i);
                 for(int j=0;j<metodostempA.size();j++){
-                    if(idmetodo.equals(metodostempB.get(j))){
+                    if(idmetodo.equals(metodostempA.get(j))){
                         pid = 0.4;
                         if(metodosparamtempB.get(i) == metodosparamtempA.get(j)){
                             pparam = 0.3;
@@ -619,6 +644,154 @@ public class Interfaz extends javax.swing.JFrame {
             
         }
     
+    }
+    
+
+    
+    public void puntajeclases() {
+        // Clases Archivos Proyecto B
+        double pid;
+        double pmetodos;
+        double plineas;
+        
+        for(int i=0;i<clasestempB.size();i++){
+                int estado = 0;
+                String idmetodo = clasestempB.get(i);
+                for(int j=0;j<clasestempA.size();j++){
+                    if(idmetodo.equals(clasestempA.get(j))){
+                        pid = 0.2;
+                        if(claseslineastempB.get(i) == claseslineastempA.get(j)){
+                            plineas = 0.4;
+                        } else {
+                            plineas = 0;
+                        }
+                        
+                        //Calcular puntaje metodos
+                        int totalmetodos = 0;
+                        double puntaje = 0;
+                        
+                        String [] B = clasesmetodostempB.get(i).split("-");
+                        String [] A = clasesmetodostempA.get(j).split("-");
+                        ArrayList<String> C = new ArrayList();
+                        
+                        if(A.length > B.length){
+                            totalmetodos = A.length - 1;
+                        } else if (A.length < B.length){
+                            totalmetodos = B.length - 1;
+                        } else if (A.length == B.length){
+                            totalmetodos = A.length - 1;
+                        }
+                        
+                        for(int k=0;k<B.length;k++){
+                            for(int l=0;l<A.length;l++){
+                                if(B[k].equals(A[l])){
+                                    C.add(B[k]);
+                                    l = A.length;
+                                }
+                            
+                            }
+                               
+                        }
+                        
+                        for(int k=0;k<C.size();k++){
+                            for(int l=0;l<listametodosjs.size();l++){
+                                if(C.get(k).equals(listametodosjs.get(l).metodo)){
+                                    puntaje = puntaje + listametodosjs.get(l).id + listametodosjs.get(l).lineas + listametodosjs.get(l).parametros;
+                                    l = listametodosjs.size();
+                                }
+                            
+                            }
+                               
+                        }
+                        
+                        pmetodos = (puntaje / totalmetodos) * 0.4;
+                        
+                        
+                        j = clasestempA.size();
+                        estado = 1;
+                        
+                        clasesJS nuevov= new clasesJS(idmetodo, archivometodosB.get(i),pid, pmetodos, plineas);
+                        listaclasesjs.add(nuevov);
+                        
+                    }
+                             
+                }
+                
+                if(estado == 0){
+                    
+                    pid = 0;
+                    pmetodos = 0;
+                    
+                    int estado2 = 0;
+                    for(int j=0;j<claseslineastempA.size();j++){
+                        if(claseslineastempB.get(i) == claseslineastempA.get(j)){
+                            
+                            plineas = 0.4;
+                            
+                            j = claseslineastempA.size();
+                            estado2 = 1;
+                        
+                            clasesJS nuevov= new clasesJS(idmetodo, archivometodosB.get(i),pid, pmetodos, plineas);
+                            listaclasesjs.add(nuevov);
+     
+                        }                        
+                    }
+                    
+                    if(estado2 == 0){
+                        plineas = 0;
+                        
+                        clasesJS nuevov= new clasesJS(idmetodo, archivometodosB.get(i),pid, pmetodos, plineas);
+                        listaclasesjs.add(nuevov);
+                    }
+                
+                }
+    
+        }
+        
+        // Metodos Archivo A
+        for(int i=0;i<clasestempA.size();i++){
+            int estado0 = 0;
+            String idmetodo = clasestempA.get(i);
+                for(int j=0;j<listaclasesjs.size();j++){
+                    if(clasestempA.get(i).equals(listaclasesjs.get(j).clase)){
+                        estado0 = 1;
+                        j = listaclasesjs.size();
+                    }  
+                }
+                
+            if(estado0 == 0){
+                    
+                    pid = 0;
+                    pmetodos = 0;
+                    
+                    int estado2 = 0;
+                    for(int j=0;j<claseslineastempB.size();j++){
+                        if(claseslineastempA.get(i) == claseslineastempB.get(j)){
+                            
+                            plineas = 0.4;
+                            
+                            j = claseslineastempB.size();
+                            estado2 = 1;
+                        
+                            clasesJS nuevov= new clasesJS(idmetodo, archivometodosA.get(i),pid, pmetodos, plineas);
+                            listaclasesjs.add(nuevov);
+     
+                        }                        
+                    }
+                    
+                    if(estado2 == 0){
+                        plineas = 0;
+                        
+                        clasesJS nuevov= new clasesJS(idmetodo, archivometodosA.get(i),pid, pmetodos, plineas);
+                        listaclasesjs.add(nuevov);
+                    }
+                
+                }
+            
+            
+        }
+    
+        
     }
     
     /*

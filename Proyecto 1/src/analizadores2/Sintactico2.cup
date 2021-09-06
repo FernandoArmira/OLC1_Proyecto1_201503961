@@ -39,7 +39,7 @@ parser code
 
         }
 
-    public void Addclase(String clase, String archivo){
+    /*public void Addclase(String clase, String archivo){
         //variablesJS nuevov= new variablesJS(variable, archivo);
         clasesJS nuevov= new clasesJS(clase, archivo);
         
@@ -52,7 +52,7 @@ parser code
                 }
             }
 
-        }
+        }*/
         
 
     //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
@@ -295,19 +295,32 @@ IMPORT ::= requirepr pariz cadena parder;
 
 CLASS ::= classpr id:a pariz parder llaveiz CUERPOCLASE  llaveder{://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
-        proyecto.Interfaz.clasestemp.add(a);
+        proyecto.Interfaz.clasestempA.add(a);
+        proyecto.Interfaz.claseslineastempA.add(proyecto.Interfaz.numlineasc);
+        proyecto.Interfaz.numlineasc = 0;
+        proyecto.Interfaz.clasesmetodostempA.add(proyecto.Interfaz.metodosc);
+        proyecto.Interfaz.metodosc = "";
+        proyecto.Interfaz.archivoclasesA.add(proyecto.Interfaz.nombrearchivojs);
+
         //System.out.println("Archivo A");
     } else {
-        Addclase(a,proyecto.Interfaz.nombrearchivojs);
+        proyecto.Interfaz.clasestempB.add(a);
+        proyecto.Interfaz.claseslineastempB.add(proyecto.Interfaz.numlineasc);
+        proyecto.Interfaz.numlineasc = 0;
+        proyecto.Interfaz.clasesmetodostempB.add(proyecto.Interfaz.metodosc);
+        proyecto.Interfaz.metodosc = "";
+        proyecto.Interfaz.archivoclasesB.add(proyecto.Interfaz.nombrearchivojs);
+        //Addclase(a,proyecto.Interfaz.nombrearchivojs);
         //System.out.println("Archivo B");
-
+        
     }
 :};
 
-CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL
-            | INSTRUCCIONL;
+CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL{:proyecto.Interfaz.numlineasc++;:}
+            | INSTRUCCIONL{:proyecto.Interfaz.numlineasc++;:};
 
 METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
+    proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" + a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);
         proyecto.Interfaz.metodosparamtempA.add(0);
@@ -328,6 +341,7 @@ METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("
     }
 :}
         | id:a pariz CUERPOMETODO parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
+        proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" +  a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);
         proyecto.Interfaz.metodosparamtempA.add(proyecto.Interfaz.numparametros);
