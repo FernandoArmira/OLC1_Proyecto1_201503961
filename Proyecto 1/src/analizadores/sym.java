@@ -19,6 +19,7 @@ public class sym {
   public static final int graficabarras = 18;
   public static final int titulo = 19;
   public static final int ejex = 20;
+  public static final int puntajegeneral = 31;
   public static final int igual = 8;
   public static final int EOF = 0;
   public static final int dolar = 12;
@@ -70,7 +71,8 @@ public class sym {
   "puntajeespecifico",
   "decimal",
   "id",
-  "cadena"
+  "cadena",
+  "puntajegeneral"
   };
 }
 

@@ -9,7 +9,7 @@ package proyecto;
  *
  * @author Fernando Augusto
  */
-public class Errores {
+public class Tokens {
     
     public String tipoError;
     public String valorError;
@@ -17,7 +17,7 @@ public class Errores {
     public int columna;
     public String archivo;
 
-    public Errores(String tipoError, String valorError, int fila, int columna, String archivo) {
+    public Tokens(String tipoError, String valorError, int fila, int columna, String archivo) {
         this.tipoError = tipoError;
         this.valorError = valorError;
         this.fila = fila;
@@ -64,5 +64,6 @@ public class Errores {
     public void setTipoArchivo(String archivo) {
         this.archivo = archivo;
     }
+    
     
 }

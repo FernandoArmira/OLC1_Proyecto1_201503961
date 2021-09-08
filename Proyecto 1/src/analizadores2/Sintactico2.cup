@@ -59,14 +59,29 @@ parser code
     public void syntax_error(Symbol s)
     {
         System.err.println("Error Sintactico en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador "+s.value + " no reconocido. Se ha recuperado del error." );
-        Errores nuevoE = new Errores("Error sintactico: recuperado", s.value.toString(), s.right+1, s.left+1);
-        proyecto.Interfaz.listaErrores.add(nuevoE);
+        if(proyecto.Interfaz.archivoa == true){
+            Errores nuevoE = new Errores("Error sintactico: recuperado", s.value.toString(), s.right+1, s.left+1, "ProyectoA/" +proyecto.Interfaz.nombrearchivojs);
+            proyecto.Interfaz.listaErrores.add(nuevoE);
+        }else{
+            Errores nuevoE = new Errores("Error sintactico: recuperado", s.value.toString(), s.right+1, s.left+1, "ProyectoB/" +proyecto.Interfaz.nombrearchivojs);
+            proyecto.Interfaz.listaErrores.add(nuevoE);
+        }
+        //proyecto.Interfaz.listaErrores.add(nuevoE);
     }
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
         System.err.println("Error Sintactico en la Línea " + (s.right+1)+ " Columna "+(s.left+1)+". Identificador " +s.value + " no reconocido.");
-        Errores nuevoE = new Errores("Error sintactico: no recuperado", s.value.toString(), s.right+1, s.left+1);
-        proyecto.Interfaz.listaErrores.add(nuevoE);
+        
+        if(proyecto.Interfaz.archivoa == true){
+            Errores nuevoE = new Errores("Error sintactico: no recuperado", s.value.toString(), s.right+1, s.left+1, "ProyectoA/" +proyecto.Interfaz.nombrearchivojs);
+            proyecto.Interfaz.listaErrores.add(nuevoE);
+        }else{
+            Errores nuevoE = new Errores("Error sintactico: no recuperado", s.value.toString(), s.right+1, s.left+1, "ProyectoB/" +proyecto.Interfaz.nombrearchivojs);
+            proyecto.Interfaz.listaErrores.add(nuevoE);
+        }
+
+        //Errores nuevoE = new Errores("Error sintactico: no recuperado", s.value.toString(), s.right+1, s.left+1, proyecto.Interfaz.nombrearchivojs);
+        //proyecto.Interfaz.listaErrores.add(nuevoE);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------8
 :}
@@ -135,7 +150,8 @@ INSTRUCCION ::= INSTRUCCION VARIABLES puntocoma
             | DOWHILE
             | INC
             | DEC
-            | CALLM;
+            | CALLM
+            |error;
 
 INSTRUCCIONL ::= VARIABLES puntocoma
             | PRINTCONSOLE puntocoma
@@ -158,10 +174,15 @@ INSTRUCCIONL ::= VARIABLES puntocoma
             | DEC
             | CALLM
             | METODO
-            | breakpr;
+            | breakpr
+            |error;
 
 VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
-    proyecto.Interfaz.variablesg++;
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.variablesg++;
+    }else{
+        proyecto.Interfaz.variablesgB++;
+    }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
         System.out.println("Archivo A");
@@ -173,7 +194,11 @@ VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
     }
 :}
     |PRVARIABLES id:a {://System.out.println("Variables");
-    proyecto.Interfaz.variablesg++;
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.variablesg++;
+    }else{
+        proyecto.Interfaz.variablesgB++;
+    }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
         System.out.println("Archivo A");
@@ -194,7 +219,8 @@ VALOR ::= entero
         | cadena
         | truevar
         | falsevar
-        | IMPORT;
+        | IMPORT
+        |error;
 
 EXPRESION ::= cadena
             | id
@@ -219,7 +245,8 @@ IF ::= ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder
     | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSEIF ELSE;
 
 CONDICION ::= RELACIONAL
-            | LOGICO;
+            | LOGICO
+            |error;
 
 RELACIONAL ::= EXPRESION digual EXPRESION
         | EXPRESION diferente EXPRESION
@@ -245,7 +272,8 @@ CUERPOELSEIF ::= elsepr ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder;
 
 FOR ::= forpr pariz SETTINGFOR parder llaveiz CUERPOFOR llaveder;
 
-SETTINGFOR ::= INICIOFOR puntocoma RELACIONAL puntocoma INCFOR;
+SETTINGFOR ::= INICIOFOR puntocoma RELACIONAL puntocoma INCFOR
+        |error;
 
 INICIOFOR ::= VARIABLES
         | ASIGNACION;
@@ -270,11 +298,13 @@ DOWHILE ::= dopr llaveiz CUERPOWHILE llaveder whilepr pariz RELACIONAL parder
 SWITCH ::= switchpr pariz id parder llaveiz CUERPOSWITCH FINALSWITCH llaveder;
 
 CUERPOSWITCH ::= CUERPOSWITCH casepr EXPRESION dpuntos CUERPOCASE breakpr puntocoma
-        | casepr EXPRESION dpuntos CUERPOCASE breakpr puntocoma;
+        | casepr EXPRESION dpuntos CUERPOCASE breakpr puntocoma
+        |error;
 
 CUERPOCASE ::= INSTRUCCION;
 
-FINALSWITCH ::= defaultpr dpuntos CUERPOCASE;
+FINALSWITCH ::= defaultpr dpuntos CUERPOCASE
+        |error;
 
 LOGICO ::= EXPRESION andpr EXPRESION
         | EXPRESION orpr EXPRESION
@@ -288,7 +318,8 @@ CALLM ::= id pariz parder {:proyecto.Interfaz.numparametros = 0;:}
         | id pariz CUERPOMETODO parder{:proyecto.Interfaz.numparametros = 0;:};
 
 CUERPOMETODO ::= EXPRESION{:proyecto.Interfaz.numparametros++;:}
-            | EXPRESION CUERPOMETODO2{:proyecto.Interfaz.numparametros++;:};
+            | EXPRESION CUERPOMETODO2{:proyecto.Interfaz.numparametros++;:}
+            |error;
 
 CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION{:proyecto.Interfaz.numparametros++;:}
                 | coma EXPRESION{:proyecto.Interfaz.numparametros++;:};
@@ -296,7 +327,11 @@ CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION{:proyecto.Interfaz.numparametros+
 IMPORT ::= requirepr pariz cadena parder;
 
 CLASS ::= classpr id:a pariz parder llaveiz CUERPOCLASE  llaveder{://System.out.println("Variables");
-    proyecto.Interfaz.clasesg++;
+        if(proyecto.Interfaz.archivoa == true){
+            proyecto.Interfaz.clasesg++;
+        } else{
+            proyecto.Interfaz.clasesgB++;
+        }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.clasestempA.add(a);
         proyecto.Interfaz.claseslineastempA.add(proyecto.Interfaz.numlineasc);
@@ -323,7 +358,11 @@ CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL{:proyecto.Interfaz.numlineasc++;:}
             | INSTRUCCIONL{:proyecto.Interfaz.numlineasc++;:};
 
 METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
-    proyecto.Interfaz.metodosg++;
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.metodosg++;
+    } else{
+        proyecto.Interfaz.metodosgB++;
+    }
     proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" + a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);
@@ -345,7 +384,11 @@ METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("
     }
 :}
         | id:a pariz CUERPOMETODO parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
-        proyecto.Interfaz.metodosg++;
+        if(proyecto.Interfaz.archivoa == true){
+            proyecto.Interfaz.metodosg++;
+        } else{
+            proyecto.Interfaz.metodosgB++;
+        }
         proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" +  a;
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodostempA.add(a);

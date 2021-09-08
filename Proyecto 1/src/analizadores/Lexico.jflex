@@ -42,9 +42,14 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 //r'"((.)*?\"?)*?"'
 
 %{
-    public void AddError(String tipo, String lexema, int fila, int columna){
-        Errores nuevoE= new Errores(tipo, lexema, fila+1, columna+1);
+    public void AddError(String tipo, String lexema, int fila, int columna, String archivo){
+        Errores nuevoE= new Errores(tipo, lexema, fila+1, columna+1, archivo);
         proyecto.Interfaz.listaErrores.add(nuevoE);
+    }
+
+    public void AddToken(String tipo, String lexema, int fila, int columna, String archivo){
+        Tokens nuevoE= new Tokens(tipo, lexema, fila+1, columna+1, archivo);
+        proyecto.Interfaz.listaTokens.add(nuevoE);
     }
 %}
 
@@ -65,44 +70,46 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 //"," {return new Symbol(sym.comaa,yycolumn,yyline,yytext());}
 //"," {return new Symbol(sym.comaa,yycolumn,yyline,yytext());}
 
-"{" {System.out.println("Simbolo" + yytext());return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());}
-"}" {System.out.println("Simbolo" + yytext());return new Symbol(sym.llaveder,yycolumn,yyline,yytext());}
-";" {System.out.println("Simbolo" + yytext());return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());}
-"(" {System.out.println("Simbolo" + yytext());return new Symbol(sym.pariz,yycolumn,yyline,yytext());}
-")" {System.out.println("Simbolo" + yytext());return new Symbol(sym.parder,yycolumn,yyline,yytext());}
-"," {System.out.println("Simbolo" + yytext());return new Symbol(sym.coma,yycolumn,yyline,yytext());}
-"=" {System.out.println("Simbolo" + yytext());return new Symbol(sym.igual,yycolumn,yyline,yytext());}
-":" {System.out.println("Simbolo" + yytext());return new Symbol(sym.dpuntos,yycolumn,yyline,yytext());}
-"[" {System.out.println("Simbolo" + yytext());return new Symbol(sym.coriz,yycolumn,yyline,yytext());}
-"]" {System.out.println("Simbolo" + yytext());return new Symbol(sym.corder,yycolumn,yyline,yytext());}
-"$" {System.out.println("Simbolo" + yytext());return new Symbol(sym.dolar,yycolumn,yyline,yytext());}
-"definirglobales" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.definirglobales,yycolumn,yyline,yytext());}
-"generarreporteestadistico" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.generarreporteestadistico,yycolumn,yyline,yytext());}
-"compare" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.compare,yycolumn,yyline,yytext());}
-"string" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.stringvar,yycolumn,yyline,yytext());}
-"double" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.doublevar,yycolumn,yyline,yytext());}
-"graficabarras" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.graficabarras,yycolumn,yyline,yytext());}
-"titulo" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.titulo,yycolumn,yyline,yytext());}
-"ejex" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.ejex,yycolumn,yyline,yytext());}
-"valores" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.valores,yycolumn,yyline,yytext());}
-"titulox" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.titulox,yycolumn,yyline,yytext());}
-"tituloy" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.tituloy,yycolumn,yyline,yytext());}
-"graficapie" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.graficapie,yycolumn,yyline,yytext());}
-"graficalineas" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.graficalineas,yycolumn,yyline,yytext());}
-"archivo" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.archivo,yycolumn,yyline,yytext());}
-"puntajeespecifico" {System.out.println("Palabra reservada" + yytext());return new Symbol(sym.puntajeespecifico,yycolumn,yyline,yytext());}
+"{" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());}
+"}" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.llaveder,yycolumn,yyline,yytext());}
+";" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());}
+"(" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.pariz,yycolumn,yyline,yytext());}
+")" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.parder,yycolumn,yyline,yytext());}
+"," {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.coma,yycolumn,yyline,yytext());}
+"=" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.igual,yycolumn,yyline,yytext());}
+":" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.dpuntos,yycolumn,yyline,yytext());}
+"[" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.coriz,yycolumn,yyline,yytext());}
+"]" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.corder,yycolumn,yyline,yytext());}
+"$" {System.out.println("Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.dolar,yycolumn,yyline,yytext());}
+"definirglobales" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.definirglobales,yycolumn,yyline,yytext());}
+"generarreporteestadistico" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.generarreporteestadistico,yycolumn,yyline,yytext());}
+"compare" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.compare,yycolumn,yyline,yytext());}
+"string" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.stringvar,yycolumn,yyline,yytext());}
+"double" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.doublevar,yycolumn,yyline,yytext());}
+"graficabarras" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.graficabarras,yycolumn,yyline,yytext());}
+"titulo" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.titulo,yycolumn,yyline,yytext());}
+"ejex" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.ejex,yycolumn,yyline,yytext());}
+"valores" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.valores,yycolumn,yyline,yytext());}
+"titulox" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.titulox,yycolumn,yyline,yytext());}
+"tituloy" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.tituloy,yycolumn,yyline,yytext());}
+"graficapie" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.graficapie,yycolumn,yyline,yytext());}
+"graficalineas" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.graficalineas,yycolumn,yyline,yytext());}
+"archivo" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.archivo,yycolumn,yyline,yytext());}
+"puntajeespecifico" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.puntajeespecifico,yycolumn,yyline,yytext());}
+"puntajegeneral" {System.out.println("Palabra reservada" + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.puntajegeneral,yycolumn,yyline,yytext());}
+
 
 \n {yycolumn=1;}
 {blancos} {/*Se ignoran*/}
 
-{decimal} {System.out.println("Decimal" + yytext());return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
-{id} {System.out.println("Id" + yytext());return new Symbol(sym.id,yycolumn,yyline,yytext());}
-{cadena} {System.out.println("Cadena" + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));}
+{decimal} {System.out.println("Decimal" + yytext());AddToken("Decimal",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
+{id} {System.out.println("Id" + yytext());AddToken("Id",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.id,yycolumn,yyline,yytext());}
+{cadena} {System.out.println("Cadena" + yytext());AddToken("Cadena",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));}
 
 //CUALQUIER ERROR:           SIMBOLOS NO DEFINIDOS DENTRO DEL LENGUAJE
 .   {
 	    System.err.println("Error lexico: "+yytext()+ " Linea:"+(yyline)+" Columna:"+(yycolumn));
-            AddError("Error Léxico",yytext(),yyline,yycolumn);
+            AddError("Error Léxico",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);
     }
 
 }

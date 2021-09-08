@@ -69,16 +69,16 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\1\26\1\0\1\31\1\0\1\32\2\0\1\32\1\0"+
     "\1\33\1\34\1\35\1\36\1\37\1\40\1\41\1\42"+
     "\10\4\1\0\3\4\2\43\2\4\1\44\1\4\1\45"+
-    "\1\46\1\4\1\47\1\0\2\4\1\0\3\4\1\0"+
-    "\2\4\1\50\1\0\4\4\2\51\1\52\2\53\1\0"+
-    "\1\4\1\0\1\4\1\0\1\4\1\0\1\4\1\0"+
-    "\3\4\1\0\1\4\2\54\1\55\1\0\1\55\1\4"+
-    "\1\0\1\4\2\56\2\57\1\4\2\60\1\0\1\4"+
-    "\1\0\1\4\2\61\1\4\2\62\1\0\1\4\1\63"+
-    "\3\0\1\64";
+    "\1\46\1\47\1\4\1\50\1\0\2\4\1\0\3\4"+
+    "\1\0\2\4\1\51\1\0\4\4\2\52\1\53\2\54"+
+    "\1\0\1\4\1\0\1\4\1\0\1\4\1\0\1\4"+
+    "\1\0\3\4\1\0\1\4\2\55\1\56\1\0\1\56"+
+    "\1\4\1\0\1\4\2\57\2\60\1\4\2\61\1\0"+
+    "\1\4\1\0\1\4\2\62\1\4\2\63\1\0\1\4"+
+    "\1\64\3\0\1\65";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[153];
+    int [] result = new int[154];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -113,19 +113,19 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\0\u0268\0\70\0\70\0\70\0\70\0\70\0\70\0\70"+
     "\0\70\0\u07a8\0\u07e0\0\u0818\0\u0850\0\u0888\0\u08c0\0\u08f8"+
     "\0\u0930\0\u0968\0\u09a0\0\u09d8\0\u0a10\0\70\0\u0118\0\u0a48"+
-    "\0\u0a80\0\u0118\0\u0ab8\0\u0770\0\u0118\0\u0af0\0\u0118\0\u0b28"+
-    "\0\u0b60\0\u0b98\0\u0bd0\0\u0c08\0\u0c40\0\u0c78\0\u0cb0\0\u0ce8"+
-    "\0\u0d20\0\u0118\0\u0d58\0\u0d90\0\u0dc8\0\u0e00\0\u0e38\0\70"+
-    "\0\u0118\0\u0118\0\70\0\u0118\0\u0e70\0\u0ea8\0\u0ee0\0\u0f18"+
-    "\0\u0f50\0\u0f88\0\u0fc0\0\u0ff8\0\u1030\0\u1068\0\u10a0\0\u10d8"+
-    "\0\u1110\0\u1148\0\70\0\u0118\0\70\0\u1180\0\u0118\0\u11b8"+
-    "\0\u11f0\0\u1228\0\70\0\u0118\0\70\0\u0118\0\u1260\0\70"+
-    "\0\u0118\0\u1298\0\u12d0\0\u1308\0\u1340\0\70\0\u0118\0\u1378"+
-    "\0\70\0\u0118\0\u13b0\0\u13e8\0\u0118\0\u1420\0\u1458\0\u1490"+
-    "\0\70";
+    "\0\u0a80\0\u0118\0\u0ab8\0\70\0\u0770\0\u0118\0\u0af0\0\u0118"+
+    "\0\u0b28\0\u0b60\0\u0b98\0\u0bd0\0\u0c08\0\u0c40\0\u0c78\0\u0cb0"+
+    "\0\u0ce8\0\u0d20\0\u0118\0\u0d58\0\u0d90\0\u0dc8\0\u0e00\0\u0e38"+
+    "\0\70\0\u0118\0\u0118\0\70\0\u0118\0\u0e70\0\u0ea8\0\u0ee0"+
+    "\0\u0f18\0\u0f50\0\u0f88\0\u0fc0\0\u0ff8\0\u1030\0\u1068\0\u10a0"+
+    "\0\u10d8\0\u1110\0\u1148\0\70\0\u0118\0\70\0\u1180\0\u0118"+
+    "\0\u11b8\0\u11f0\0\u1228\0\70\0\u0118\0\70\0\u0118\0\u1260"+
+    "\0\70\0\u0118\0\u1298\0\u12d0\0\u1308\0\u1340\0\70\0\u0118"+
+    "\0\u1378\0\70\0\u0118\0\u13b0\0\u13e8\0\u0118\0\u1420\0\u1458"+
+    "\0\u1490\0\70";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[153];
+    int [] result = new int[154];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -190,82 +190,82 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\1\121\2\10\1\122\1\10\1\0\3\10\1\0\6\10"+
     "\1\0\2\10\3\0\2\10\1\0\1\10\32\0\2\10"+
     "\1\123\6\10\1\0\3\10\1\0\6\10\1\0\2\10"+
-    "\15\0\1\57\56\0\1\124\66\0\2\10\1\0\1\10"+
-    "\32\0\2\10\1\125\6\10\1\0\3\10\1\0\6\10"+
+    "\15\0\1\124\56\0\1\125\66\0\2\10\1\0\1\10"+
+    "\32\0\2\10\1\126\6\10\1\0\3\10\1\0\6\10"+
     "\1\0\2\10\3\0\2\10\1\0\1\10\32\0\11\10"+
-    "\1\0\3\10\1\0\6\10\1\0\1\10\1\126\3\0"+
-    "\2\10\1\0\1\10\32\0\5\10\1\127\3\10\1\0"+
+    "\1\0\3\10\1\0\6\10\1\0\1\10\1\127\3\0"+
+    "\2\10\1\0\1\10\32\0\5\10\1\130\3\10\1\0"+
     "\3\10\1\0\6\10\1\0\2\10\3\0\2\10\1\0"+
-    "\1\10\32\0\11\10\1\130\1\131\2\10\1\0\6\10"+
+    "\1\10\32\0\11\10\1\131\1\132\2\10\1\0\6\10"+
     "\1\0\2\10\3\0\2\10\1\0\1\10\32\0\11\10"+
-    "\1\0\1\10\1\132\1\10\1\0\6\10\1\0\2\10"+
-    "\3\0\2\10\1\0\1\10\32\0\11\10\1\133\1\134"+
+    "\1\0\1\10\1\133\1\10\1\0\6\10\1\0\2\10"+
+    "\3\0\2\10\1\0\1\10\32\0\11\10\1\134\1\135"+
     "\2\10\1\0\6\10\1\0\2\10\3\0\2\10\1\0"+
-    "\1\10\32\0\1\10\1\135\7\10\1\0\3\10\1\0"+
+    "\1\10\32\0\1\10\1\136\7\10\1\0\3\10\1\0"+
     "\6\10\1\0\2\10\3\0\2\10\1\0\1\10\32\0"+
-    "\10\10\1\136\1\0\3\10\1\0\6\10\1\0\2\10"+
-    "\56\0\2\137\13\0\2\10\1\0\1\10\32\0\11\10"+
-    "\1\0\3\10\1\137\1\140\5\10\1\0\2\10\3\0"+
-    "\2\10\1\0\1\10\32\0\3\10\1\141\5\10\1\0"+
+    "\10\10\1\137\1\0\3\10\1\0\6\10\1\0\2\10"+
+    "\56\0\2\140\13\0\2\10\1\0\1\10\32\0\11\10"+
+    "\1\0\3\10\1\140\1\141\5\10\1\0\2\10\3\0"+
+    "\2\10\1\0\1\10\32\0\3\10\1\142\5\10\1\0"+
     "\3\10\1\0\6\10\1\0\2\10\3\0\2\10\1\0"+
-    "\1\10\32\0\2\10\1\142\6\10\1\0\3\10\1\0"+
+    "\1\10\32\0\2\10\1\143\6\10\1\0\3\10\1\0"+
     "\6\10\1\0\2\10\3\0\2\10\1\0\1\10\32\0"+
-    "\11\10\1\0\3\10\1\143\1\144\5\10\1\0\2\10"+
+    "\11\10\1\0\3\10\1\144\1\145\5\10\1\0\2\10"+
     "\3\0\2\10\1\0\1\10\32\0\11\10\1\0\2\10"+
-    "\1\145\1\0\6\10\1\0\2\10\3\0\2\10\1\0"+
-    "\1\10\32\0\4\10\1\146\4\10\1\0\3\10\1\0"+
+    "\1\146\1\0\6\10\1\0\2\10\3\0\2\10\1\0"+
+    "\1\10\32\0\4\10\1\147\4\10\1\0\3\10\1\0"+
     "\6\10\1\0\2\10\3\0\2\10\1\0\1\10\32\0"+
-    "\11\10\1\0\1\10\1\147\1\10\1\0\6\10\1\0"+
-    "\2\10\45\0\1\150\25\0\2\10\1\0\1\10\32\0"+
-    "\4\10\1\151\4\10\1\0\3\10\1\0\6\10\1\0"+
-    "\2\10\3\0\2\10\1\0\1\10\32\0\4\10\1\152"+
+    "\11\10\1\0\1\10\1\150\1\10\1\0\6\10\1\0"+
+    "\2\10\45\0\1\151\25\0\2\10\1\0\1\10\32\0"+
+    "\4\10\1\152\4\10\1\0\3\10\1\0\6\10\1\0"+
+    "\2\10\3\0\2\10\1\0\1\10\32\0\4\10\1\153"+
     "\4\10\1\0\3\10\1\0\6\10\1\0\2\10\45\0"+
-    "\1\153\25\0\2\10\1\0\1\10\32\0\4\10\1\154"+
+    "\1\154\25\0\2\10\1\0\1\10\32\0\4\10\1\155"+
     "\4\10\1\0\3\10\1\0\6\10\1\0\2\10\3\0"+
-    "\2\10\1\0\1\10\32\0\11\10\1\155\1\156\2\10"+
+    "\2\10\1\0\1\10\32\0\11\10\1\156\1\157\2\10"+
     "\1\0\6\10\1\0\2\10\3\0\2\10\1\0\1\10"+
-    "\32\0\11\10\1\157\1\160\2\10\1\0\6\10\1\0"+
-    "\2\10\46\0\1\161\24\0\2\10\1\0\1\10\32\0"+
-    "\5\10\1\162\3\10\1\0\3\10\1\0\6\10\1\0"+
-    "\2\10\3\0\2\10\1\0\1\10\32\0\11\10\1\163"+
-    "\1\164\2\10\1\0\6\10\1\0\2\10\44\0\1\165"+
-    "\26\0\2\10\1\0\1\10\32\0\3\10\1\166\5\10"+
+    "\32\0\11\10\1\160\1\161\2\10\1\0\6\10\1\0"+
+    "\2\10\46\0\1\162\24\0\2\10\1\0\1\10\32\0"+
+    "\5\10\1\163\3\10\1\0\3\10\1\0\6\10\1\0"+
+    "\2\10\3\0\2\10\1\0\1\10\32\0\11\10\1\164"+
+    "\1\165\2\10\1\0\6\10\1\0\2\10\44\0\1\166"+
+    "\26\0\2\10\1\0\1\10\32\0\3\10\1\167\5\10"+
     "\1\0\3\10\1\0\6\10\1\0\2\10\3\0\2\10"+
-    "\1\0\1\10\32\0\1\10\1\167\7\10\1\0\3\10"+
+    "\1\0\1\10\32\0\1\10\1\170\7\10\1\0\3\10"+
     "\1\0\6\10\1\0\2\10\3\0\2\10\1\0\1\10"+
-    "\32\0\1\10\1\170\7\10\1\0\3\10\1\0\6\10"+
+    "\32\0\1\10\1\171\7\10\1\0\3\10\1\0\6\10"+
     "\1\0\2\10\3\0\2\10\1\0\1\10\32\0\11\10"+
-    "\1\0\3\10\1\171\1\172\5\10\1\0\2\10\52\0"+
-    "\2\173\17\0\2\10\1\0\1\10\32\0\11\10\1\173"+
-    "\1\174\2\10\1\0\6\10\1\0\2\10\46\0\1\175"+
-    "\1\0\1\176\22\0\2\10\1\0\1\10\32\0\5\10"+
-    "\1\177\1\10\1\200\1\10\1\0\3\10\1\0\6\10"+
-    "\1\0\2\10\47\0\1\201\23\0\2\10\1\0\1\10"+
-    "\32\0\6\10\1\202\2\10\1\0\3\10\1\0\6\10"+
-    "\1\0\2\10\45\0\1\203\25\0\2\10\1\0\1\10"+
-    "\32\0\4\10\1\204\4\10\1\0\3\10\1\0\6\10"+
-    "\1\0\2\10\45\0\1\205\25\0\2\10\1\0\1\10"+
-    "\32\0\4\10\1\206\4\10\1\0\3\10\1\0\6\10"+
+    "\1\0\3\10\1\172\1\173\5\10\1\0\2\10\52\0"+
+    "\2\174\17\0\2\10\1\0\1\10\32\0\11\10\1\174"+
+    "\1\175\2\10\1\0\6\10\1\0\2\10\46\0\1\176"+
+    "\1\0\1\177\22\0\2\10\1\0\1\10\32\0\5\10"+
+    "\1\200\1\10\1\201\1\10\1\0\3\10\1\0\6\10"+
+    "\1\0\2\10\47\0\1\202\23\0\2\10\1\0\1\10"+
+    "\32\0\6\10\1\203\2\10\1\0\3\10\1\0\6\10"+
+    "\1\0\2\10\45\0\1\204\25\0\2\10\1\0\1\10"+
+    "\32\0\4\10\1\205\4\10\1\0\3\10\1\0\6\10"+
+    "\1\0\2\10\45\0\1\206\25\0\2\10\1\0\1\10"+
+    "\32\0\4\10\1\207\4\10\1\0\3\10\1\0\6\10"+
     "\1\0\2\10\3\0\2\10\1\0\1\10\32\0\11\10"+
-    "\1\0\1\10\1\207\1\10\1\0\6\10\1\0\2\10"+
+    "\1\0\1\10\1\210\1\10\1\0\6\10\1\0\2\10"+
     "\3\0\2\10\1\0\1\10\32\0\11\10\1\0\3\10"+
-    "\1\0\6\10\1\210\1\211\1\10\43\0\1\212\27\0"+
-    "\2\10\1\0\1\10\32\0\2\10\1\213\6\10\1\0"+
-    "\3\10\1\0\6\10\1\0\2\10\44\0\1\214\26\0"+
-    "\2\10\1\0\1\10\32\0\3\10\1\215\5\10\1\0"+
-    "\3\10\1\0\6\10\1\0\2\10\62\0\1\216\10\0"+
+    "\1\0\6\10\1\211\1\212\1\10\43\0\1\213\27\0"+
+    "\2\10\1\0\1\10\32\0\2\10\1\214\6\10\1\0"+
+    "\3\10\1\0\6\10\1\0\2\10\44\0\1\215\26\0"+
+    "\2\10\1\0\1\10\32\0\3\10\1\216\5\10\1\0"+
+    "\3\10\1\0\6\10\1\0\2\10\62\0\1\217\10\0"+
     "\2\10\1\0\1\10\32\0\11\10\1\0\3\10\1\0"+
-    "\3\10\1\217\2\10\1\0\2\10\3\0\2\10\1\0"+
-    "\1\10\32\0\3\10\1\220\5\10\1\0\3\10\1\0"+
-    "\6\10\1\0\2\10\45\0\1\221\25\0\2\10\1\0"+
-    "\1\10\32\0\4\10\1\222\4\10\1\0\3\10\1\0"+
-    "\6\10\1\0\2\10\45\0\1\223\25\0\2\10\1\0"+
-    "\1\10\32\0\4\10\1\224\4\10\1\0\3\10\1\0"+
+    "\3\10\1\220\2\10\1\0\2\10\3\0\2\10\1\0"+
+    "\1\10\32\0\3\10\1\221\5\10\1\0\3\10\1\0"+
+    "\6\10\1\0\2\10\45\0\1\222\25\0\2\10\1\0"+
+    "\1\10\32\0\4\10\1\223\4\10\1\0\3\10\1\0"+
+    "\6\10\1\0\2\10\45\0\1\224\25\0\2\10\1\0"+
+    "\1\10\32\0\4\10\1\225\4\10\1\0\3\10\1\0"+
     "\6\10\1\0\2\10\3\0\2\10\1\0\1\10\32\0"+
-    "\5\10\1\225\3\10\1\0\3\10\1\0\6\10\1\0"+
-    "\2\10\5\0\1\226\65\0\2\10\1\226\1\10\32\0"+
+    "\5\10\1\226\3\10\1\0\3\10\1\0\6\10\1\0"+
+    "\2\10\5\0\1\227\65\0\2\10\1\227\1\10\32\0"+
     "\11\10\1\0\3\10\1\0\6\10\1\0\2\10\44\0"+
-    "\1\227\73\0\1\230\77\0\1\231\7\0";
+    "\1\230\73\0\1\231\77\0\1\232\7\0";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[5320];
@@ -308,16 +308,17 @@ public class Lexico implements java_cup.runtime.Scanner {
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\10\2\0\1\11\16\1\12\11\20\1\3\11"+
     "\1\1\1\0\1\11\1\0\1\11\2\0\1\1\1\0"+
-    "\10\11\10\1\1\0\3\1\1\11\11\1\1\0\2\1"+
-    "\1\0\3\1\1\0\3\1\1\0\4\1\1\11\2\1"+
-    "\1\11\1\1\1\0\1\1\1\0\1\1\1\0\1\1"+
-    "\1\0\1\1\1\0\3\1\1\0\1\1\1\11\1\1"+
-    "\1\11\1\0\2\1\1\0\1\1\1\11\1\1\1\11"+
-    "\2\1\1\11\1\1\1\0\1\1\1\0\1\1\1\11"+
-    "\2\1\1\11\1\1\1\0\2\1\3\0\1\11";
+    "\10\11\10\1\1\0\3\1\1\11\5\1\1\11\4\1"+
+    "\1\0\2\1\1\0\3\1\1\0\3\1\1\0\4\1"+
+    "\1\11\2\1\1\11\1\1\1\0\1\1\1\0\1\1"+
+    "\1\0\1\1\1\0\1\1\1\0\3\1\1\0\1\1"+
+    "\1\11\1\1\1\11\1\0\2\1\1\0\1\1\1\11"+
+    "\1\1\1\11\2\1\1\11\1\1\1\0\1\1\1\0"+
+    "\1\1\1\11\2\1\1\11\1\1\1\0\2\1\3\0"+
+    "\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[153];
+    int [] result = new int[154];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -396,9 +397,27 @@ public class Lexico implements java_cup.runtime.Scanner {
     String cadena="";
     String comentario = "";
 
-    public void AddError(String tipo, String lexema, int fila, int columna){
-        Errores nuevoE= new Errores(tipo, lexema, fila+1, columna+1);
-        proyecto.Interfaz.listaErrores.add(nuevoE);
+    public void AddError(String tipo, String lexema, int fila, int columna, String archivo){
+        if(proyecto.Interfaz.archivoa == true){
+            Errores nuevoE= new Errores(tipo, lexema, fila+1, columna+1,"ProyectoA/" + archivo);
+            proyecto.Interfaz.listaErrores.add(nuevoE);
+        }else{
+            Errores nuevoE= new Errores(tipo, lexema, fila+1, columna+1,"ProyectoB/" + archivo);
+            proyecto.Interfaz.listaErrores.add(nuevoE);
+        }
+        //Errores nuevoE= new Errores(tipo, lexema, fila+1, columna+1, archivo);
+        //proyecto.Interfaz.listaErrores.add(nuevoE);
+    }
+
+    public void AddToken(String tipo, String lexema, int fila, int columna, String archivo){
+        if(proyecto.Interfaz.archivoa == true){
+            Tokens nuevoE= new Tokens(tipo, lexema, fila+1, columna+1,"ProyectoA/" + archivo);
+            proyecto.Interfaz.listaTokens.add(nuevoE);
+        }else{
+            Tokens nuevoE= new Tokens(tipo, lexema, fila+1, columna+1,"ProyectoB/" + archivo);
+            proyecto.Interfaz.listaTokens.add(nuevoE);
+        }
+        
     }
 
 
@@ -788,119 +807,123 @@ public class Lexico implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
             { System.err.println("Error lexico: "+yytext()+ " Linea:"+(yyline)+" Columna:"+(yycolumn));
-            AddError("Error Léxico",yytext(),yyline,yycolumn);
+            AddError("Error Léxico",yytext(),yyline,yycolumn, proyecto.Interfaz.nombrearchivojs);
             } 
             // fall through
-          case 53: break;
+          case 54: break;
           case 2: 
             { yycolumn=1;
             } 
             // fall through
-          case 54: break;
+          case 55: break;
           case 3: 
             { /*Se ignoran*/
             } 
             // fall through
-          case 55: break;
-          case 4: 
-            { System.out.println("******************** Id " + yytext());return new Symbol(sym.id,yycolumn,yyline,yytext());
-            } 
-            // fall through
           case 56: break;
-          case 5: 
-            { System.out.println("******************** Entero " + yytext());return new Symbol(sym.entero,yycolumn,yyline,yytext());
+          case 4: 
+            { System.out.println("******************** Id " + yytext());AddToken("Id",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.id,yycolumn,yyline,yytext());
             } 
             // fall through
           case 57: break;
-          case 6: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.notpr,yycolumn,yyline,yytext());
+          case 5: 
+            { System.out.println("******************** Entero " + yytext());AddToken("Entero",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.entero,yycolumn,yyline,yytext());
             } 
             // fall through
           case 58: break;
-          case 7: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.div,yycolumn,yyline,yytext());
+          case 6: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.notpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 59: break;
-          case 8: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.por,yycolumn,yyline,yytext());
+          case 7: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.div,yycolumn,yyline,yytext());
             } 
             // fall through
           case 60: break;
-          case 9: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.igual,yycolumn,yyline,yytext());
+          case 8: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.por,yycolumn,yyline,yytext());
             } 
             // fall through
           case 61: break;
-          case 10: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.menorq,yycolumn,yyline,yytext());
+          case 9: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.igual,yycolumn,yyline,yytext());
             } 
             // fall through
           case 62: break;
-          case 11: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.mayorq,yycolumn,yyline,yytext());
+          case 10: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.menorq,yycolumn,yyline,yytext());
             } 
             // fall through
           case 63: break;
-          case 12: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.mas,yycolumn,yyline,yytext());
+          case 11: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.mayorq,yycolumn,yyline,yytext());
             } 
             // fall through
           case 64: break;
-          case 13: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.menos,yycolumn,yyline,yytext());
+          case 12: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.mas,yycolumn,yyline,yytext());
             } 
             // fall through
           case 65: break;
-          case 14: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.porcentaje,yycolumn,yyline,yytext());
+          case 13: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.menos,yycolumn,yyline,yytext());
             } 
             // fall through
           case 66: break;
-          case 15: 
-            { System.out.println("********************Simbolo " + yytext());return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());
+          case 14: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.porcentaje,yycolumn,yyline,yytext());
             } 
             // fall through
           case 67: break;
-          case 16: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.dpuntos,yycolumn,yyline,yytext());
+          case 15: 
+            { System.out.println("********************Simbolo " + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());
             } 
             // fall through
           case 68: break;
-          case 17: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.coma,yycolumn,yyline,yytext());
+          case 16: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.dpuntos,yycolumn,yyline,yytext());
             } 
             // fall through
           case 69: break;
-          case 18: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.pariz,yycolumn,yyline,yytext());
+          case 17: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.coma,yycolumn,yyline,yytext());
             } 
             // fall through
           case 70: break;
-          case 19: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.parder,yycolumn,yyline,yytext());
+          case 18: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.pariz,yycolumn,yyline,yytext());
             } 
             // fall through
           case 71: break;
-          case 20: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());
+          case 19: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.parder,yycolumn,yyline,yytext());
             } 
             // fall through
           case 72: break;
-          case 21: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.llaveder,yycolumn,yyline,yytext());
+          case 20: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.llaveiz,yycolumn,yyline,yytext());
             } 
             // fall through
           case 73: break;
+          case 21: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.llaveder,yycolumn,yyline,yytext());
+            } 
+            // fall through
+          case 74: break;
           case 22: 
             { comentario = comentario + yytext();
             } 
             // fall through
-          case 74: break;
+          case 75: break;
           case 23: 
             { yybegin(YYINITIAL); 
     System.out.println(comentario.trim());
-    proyecto.Interfaz.comentariosg++;
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.comentariosg++;
+    }else{
+        proyecto.Interfaz.comentariosgB++;
+    }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.comentariostemp.add(comentario.trim());
     } else {
@@ -916,152 +939,177 @@ public class Lexico implements java_cup.runtime.Scanner {
     }
             } 
             // fall through
-          case 75: break;
+          case 76: break;
           case 24: 
             { 
             } 
             // fall through
-          case 76: break;
-          case 25: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.diferente,yycolumn,yyline,yytext());
-            } 
-            // fall through
           case 77: break;
-          case 26: 
-            { System.out.println("******************** Cadena " + yytext());return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));
+          case 25: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.diferente,yycolumn,yyline,yytext());
             } 
             // fall through
           case 78: break;
+          case 26: 
+            { System.out.println("******************** Cadena " + yytext());AddToken("Cadena",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));
+            } 
+            // fall through
+          case 79: break;
           case 27: 
             { yybegin(COMENT_SIMPLE); comentario = "";
             } 
             // fall through
-          case 79: break;
+          case 80: break;
           case 28: 
             { yybegin(COMENT_MULTI); comentario = "";
             } 
             // fall through
-          case 80: break;
-          case 29: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.pot,yycolumn,yyline,yytext());
-            } 
-            // fall through
           case 81: break;
-          case 30: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.digual,yycolumn,yyline,yytext());
+          case 29: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.pot,yycolumn,yyline,yytext());
             } 
             // fall through
           case 82: break;
-          case 31: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.menorigual,yycolumn,yyline,yytext());
+          case 30: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.digual,yycolumn,yyline,yytext());
             } 
             // fall through
           case 83: break;
-          case 32: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.mayorigual,yycolumn,yyline,yytext());
+          case 31: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.menorigual,yycolumn,yyline,yytext());
             } 
             // fall through
           case 84: break;
-          case 33: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.andpr,yycolumn,yyline,yytext());
+          case 32: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.mayorigual,yycolumn,yyline,yytext());
             } 
             // fall through
           case 85: break;
-          case 34: 
-            { System.out.println("********************Simbolo" + yytext());return new Symbol(sym.orpr,yycolumn,yyline,yytext());
+          case 33: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.andpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 86: break;
-          case 35: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.ifpr,yycolumn,yyline,yytext());
+          case 34: 
+            { System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.orpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 87: break;
-          case 36: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.dopr,yycolumn,yyline,yytext());
+          case 35: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.ifpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 88: break;
-          case 37: 
-            { System.out.println("******************** Decimal " + yytext());return new Symbol(sym.decimal,yycolumn,yyline,yytext());
+          case 36: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.dopr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 89: break;
-          case 38: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.var,yycolumn,yyline,yytext());
+          case 37: 
+            { yybegin(YYINITIAL); 
+    System.out.println(comentario.trim());
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.comentariosg++;
+    }else{
+        proyecto.Interfaz.comentariosgB++;
+    }
+    
+    if(proyecto.Interfaz.archivoa == true){
+        proyecto.Interfaz.comentariostemp.add(comentario.trim());
+    } else {
+        comentarioJS nuevov= new comentarioJS(comentario.trim(), proyecto.Interfaz.nombrearchivojs);
+        
+            for(int i=0;i<proyecto.Interfaz.comentariostemp.size();i++){
+                if(proyecto.Interfaz.comentariostemp.get(i).equals(comentario.trim())){
+                    proyecto.Interfaz.listacomentariosjs.add(nuevov);
+                    i = proyecto.Interfaz.comentariostemp.size();
+                }
+            }
+
+    }
             } 
             // fall through
           case 90: break;
-          case 39: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.let,yycolumn,yyline,yytext());
+          case 38: 
+            { System.out.println("******************** Decimal " + yytext());AddToken("Decimal",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.decimal,yycolumn,yyline,yytext());
             } 
             // fall through
           case 91: break;
-          case 40: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.forpr,yycolumn,yyline,yytext());
+          case 39: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.var,yycolumn,yyline,yytext());
             } 
             // fall through
           case 92: break;
-          case 41: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.elsepr,yycolumn,yyline,yytext());
+          case 40: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.let,yycolumn,yyline,yytext());
             } 
             // fall through
           case 93: break;
-          case 42: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.truevar,yycolumn,yyline,yytext());
+          case 41: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.forpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 94: break;
-          case 43: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.casepr,yycolumn,yyline,yytext());
+          case 42: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.elsepr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 95: break;
-          case 44: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.classpr,yycolumn,yyline,yytext());
+          case 43: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.truevar,yycolumn,yyline,yytext());
             } 
             // fall through
           case 96: break;
-          case 45: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.constvar,yycolumn,yyline,yytext());
+          case 44: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.casepr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 97: break;
-          case 46: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.falsevar,yycolumn,yyline,yytext());
+          case 45: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.classpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 98: break;
-          case 47: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.whilepr,yycolumn,yyline,yytext());
+          case 46: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.constvar,yycolumn,yyline,yytext());
             } 
             // fall through
           case 99: break;
-          case 48: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.breakpr,yycolumn,yyline,yytext());
+          case 47: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.falsevar,yycolumn,yyline,yytext());
             } 
             // fall through
           case 100: break;
-          case 49: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.switchpr,yycolumn,yyline,yytext());
+          case 48: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.whilepr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 101: break;
-          case 50: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.requirepr,yycolumn,yyline,yytext());
+          case 49: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.breakpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 102: break;
-          case 51: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.defaultpr,yycolumn,yyline,yytext());
+          case 50: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.switchpr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 103: break;
-          case 52: 
-            { System.out.println("********************Palabra reservada " + yytext());return new Symbol(sym.imprimir,yycolumn,yyline,yytext());
+          case 51: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.requirepr,yycolumn,yyline,yytext());
             } 
             // fall through
           case 104: break;
+          case 52: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.defaultpr,yycolumn,yyline,yytext());
+            } 
+            // fall through
+          case 105: break;
+          case 53: 
+            { System.out.println("********************Palabra reservada " + yytext());AddToken("Palabra reservada",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.imprimir,yycolumn,yyline,yytext());
+            } 
+            // fall through
+          case 106: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

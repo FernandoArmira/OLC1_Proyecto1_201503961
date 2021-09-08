@@ -5,6 +5,7 @@
  */
 package proyecto;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,8 +43,9 @@ public class Interfaz extends javax.swing.JFrame {
     /**
      * Creates new form Editor
      */
-    public static String list_of_names="";
+    //public static String list_of_names="";
     public static ArrayList<Errores> listaErrores = new ArrayList<Errores>();
+    public static ArrayList<Tokens> listaTokens = new ArrayList<Tokens>();
     public static ArrayList<variables> listavariables = new ArrayList<variables>();
     public static String nombrearchivo = "";
     public static Boolean archivoa = false;
@@ -84,12 +88,40 @@ public class Interfaz extends javax.swing.JFrame {
     public static int variablesg = 0;
     public static int metodosg = 0;
     public static int clasesg = 0;
+    public static int comentariosgB = 0;
+    public static int variablesgB = 0;
+    public static int metodosgB = 0;
+    public static int clasesgB = 0;
+    
+    public static ArrayList<String> archivosproyecto = new ArrayList();
+    public static ArrayList<Integer> rcomentarios = new ArrayList();
+    public static ArrayList<Integer> rcomentariosB = new ArrayList();
+    public static ArrayList<Integer> rvariables = new ArrayList();
+    public static ArrayList<Integer> rvariablesB = new ArrayList();
+    public static ArrayList<Integer> rmetodos = new ArrayList();
+    public static ArrayList<Integer> rmetodosB = new ArrayList();
+    public static ArrayList<Integer> rclases = new ArrayList();
+    public static ArrayList<Integer> rclasesB = new ArrayList();
+    
+    
     public static double puntajegeneral = 0;
+    
+    //Puntaje especifico
+    public static double puntaje = 0;
+    
+    //Nombre reportes a generar
+    public String [] name;
+    
+    //Graficos a reportar
+    public static ArrayList<String> lineasr = new ArrayList();
+    public static ArrayList<String> barrasr = new ArrayList();
+    public static ArrayList<String> pier = new ArrayList();
     
     public Interfaz() {
         initComponents();
         jTextField1.setVisible(false);
         //jTextArea2.setVisible(false);
+       
     }
 
     /**
@@ -223,6 +255,11 @@ public class Interfaz extends javax.swing.JFrame {
         jMenu4.add(jMenuItem3);
 
         jMenuItem4.setText("JSON");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem4);
 
         jMenuBar1.add(jMenu4);
@@ -373,12 +410,13 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        list_of_names="";
-        listaErrores.clear();
-        listavariables.clear();
+        //list_of_names="";
+        
+        resetear();
+        
         //jTextArea1.setText("");
         analizadores.parser.archivos.clear();
-        
+            
         try {
             System.out.println("Ejecutando analisis .....................................................");
             String path = jTextArea1.getText();
@@ -398,7 +436,7 @@ public class Interfaz extends javax.swing.JFrame {
             
             System.out.println("----------------------------ComentariosJS---------------------------------");
             for(int i=0;i<listacomentariosjs.size();i++){
-                System.out.println(listacomentariosjs.get(i).comentario + " " + listavariablesjs.get(i).archivo);
+                System.out.println(listacomentariosjs.get(i).comentario + " " + listacomentariosjs.get(i).archivo);
             }
             
             System.out.println("------------------------------MetodosJS-------------------------------------");
@@ -410,7 +448,7 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println(metodostempB.get(i) + " " + metodosparamtempB.get(i) + " " + metodoslineastempB.get(i) + " " + archivometodosB.get(i));
             }
             
-            puntajemetodos();
+            //puntajemetodos();
             
             System.out.println("-------------------------------Puntaje MetodosJS------------------------------------");
             for(int i=0;i<listametodosjs.size();i++){
@@ -427,7 +465,7 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println(clasestempB.get(i) + " "  + archivoclasesB.get(i)+ " " + clasesmetodostempB.get(i) + " " + claseslineastempB.get(i) + " ");
             }
             
-            puntajeclases();
+            //puntajeclases();
             
             System.out.println("-------------------------------Puntaje ClaseJS------------------------------------");
             for(int i=0;i<listaclasesjs.size();i++){
@@ -440,6 +478,16 @@ public class Interfaz extends javax.swing.JFrame {
             
             System.out.println(puntajegeneral);
             
+            System.out.println("-------------------------------Resumen------------------------------------");
+            System.out.println(comentariosg + " " + comentariosgB);
+            System.out.println(variablesg + " " + variablesgB);
+            System.out.println(metodosg + " " + metodosgB);
+            System.out.println(clasesg + " " + clasesgB);
+            
+            System.out.println("-------------------------------Errores ------------------------------------");
+            for(int i=0;i<listaErrores.size();i++){
+                System.out.println(listaErrores.get(i).valorError );
+            }
             //+ metodosparamtempA.get(i) + " " + metodoslineastempA.get(i) + " "
             /*for(int i=0;i<listaclasesjs.size();i++){
                 System.out.println(listaclasesjs.get(i).clase + " " + listaclasesjs.get(i).archivo);
@@ -455,12 +503,17 @@ public class Interfaz extends javax.swing.JFrame {
         /*for(int i =0; i<listaErrores.size();i++){
             System.out.println("i: "+i+" Tipo: "+listaErrores.get(i).tipoError+" valorError:"+listaErrores.get(i).valorError+" fila:"+listaErrores.get(i).fila+" Columna:"+listaErrores.get(i).columna);
         }*/
+        name = nombrearchivo.split("\\.");
         
-        ReporteErrores(nombrearchivo);
+        ReporteEstadistico("Estadistico" + name[0]);
+        ReporteTokens("Tokens" + name[0]);
+        ReporteErrores("Errores" + name[0]);
+        ReporteJSON("JSON" + name[0]);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+                // TODO add your handling code here:
+                abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\Errores" + name[0] + ".html");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -470,12 +523,21 @@ public class Interfaz extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
         }*/
+        
+        //Abrir reporte estadistico
+        abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\Estadistico" + name[0] + ".html");
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+                // TODO add your handling code here:
+                abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\Tokens" + name[0] + ".html");
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+            abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\JSON" + name[0] + ".JSON");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -486,7 +548,7 @@ public class Interfaz extends javax.swing.JFrame {
                 PrintWriter pw = null;
                 try {
                     
-                    fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\ERRORES_201503961\\" + nombre+ ".html");
+                    fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\" + nombre+ ".html");
                     pw = new PrintWriter(fichero);
                     //comenzamos a escribir el html
                     pw.println("<html>");
@@ -501,6 +563,7 @@ public class Interfaz extends javax.swing.JFrame {
                     pw.println("<td>VALOR</td>");
                     pw.println("<td>FILA</td>");
                     pw.println("<td>COLUMNA</td>");
+                    pw.println("<td>ARCHIVO</td>");
                     pw.println("</tr>");
                     for(int i=0;i<listaErrores.size();i++){
                         pw.println("<tr>");
@@ -508,6 +571,7 @@ public class Interfaz extends javax.swing.JFrame {
                         pw.println("<td>"+listaErrores.get(i).getValorError()+"</td>");
                         pw.println("<td>"+listaErrores.get(i).getFila()+"</td>");
                         pw.println("<td>"+listaErrores.get(i).getColumna()+"</td>");
+                        pw.println("<td>"+listaErrores.get(i).getArchivo()+"</td>");
                         pw.println("</tr>");
                     }
                     pw.println("</table>");
@@ -532,7 +596,60 @@ public class Interfaz extends javax.swing.JFrame {
         }
     }
     
-    public void puntajemetodos(){
+    public void ReporteTokens(String nombre){
+        FileWriter fichero = null;
+                PrintWriter pw = null;
+                try {
+                    
+                    fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\" + nombre+ ".html");
+                    pw = new PrintWriter(fichero);
+                    //comenzamos a escribir el html
+                    pw.println("<html>");
+                    pw.println("<head><title>REPORTE DE Tokens</title></head>");
+                    pw.println("<body>");
+                    pw.println("<div align=\"center\">");
+                    pw.println("<h1>Reporte de Tokens</h1>");
+                    pw.println("<br></br>");
+                    pw.println("<table border=1>");
+                    pw.println("<tr>");
+                    pw.println("<td>TOKEN</td>");
+                    pw.println("<td>LEXEMA</td>");
+                    pw.println("<td>FILA</td>");
+                    pw.println("<td>COLUMNA</td>");
+                    pw.println("<td>ARCHIVO</td>");
+                    pw.println("</tr>");
+                    for(int i=0;i<listaTokens.size();i++){
+                        pw.println("<tr>");
+                        pw.println("<td>"+listaTokens.get(i).getTipoError()+"</td>");
+                        pw.println("<td>"+listaTokens.get(i).getValorError()+"</td>");
+                        pw.println("<td>"+listaTokens.get(i).getFila()+"</td>");
+                        pw.println("<td>"+listaTokens.get(i).getColumna()+"</td>");
+                        pw.println("<td>"+listaTokens.get(i).getArchivo()+"</td>");
+                        pw.println("</tr>");
+                    }
+                    pw.println("</table>");
+                    pw.println("</div");
+                    pw.println("</body>");
+                    pw.println("</html>");
+                } catch (Exception e) {
+                }finally{
+                    if(null!=fichero){
+                        try {
+                            fichero.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                try {
+            //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "Reportes\\"+"Reporte ErroresL.html");
+            //System.out.println("Final");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void puntajemetodos(){
         double pid;
         double pparam;
         double plineas;
@@ -610,7 +727,7 @@ public class Interfaz extends javax.swing.JFrame {
             int estado0 = 0;
             String idmetodo = metodostempA.get(i);
                 for(int j=0;j<listametodosjs.size();j++){
-                    if(metodostempA.get(i).equals(listametodosjs.get(j).metodo)){
+                    if(metodostempA.get(i).equals(listametodosjs.get(j).metodo) && archivometodosA.get(i).equals(listametodosjs.get(j).archivo)){
                         estado0 = 1;
                         j = listametodosjs.size();
                     }  
@@ -660,8 +777,9 @@ public class Interfaz extends javax.swing.JFrame {
     
 
     
-    public void puntajeclases() {
+    public static void puntajeclases() {
         // Clases Archivos Proyecto B
+        
         double pid;
         double pmetodos;
         double plineas;
@@ -722,7 +840,7 @@ public class Interfaz extends javax.swing.JFrame {
                         j = clasestempA.size();
                         estado = 1;
                         
-                        clasesJS nuevov= new clasesJS(idmetodo, archivometodosB.get(i),pid, pmetodos, plineas);
+                        clasesJS nuevov= new clasesJS(idmetodo, archivoclasesB.get(i),pid, pmetodos, plineas);
                         listaclasesjs.add(nuevov);
                         
                     }
@@ -743,7 +861,7 @@ public class Interfaz extends javax.swing.JFrame {
                             j = claseslineastempA.size();
                             estado2 = 1;
                         
-                            clasesJS nuevov= new clasesJS(idmetodo, archivometodosB.get(i),pid, pmetodos, plineas);
+                            clasesJS nuevov= new clasesJS(idmetodo, archivoclasesB.get(i),pid, pmetodos, plineas);
                             listaclasesjs.add(nuevov);
      
                         }                        
@@ -752,7 +870,7 @@ public class Interfaz extends javax.swing.JFrame {
                     if(estado2 == 0){
                         plineas = 0;
                         
-                        clasesJS nuevov= new clasesJS(idmetodo, archivometodosB.get(i),pid, pmetodos, plineas);
+                        clasesJS nuevov= new clasesJS(idmetodo, archivoclasesB.get(i),pid, pmetodos, plineas);
                         listaclasesjs.add(nuevov);
                     }
                 
@@ -765,7 +883,7 @@ public class Interfaz extends javax.swing.JFrame {
             int estado0 = 0;
             String idmetodo = clasestempA.get(i);
                 for(int j=0;j<listaclasesjs.size();j++){
-                    if(clasestempA.get(i).equals(listaclasesjs.get(j).clase)){
+                    if(clasestempA.get(i).equals(listaclasesjs.get(j).clase) && archivoclasesA.get(i).equals(listaclasesjs.get(j).archivo)){
                         estado0 = 1;
                         j = listaclasesjs.size();
                     }  
@@ -785,7 +903,7 @@ public class Interfaz extends javax.swing.JFrame {
                             j = claseslineastempB.size();
                             estado2 = 1;
                         
-                            clasesJS nuevov= new clasesJS(idmetodo, archivometodosA.get(i),pid, pmetodos, plineas);
+                            clasesJS nuevov= new clasesJS(idmetodo, archivoclasesA.get(i),pid, pmetodos, plineas);
                             listaclasesjs.add(nuevov);
      
                         }                        
@@ -794,7 +912,7 @@ public class Interfaz extends javax.swing.JFrame {
                     if(estado2 == 0){
                         plineas = 0;
                         
-                        clasesJS nuevov= new clasesJS(idmetodo, archivometodosA.get(i),pid, pmetodos, plineas);
+                        clasesJS nuevov= new clasesJS(idmetodo, archivoclasesA.get(i),pid, pmetodos, plineas);
                         listaclasesjs.add(nuevov);
                     }
                 
@@ -807,7 +925,7 @@ public class Interfaz extends javax.swing.JFrame {
     }
     
     //Puntaje general
-    public void puntajegeneral(){
+    public static void puntajegeneral(){
         float pcom = 0;
         float pvar = 0;
         float pmet = 0;
@@ -817,11 +935,11 @@ public class Interfaz extends javax.swing.JFrame {
         int clases = 0;
         
       
-        pcom = ((float)listacomentariosjs.size()/(float)comentariosg)*(float)0.2;
+        pcom = ((float)listacomentariosjs.size()/((float)comentariosg + (float)comentariosgB))*(float)0.2;
         /*System.out.println(listacomentariosjs.size());
         System.out.println(comentariosg);
         System.out.println(pcom);*/
-        pvar = ((float)listavariablesjs.size()/(float)variablesg)*(float)0.2;
+        pvar = ((float)listavariablesjs.size()/((float)variablesg + (float)variablesgB))*(float)0.2;
         
         for(int i=0;i<listametodosjs.size();i++){
             double puntaje = 0;
@@ -833,7 +951,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         }
         
-        pmet = ((float)metodos/(float)metodosg)*(float)0.3;
+        pmet = ((float)metodos/((float)metodosg + (float)metodosgB))*(float)0.3;
         
         for(int i=0;i<listaclasesjs.size();i++){
             double puntaje = 0;
@@ -845,7 +963,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         }
         
-        pcla = ((float)clases/(float)clasesg)*(float)0.3;
+        pcla = ((float)clases/((float)clasesg + (float)clasesgB))*(float)0.3;
         
         puntajegeneral = pcom + pvar + pmet + pcla;
         
@@ -855,47 +973,229 @@ public class Interfaz extends javax.swing.JFrame {
         System.out.println(pmet);
         System.out.println(pcla);*/
     }  
-    /*
-    public void gbarras() throws IOException{
-        
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        int[ ] edad = {15, 13, 11};
-        
-        String [ ] nombre = {"Fernando", "Marz", "Jade"};
-        
-        for(int i = 0; i < edad.length; i++){
-            dataset.setValue(edad[i], "", nombre[i]);
-        }
-        
-
-        
-        JFreeChart chart = ChartFactory.createBarChart(
-                "Comparación Ventas 2013-2014", // Titulo
-                "Vendedores", // Titulo ejex
-                "Ventas", // Titulo ejey
-                dataset, 
-                PlotOrientation.VERTICAL,
-                true, 
-                false, 
-                false
-        );
-        
-        //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica de Barras", chart);
-        frame.pack();
-        frame.setVisible(true);
-        
-        int width = 640; // Width of the image 
-        int height = 480; // Height of the image 
-        File BarChart = new File( "BarChart.jpeg" );
-        ChartUtilities.saveChartAsJPEG( BarChart , chart , width , height );
-
-
     
+    
+    public static void resetear(){
+        listaErrores.clear();
+        listaTokens.clear();
+        listavariables.clear();
+        listavariablesjs.clear();
+        listacomentariosjs.clear();
+        listametodosjs.clear();
+        listaclasesjs.clear();
+        comentariosg = 0;
+        variablesg = 0;
+        metodosg = 0;
+        clasesg = 0;
+        comentariosgB = 0;
+        variablesgB = 0;
+        metodosgB = 0;
+        clasesgB = 0;
+        archivosproyecto.clear();
+        rcomentarios.clear();
+        rcomentariosB.clear();
+        rvariables.clear();
+        rvariablesB.clear();
+        rmetodos.clear();
+        rmetodosB.clear();
+        rclases.clear();
+        rclasesB.clear();
+        puntajegeneral = 0;
+        lineasr.clear();
+        barrasr.clear();
+        pier.clear();
     }
-    */
+   
+    
+    // REPORTES
+    
+    public void ReporteEstadistico(String nombre){
+        FileWriter fichero = null;
+                PrintWriter pw = null;
+                try {
+                    
+                    fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\" + nombre+ ".html");
+                    pw = new PrintWriter(fichero);
+                    //comenzamos a escribir el html
+                    pw.println("<html>");
+                    pw.println("<head><title>REPORTE ESTADISTICO</title></head>");
+                    pw.println("<body>");
+                    pw.println("<div align=\"center\">");
+                    pw.println("<h1>Reporte Estadistico</h1>");
+                    pw.println("<br></br>");
+                    pw.println("<h3>Resumen</h3>");
+                    pw.println("<table border=1>");
+                    pw.println("<tr>");
+                    pw.println("<td>Tipo</td>");
+                    pw.println("<td>Proyecto A</td>");
+                    pw.println("<td>Proyecto B</td>");
+                    pw.println("</tr>");
+                    pw.println("<tr>");
+                    pw.println("<td>Total variables</td>");
+                    pw.println("<td>" + variablesg + "</td>");
+                    pw.println("<td>" + variablesgB + "</td>");
+                    pw.println("</tr>");
+                    pw.println("<tr>");
+                    pw.println("<td>Total clases</td>");
+                    pw.println("<td>" + clasesg + "</td>");
+                    pw.println("<td>" + clasesgB + "</td>");
+                    pw.println("</tr>");
+                    pw.println("<tr>");
+                    pw.println("<td>Total metodos</td>");
+                    pw.println("<td>" + metodosg + "</td>");
+                    pw.println("<td>" + metodosgB + "</td>");
+                    pw.println("</tr>");
+                    pw.println("<tr>");
+                    pw.println("<td>Total comentarios</td>");
+                    pw.println("<td>" + comentariosg + "</td>");
+                    pw.println("<td>" + comentariosgB + "</td>");
+                    pw.println("</tr>");
+                    /*for(int i=0;i<listaErrores.size();i++){
+                        pw.println("<tr>");
+                        pw.println("<td>"+listaErrores.get(i).getTipoError()+"</td>");
+                        pw.println("<td>"+listaErrores.get(i).getValorError()+"</td>");
+                        pw.println("<td>"+listaErrores.get(i).getFila()+"</td>");
+                        pw.println("<td>"+listaErrores.get(i).getColumna()+"</td>");
+                        pw.println("</tr>");
+                    }*/
+                    pw.println("</table>");
+                    pw.println("<br></br>");
+                    for(int i=0;i<lineasr.size();i++){
+                        pw.println("<img src= \"C:\\Users\\Fernando Armira\\Documents\\GitHub\\OLC1_Proyecto1_201503961\\Proyecto 1\\" + lineasr.get(i) + "\">");
+                    }
+                    pw.println("<br></br>");
+                    
+                    pw.println("<h3>Grafica de barras</h3>");
+                    pw.println("<br></br>");
+                    for(int i=0;i<barrasr.size();i++){
+                        pw.println("<img src= \"C:\\Users\\Fernando Armira\\Documents\\GitHub\\OLC1_Proyecto1_201503961\\Proyecto 1\\" + barrasr.get(i) + "\">");
+                    }
+                    pw.println("<br></br>");
+                    
+                    pw.println("<h3>Grafica de pie</h3>");
+                    pw.println("<br></br>");
+                    for(int i=0;i<pier.size();i++){
+                        pw.println("<img src= \"C:\\Users\\Fernando Armira\\Documents\\GitHub\\OLC1_Proyecto1_201503961\\Proyecto 1\\" + pier.get(i) + "\">");
+                    }
+                    pw.println("<br></br>");
+                    
+                    
+                    pw.println("<h3>Datos finales</h3>");
+                    pw.println("<h4>Nombre: Fernando Augusto Armira Ramírez</h4>");
+                    pw.println("<h4>Carnet: 201503961</h4>");
+                    pw.print("<h4>Fecha y hora: ");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    //System.out.println("yyyy/MM/dd HH:mm:ss-> "+dtf.format(LocalDateTime.now()));
+                    pw.println(dtf.format(LocalDateTime.now()) + "</h4>");
+                    pw.println("</div");
+                    pw.println("</body>");
+                    pw.println("</html>");
+                } catch (Exception e) {
+                }finally{
+                    if(null!=fichero){
+                        try {
+                            fichero.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                try {
+            //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "Reportes\\"+"Reporte ErroresL.html");
+            //System.out.println("Final");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void ReporteJSON(String nombre){
+        FileWriter fichero = null;
+                PrintWriter pw = null;
+                try {
+                    
+                    fichero = new FileWriter("C:\\Users\\Fernando Armira\\Documents\\Reportes\\" + nombre+ ".JSON");
+                    pw = new PrintWriter(fichero);
+                    //comenzamos a escribir el html
+                    pw.println("{");
+                    pw.println("    \"PuntajeGeneral\":" + puntajegeneral);
+                    pw.println("    \"PuntajeEspecificos\":[");
+                    for(int i=0;i<listavariablesjs.size();i++){
+                        pw.println("        {");
+                        pw.println("            \"archivo:\" : \"" + listavariablesjs.get(i).archivo + "\"," );
+                        pw.println("            \"tipo:\" : \"variable\"," );
+                        pw.println("            \"nombre:\" : \"" + listavariablesjs.get(i).variable + "\"," );
+                        pw.println("            \"puntaje:\" : 1" );
+                        pw.println("        },");
+                    }
+                    for(int i=0;i<listacomentariosjs.size();i++){
+                        pw.println("        {");
+                        pw.println("            \"archivo:\" : \"" + listacomentariosjs.get(i).archivo + "\"," );
+                        pw.println("            \"tipo:\" : \"comentario\"," );
+                        pw.println("            \"nombre:\" : \"" + listacomentariosjs.get(i).comentario + "\"," );
+                        pw.println("            \"puntaje:\" : 1" );
+                        pw.println("        },");
+                    }
+                    for(int i=0;i<listametodosjs.size();i++){
+                        pw.println("        {");
+                        pw.println("            \"archivo:\" : \"" + listametodosjs.get(i).archivo + "\"," );
+                        pw.println("            \"tipo:\" : \"metodo\"," );
+                        pw.println("            \"nombre:\" : \"" + listametodosjs.get(i).metodo + "\"," );
+                        double puntaje = listametodosjs.get(i).id + listametodosjs.get(i).lineas + listametodosjs.get(i).parametros;
+                        pw.println("            \"puntaje:\" :" + puntaje );
+                        pw.println("        },");
+                    }
+                    
+                    for(int i=0;i<listaclasesjs.size() - 1;i++){
+                        pw.println("        {");
+                        pw.println("            \"archivo:\" : \"" + listaclasesjs.get(i).archivo + "\"," );
+                        pw.println("            \"tipo:\" : \"clase\"," );
+                        pw.println("            \"nombre:\" : \"" + listaclasesjs.get(i).clase + "\"," );
+                        double puntaje = listaclasesjs.get(i).id + listaclasesjs.get(i).lineas + listaclasesjs.get(i).parametros;
+                        pw.println("            \"puntaje:\" :" + puntaje );
+                        pw.println("        },");
+                    }
+                    pw.println("        {");
+                    pw.println("            \"archivo:\" : \"" + listaclasesjs.get(listaclasesjs.size() - 1).archivo + "\"," );
+                    pw.println("            \"tipo:\" : \"clase\"," );
+                    pw.println("            \"nombre:\" : \"" + listaclasesjs.get(listaclasesjs.size() - 1).clase + "\"," );
+                    double puntaje = listaclasesjs.get(listaclasesjs.size() - 1).id + listaclasesjs.get(listaclasesjs.size() - 1).lineas + listaclasesjs.get(listaclasesjs.size() - 1).parametros;
+                    pw.println("            \"puntaje:\" :" + puntaje );
+                    pw.println("        }");
+                    pw.println("    ]");
+                    pw.println("}");
+                } catch (Exception e) {
+                }finally{
+                    if(null!=fichero){
+                        try {
+                            fichero.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                try {
+            //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "Reportes\\"+"Reporte ErroresL.html");
+            //System.out.println("Final");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void abrirarchivo(String archivo){
 
+     try {
+
+            File objetofile = new File (archivo);
+            Desktop.getDesktop().open(objetofile);
+
+     }catch (IOException ex) {
+
+            System.out.println(ex);
+
+     }
+
+}
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

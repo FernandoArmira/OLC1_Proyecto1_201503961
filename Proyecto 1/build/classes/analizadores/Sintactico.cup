@@ -31,11 +31,13 @@ parser code
     public static String titulograficax = "";
     public static String titulograficay = "";
     public static String direccionA = "";
+    public static String archivo = "";
     public static ArrayList<String> valoresx = new ArrayList();
     public static ArrayList<String> valoresy = new ArrayList();
     public static ArrayList<String> archivos = new ArrayList();
     public static int contgbarras = 1;
     public static int contgpie = 1;
+    public static int contglineas = 1;
     
 // Grafica de barras
     public static void gbarras(String titulo, String titulox, String tituloy, String nombre) throws IOException{
@@ -66,9 +68,9 @@ parser code
         );
         
         //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica de Barras", chart);
+        /*ChartFrame frame = new ChartFrame("Ejemplo Grafica de Barras", chart);
         frame.pack();
-        frame.setVisible(true);
+        frame.setVisible(true);*/
 
 
         //Crear imaagen de la grafica
@@ -76,6 +78,8 @@ parser code
         int height = 480; // Height of the image 
         File BarChart = new File( nombre + ".jpeg" );
         ChartUtilities.saveChartAsJPEG( BarChart , chart , width , height );
+
+        proyecto.Interfaz.barrasr.add(nombre + ".jpeg");
 
         valoresx.clear();
         valoresy.clear();
@@ -121,9 +125,9 @@ parser code
         );
 
         //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
+        /*ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
         frame.pack();
-        frame.setVisible(true);
+        frame.setVisible(true);*/
 
          //Crear imaagen de la grafica
         int width = 640; // Width of the image 
@@ -131,43 +135,79 @@ parser code
         File PieChart = new File( nombre + ".jpeg" );
         ChartUtilities.saveChartAsJPEG( PieChart , chart , width , height );
 
+        proyecto.Interfaz.pier.add(nombre + ".jpeg");
+
         valoresx.clear();
         valoresy.clear();
 
     }
 
 // Grafica de lineas
-    public static void glineas(){
+    public static void glineas(String titulo, String nombre, String archivo) throws IOException{
+        int indice = 0;
+        int estado = 0;
+        for(int i=0;i<proyecto.Interfaz.archivosproyecto.size();i++){
+            if(archivo.equals(proyecto.Interfaz.archivosproyecto.get(i))){
+                indice = i;
+                estado = 1;
+                i = proyecto.Interfaz.archivosproyecto.size();
+            } else{
+                String[] partes = proyecto.Interfaz.archivosproyecto.get(i).split("\\.");
+                if(archivo.equals(partes[0])){     
+                    indice = i;
+                    estado = 1;
+                    i = proyecto.Interfaz.archivosproyecto.size();
+                }
+            }
+        }
+
+
         final XYSeries serie1 = new XYSeries("Fernando Alonso");
-	serie1.add(1, 131.78);
-	serie1.add(2, 129.95);
-	serie1.add(3, 128.16);
-	serie1.add(4, 125.91);
-	serie1.add(5, 130.44);
+        if(estado == 1){
+            
+            serie1.add(1, proyecto.Interfaz.rvariables.get(indice));
+            serie1.add(2, proyecto.Interfaz.rmetodos.get(indice));
+            serie1.add(3, proyecto.Interfaz.rclases.get(indice));
+            serie1.add(4, proyecto.Interfaz.rcomentarios.get(indice));
+        }
+	
 		
 	final XYSeries serie2 = new XYSeries("Jaime Alguersuari");
-	serie2.add(1, 100.16);
-	serie2.add(2, 150.32);
-	serie2.add(3, 130.86);
-	serie2.add(4, 110.02);
-	serie2.add(5, 90.45);
+
+        if(estado == 1){
+            
+            serie2.add(1, proyecto.Interfaz.rvariablesB.get(indice));
+            serie2.add(2, proyecto.Interfaz.rmetodosB.get(indice));
+            serie2.add(3, proyecto.Interfaz.rclasesB.get(indice));
+            serie2.add(4, proyecto.Interfaz.rcomentariosB.get(indice));
+        }
+	
 		
 	final XYSeriesCollection collection = new XYSeriesCollection();
 	collection.addSeries(serie1);
 	collection.addSeries(serie2);
         
         JFreeChart chart = 
-        ChartFactory.createXYLineChart("Sesiones en Adictos al Trabajo",  
-        "Meses","Sesiones",collection,PlotOrientation.VERTICAL,
+        ChartFactory.createXYLineChart(titulo,  
+        "1.variables  2.metodos  3.clases  4.comentarios","Numero",collection,PlotOrientation.VERTICAL,
         false,
         false, 
         true                // Show legend
         );
         
         //Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
+        /*ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
         frame.pack();
-        frame.setVisible(true);
+        frame.setVisible(true);*/
+
+        //Crear imaagen de la grafica
+        int width = 640; // Width of the image 
+        int height = 480; // Height of the image 
+        File XYChart = new File( nombre + ".jpeg" );
+        ChartUtilities.saveChartAsJPEG( XYChart , chart , width , height );
+
+        proyecto.Interfaz.lineasr.add(nombre + ".jpeg");
+
     } 
 
 // Variables globales del lenguaje fca
@@ -250,11 +290,46 @@ parser code
                 if(archivos.get(i).equals(nombre)){
                     System.out.println("Archivo con el mismo nombre: " + nombre);
                     //System.out.println("Analizar: " + direccionA+nombre);
+                    
+                    proyecto.Interfaz.variablestemp.clear();
+                    proyecto.Interfaz.comentariostemp.clear();
+                    proyecto.Interfaz.metodostempA.clear();
+                    proyecto.Interfaz.metodosparamtempA.clear();
+                    proyecto.Interfaz.metodoslineastempA.clear();
+                    proyecto.Interfaz.archivometodosA.clear();
+                    proyecto.Interfaz.metodostempB.clear();
+                    proyecto.Interfaz.metodosparamtempB.clear();
+                    proyecto.Interfaz.metodoslineastempB.clear();
+                    proyecto.Interfaz.archivometodosB.clear();
+                    proyecto.Interfaz.clasestempA.clear();
+                    proyecto.Interfaz.claseslineastempA.clear();
+                    proyecto.Interfaz.clasesmetodostempA.clear();
+                    proyecto.Interfaz.archivoclasesA.clear();
+                    proyecto.Interfaz.clasestempB.clear();
+                    proyecto.Interfaz.claseslineastempB.clear();
+                    proyecto.Interfaz.clasesmetodostempB.clear();
+                    proyecto.Interfaz.archivoclasesB.clear();
+                    
                     proyecto.Interfaz.nombrearchivojs = nombre;
                     proyecto.Interfaz.archivoa = true;
                     ejecutar(direccionA+ "\\" +nombre);
                     proyecto.Interfaz.archivoa = false;
                     ejecutar(direccion+ "\\" + nombre);
+
+                    proyecto.Interfaz.puntajemetodos();
+                    proyecto.Interfaz.puntajeclases();
+
+                    proyecto.Interfaz.archivosproyecto.add(nombre);
+
+                    proyecto.Interfaz.rcomentarios.add(proyecto.Interfaz.comentariosg);
+                    proyecto.Interfaz.rcomentariosB.add(proyecto.Interfaz.comentariosgB);
+                    proyecto.Interfaz.rvariables.add(proyecto.Interfaz.variablesg);
+                    proyecto.Interfaz.rvariablesB.add(proyecto.Interfaz.variablesgB);
+                    proyecto.Interfaz.rmetodos.add(proyecto.Interfaz.metodosg);
+                    proyecto.Interfaz.rmetodosB.add(proyecto.Interfaz.metodosgB);
+                    proyecto.Interfaz.rclases.add(proyecto.Interfaz.clasesg);
+                    proyecto.Interfaz.rclasesB.add(proyecto.Interfaz.clasesgB);
+                    
                     estadovar = 1;
                     i = archivos.size();
                 }
@@ -272,13 +347,13 @@ parser code
     public void syntax_error(Symbol s)
     {
         System.err.println("Error Sintactico en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador "+s.value + " no reconocido. Se ha recuperado del error." );
-        Errores nuevoE = new Errores("Error sintactico: recuperado", s.value.toString(), s.right+1, s.left+1);
+        Errores nuevoE = new Errores("Error sintactico: recuperado", s.value.toString(), s.right+1, s.left+1, proyecto.Interfaz.nombrearchivo);
         proyecto.Interfaz.listaErrores.add(nuevoE);
     }
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
         System.err.println("Error Sintactico en la Línea " + (s.right+1)+ " Columna "+(s.left+1)+". Identificador " +s.value + " no reconocido.");
-        Errores nuevoE = new Errores("Error sintactico: no recuperado", s.value.toString(), s.right+1, s.left+1);
+        Errores nuevoE = new Errores("Error sintactico: no recuperado", s.value.toString(), s.right+1, s.left+1, proyecto.Interfaz.nombrearchivo);
         proyecto.Interfaz.listaErrores.add(nuevoE);
     }
     //-------------------------------------------------------------------------------------------------------------------------------------------8
@@ -288,10 +363,10 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String llaveiz, llaveder, puntocoma, pariz, parder, coma, igual, dpuntos, coriz, corder, dolar, definirglobales, generarreporteestadistico, compare, stringvar, doublevar, graficabarras, titulo, ejex, valores, titulox, tituloy, graficapie, graficalineas, archivo, puntajeespecifico, decimal, id, cadena;
+terminal String llaveiz, llaveder, puntocoma, pariz, parder, coma, igual, dpuntos, coriz, corder, dolar, definirglobales, generarreporteestadistico, compare, stringvar, doublevar, graficabarras, titulo, ejex, valores, titulox, tituloy, graficapie, graficalineas, archivo, puntajeespecifico, decimal, id, cadena, puntajegeneral;
 
 // no terminal [Tipo] listanoterminales;
-non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOARCHIVOS, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJEESPECIFICO, ARREGLOV2, CUERPOGPIE, CUERPOGLINEAS, BARCHIVO;
+non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJE, ARREGLOV2, CUERPOGPIE, CUERPOGLINEAS, BARCHIVO;
 
 //precedence left or;
 //precedence left conc;
@@ -318,15 +393,16 @@ BLOQUEGLOBALES ::= definirglobales llaveiz CUERPOGLOBALES llaveder;
 CUERPOGLOBALES ::= CUERPOGLOBALES VARSTRING
                 | CUERPOGLOBALES VARDOUBLE
                 | VARSTRING
-                | VARDOUBLE;
+                | VARDOUBLE
+                |error;
 
 VARSTRING ::= stringvar id:a igual cadena:b puntocoma {://System.out.println("--- Variable: " + a + " Valor: " + b);
     Addvariable(a,b,"String");:};
 
 VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {://System.out.println("--- Variable: " + a + " Valor: " + b);
     Addvariable(a,b,"Double");:}
-        | doublevar id:a igual BPUNTAJEESPECIFICO puntocoma{://System.out.println("--- Variable: " + a + " Valor: " + b);
-    Addvariable(a,"0","Double");:};
+        | doublevar id:a igual BPUNTAJE puntocoma{://System.out.println("--- Variable: " + a + " Valor: " + b);
+    Addvariable(a,String.valueOf(proyecto.Interfaz.puntaje),"Double");:};
 
 //BLOQUEARCHIVOS ::= generarreporteestadistico llaveiz CUERPOARCHIVOS llaveder;
 
@@ -334,27 +410,15 @@ VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {://System.out.println("-
 //Buscar arcivos para luego analizarlos
 
 BLOQUEARCHIVOS ::= compare pariz cadena:a coma cadena:b parder puntocoma{:System.out.println("--- Proyecto A: " + a + " Proyecto B: " + b);
-    proyecto.Interfaz.variablestemp.clear();
-    proyecto.Interfaz.comentariostemp.clear();
-    proyecto.Interfaz.metodostempA.clear();
-    proyecto.Interfaz.metodosparamtempA.clear();
-    proyecto.Interfaz.metodoslineastempA.clear();
-    proyecto.Interfaz.archivometodosA.clear();
-    proyecto.Interfaz.metodostempB.clear();
-    proyecto.Interfaz.metodosparamtempB.clear();
-    proyecto.Interfaz.metodoslineastempB.clear();
-    proyecto.Interfaz.archivometodosB.clear();
-    proyecto.Interfaz.clasestempA.clear();
-    proyecto.Interfaz.claseslineastempA.clear();
-    proyecto.Interfaz.clasesmetodostempA.clear();
-    proyecto.Interfaz.archivoclasesA.clear();
-    proyecto.Interfaz.clasestempB.clear();
-    proyecto.Interfaz.claseslineastempB.clear();
-    proyecto.Interfaz.clasesmetodostempB.clear();
-    proyecto.Interfaz.archivoclasesB.clear();
+    //proyecto.Interfaz.resetear();
+    archivos.clear();
     direccionA=a;
     listar(a);
     listar(b);
+    //Metodos para el puntaje
+
+    proyecto.Interfaz.puntajegeneral();
+    
     //ejecutar();
     System.out.println("-------------------------------------------------------------------------------------------------------");
     :};
@@ -364,7 +428,8 @@ BLOQUEGBARRAS ::= graficabarras llaveiz CUERPOGBARRAS llaveder;
 
 CUERPOGBARRAS ::= BTITULO BEJEX BVALORES BTITULOX BTITULOY{:System.out.println("--- Generar grafico de barras");
     gbarras(titulografica, titulograficax, titulograficay, "BarChart" + Integer.toString(parser.contgbarras));
-    parser.contgbarras++;:};
+    parser.contgbarras++;:}
+        |error;
     
 BTITULO ::= titulo dpuntos id:a puntocoma {://System.out.println("--- Titulo: " + a);
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
@@ -400,7 +465,8 @@ ARREGLO ::= cadena:a ARREGLO2 {://System.out.println("--- Valorx: " + a);
     }
         if(estado == 0){
             valoresx.add("-");
-        }:};
+        }:}
+        |error;
 
 ARREGLO2 ::= ARREGLO2 coma cadena:a{://System.out.println("--- Valorx: " + a);
     valoresx.add(a);:}
@@ -456,10 +522,52 @@ ARREGLOV ::= cadena:a ARREGLOV2{://System.out.println("--- Valory: " + a);
         if(estado == 0){
             valoresy.add("0");
         }:}
-        | BPUNTAJEESPECIFICO{://System.out.println("--- Valory: PE");
-    valoresy.set(0,"0");:};
+        | BPUNTAJE{://System.out.println("--- Valory: PE");
+    valoresy.set(0,String.valueOf(proyecto.Interfaz.puntaje));:}
+        |error;
 
-BPUNTAJEESPECIFICO ::= dolar llaveiz puntajeespecifico coma cadena coma cadena coma cadena llaveder;
+BPUNTAJE ::= dolar llaveiz puntajeespecifico coma cadena:a coma cadena:b coma cadena:c llaveder{://System.out.println("--- Valory: " + a);
+    //System.out.println("+++++++++++++++++++++++++++" + a);
+    //System.out.println("+++++++++++++++++++++++++++" + b);
+    //System.out.println("+++++++++++++++++++++++++++" + c);
+    proyecto.Interfaz.puntaje = 0;
+
+    if(b.toLowerCase().equals("variable")){
+        for(int i=0;i<proyecto.Interfaz.listavariablesjs.size();i++){
+                if(proyecto.Interfaz.listavariablesjs.get(i).archivo.equals(a) && proyecto.Interfaz.listavariablesjs.get(i).variable.equals(c)){
+                    proyecto.Interfaz.puntaje = 1;
+                }
+            }
+        
+    } else if(b.toLowerCase().equals("comentario")){
+        for(int i=0;i<proyecto.Interfaz.listacomentariosjs.size();i++){
+                if(proyecto.Interfaz.listacomentariosjs.get(i).archivo.equals(a) && proyecto.Interfaz.listacomentariosjs.get(i).comentario.equals(c)){
+                    proyecto.Interfaz.puntaje = 1;
+                } 
+         }
+        
+    } else if(b.toLowerCase().equals("metodo")){
+        for(int i=0;i<proyecto.Interfaz.listametodosjs.size();i++){
+                if(proyecto.Interfaz.listametodosjs.get(i).archivo.equals(a) && proyecto.Interfaz.listametodosjs.get(i).metodo.equals(c)){
+                    proyecto.Interfaz.puntaje = proyecto.Interfaz.listametodosjs.get(i).id + proyecto.Interfaz.listametodosjs.get(i).parametros + proyecto.Interfaz.listametodosjs.get(i).lineas;
+                }
+         }
+        
+        
+    } else if(b.toLowerCase().equals("clase")){
+        for(int i=0;i<proyecto.Interfaz.listaclasesjs.size();i++){
+                if(proyecto.Interfaz.listaclasesjs.get(i).archivo.equals(a) && proyecto.Interfaz.listaclasesjs.get(i).clase.equals(c)){
+                    proyecto.Interfaz.puntaje = proyecto.Interfaz.listaclasesjs.get(i).id + proyecto.Interfaz.listaclasesjs.get(i).parametros + proyecto.Interfaz.listaclasesjs.get(i).lineas;
+                } 
+         }
+        
+    }
+:}
+        | dolar llaveiz puntajegeneral llaveder{://System.out.println("--- Valory: " + a);
+            //System.out.println("+++++++++++++++++++++" + proyecto.Interfaz.puntajegeneral);
+            proyecto.Interfaz.puntaje = proyecto.Interfaz.puntajegeneral;
+            //System.out.println("+++++++++++++++++++++" + proyecto.Interfaz.puntaje);
+        :};
 
 ARREGLOV2 ::= ARREGLOV2 coma cadena:a {://System.out.println("--- Valory: " + a);
     valoresy.add(a);:}
@@ -478,8 +586,8 @@ ARREGLOV2 ::= ARREGLOV2 coma cadena:a {://System.out.println("--- Valory: " + a)
     if(estado == 0){
             valoresy.add("0");
         }:}
-        | ARREGLOV2 coma BPUNTAJEESPECIFICO {://System.out.println("--- Valory: PE");
-    valoresy.add("0");:}
+        | ARREGLOV2 coma BPUNTAJE {://System.out.println("--- Valory: PE");
+    valoresy.add(String.valueOf(proyecto.Interfaz.puntaje));:}
         | coma cadena:a {://System.out.println("--- Valory: " + a);
     valoresy.add(a);:}
         | coma id:a {://System.out.println("--- Valory: " + a);
@@ -497,8 +605,8 @@ ARREGLOV2 ::= ARREGLOV2 coma cadena:a {://System.out.println("--- Valory: " + a)
     if(estado == 0){
             valoresy.add("0");
         }:}
-        | coma BPUNTAJEESPECIFICO{://System.out.println("--- Valory: PE");
-    valoresy.add("0");:};
+        | coma BPUNTAJE{://System.out.println("--- Valory: PE");
+    valoresy.add(String.valueOf(proyecto.Interfaz.puntaje));:};
 
 BTITULOX ::= titulox dpuntos cadena:a puntocoma{://System.out.println("--- Titulox: " + a);
     titulograficax = a;:}
@@ -532,27 +640,33 @@ BLOQUEGPIE ::= graficapie llaveiz CUERPOGPIE llaveder;
 CUERPOGPIE ::= BTITULO BEJEX BVALORES{:System.out.println("--- Generar grafico de pie");
     gpie(titulografica,"PieChart" + Integer.toString(parser.contgpie));
     parser.contgpie++;
-    :};
+    :}
+        |error;
 
 BLOQUEGLINEAS ::= graficalineas llaveiz CUERPOGLINEAS llaveder;
 
 CUERPOGLINEAS ::= BTITULO BARCHIVO{:System.out.println("--- Generar grafico de lineas");
-    glineas();
+    glineas(titulografica,"XYChart" + Integer.toString(parser.contglineas), archivo);
+    parser.contglineas++;
     //gpie(titulografica,"PieChart" + Integer.toString(parser.contgpie));
     //parser.contgpie++;
-    :};
+    :}
+    |error;
 
 BARCHIVO ::= archivo dpuntos id:a puntocoma{://System.out.println("--- Archivo resumen: " + a);
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
     if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
         //System.out.println("Existe la variable");
         //titulograficay = proyecto.Interfaz.listavariables.get(i).getvalor();
+        archivo = proyecto.Interfaz.listavariables.get(i).valor;
         i = proyecto.Interfaz.listavariables.size();
     }else{
         //System.out.println("No existe la variable");
     }
 }:}
-        | archivo dpuntos cadena:a puntocoma{:System.out.println("--- Archivo resumen: " + a);:};
+        | archivo dpuntos cadena:a puntocoma{:System.out.println("--- Archivo resumen: " + a);
+        archivo = a;
+:};
 // Resumen del archivo
  
 
