@@ -32,7 +32,7 @@ letra = [a-zA-Z]
 entero = [0-9]+  //0,1,2,3,4,5,6,7,8,9 -> 1111, 125
 decimal = [0-9]+ "." [0-9]+
 id ={letra}({letra}|"_"|[0-9])*
-simbolo =([!]|[#-}])
+simbolo =([!]|[#-Ý])
 cadena1 = "\"" ({letra}|{entero}|{simbolo}|{espacios})* "\""
 cadena2 = "\‘" ({letra}|{entero}|{simbolo}|{espacios})* "\‘"
 cadena3 = "\'" ({letra}|{entero}|{simbolo}|{espacios})* "\'"
@@ -130,6 +130,8 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 
 "=" {System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.igual,yycolumn,yyline,yytext());}
 "==" {System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.digual,yycolumn,yyline,yytext());}
+"+=" {System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.masigual,yycolumn,yyline,yytext());}
+"-=" {System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.menigual,yycolumn,yyline,yytext());}
 "!=" {System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.diferente,yycolumn,yyline,yytext());}
 "<" {System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.menorq,yycolumn,yyline,yytext());}
 ">" {System.out.println("********************Simbolo" + yytext());AddToken("Simbolo",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivojs);return new Symbol(sym.mayorq,yycolumn,yyline,yytext());}

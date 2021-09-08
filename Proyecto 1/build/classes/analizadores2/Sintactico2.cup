@@ -90,7 +90,7 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual, coma, requirepr, classpr;
+terminal String entero, decimal, id, cadena, igual, puntocoma, var, let, constvar, truevar, falsevar, ifpr, pariz, parder, llaveiz, llaveder, menorq, elsepr, imprimir, diferente, forpr, mas, menos, whilepr, dopr, switchpr, casepr, breakpr, defaultpr, dpuntos, mayorq, andpr, orpr, notpr, por, pot, div, porcentaje, menorigual, mayorigual, digual, coma, requirepr, classpr, masigual, menigual;
 
 // no terminal [Tipo] listanoterminales;
 non terminal Nodo INICIO, INSTRUCCION, EXPRESION, VARIABLES, PRVARIABLES, VALOR, IF, CONDICION, CUERPOIF, RELACIONAL, ELSE, CUERPOELSE, PRINTCONSOLE, ELSEIF, CUERPOELSEIF, FOR, SETTINGFOR, CUERPOFOR, INICIOFOR, INCFOR, ASIGNACION, WHILE, DOWHILE, CUERPOWHILE, SWITCH, CUERPOSWITCH, FINALSWITCH, CUERPOCASE, LOGICO, INSTRUCCIONL, INC, DEC, CALLM, CUERPOMETODO, CUERPOMETODO2, IMPORT, CLASS, CUERPOCLASE, METODO, METODOBODY;
@@ -259,7 +259,8 @@ RELACIONAL ::= EXPRESION digual EXPRESION
         | EXPRESION menorq EXPRESION
         | EXPRESION menorigual EXPRESION
         | EXPRESION mayorq EXPRESION
-        | EXPRESION mayorigual EXPRESION;
+        | EXPRESION mayorigual EXPRESION
+        | EXPRESION digual igual EXPRESION;
 
 CUERPOIF ::= CUERPOIF INSTRUCCIONL
         | INSTRUCCIONL;
@@ -284,7 +285,9 @@ SETTINGFOR ::= INICIOFOR puntocoma RELACIONAL puntocoma INCFOR
 INICIOFOR ::= VARIABLES
         | ASIGNACION;
 
-ASIGNACION ::= id igual EXPRESION;
+ASIGNACION ::= id igual EXPRESION
+            | id masigual EXPRESION
+            | id menigual EXPRESION;
 
 INCFOR ::= INC
         | DEC
@@ -302,10 +305,13 @@ CUERPOWHILE ::= CUERPOWHILE INSTRUCCIONL
 DOWHILE ::= dopr llaveiz CUERPOWHILE llaveder whilepr pariz RELACIONAL parder
         | dopr llaveiz CUERPOWHILE llaveder whilepr pariz LOGICO parder;
 
-SWITCH ::= switchpr pariz id parder llaveiz CUERPOSWITCH FINALSWITCH llaveder;
+SWITCH ::= switchpr pariz id parder llaveiz CUERPOSWITCH llaveder
+        | switchpr pariz id parder llaveiz CUERPOSWITCH FINALSWITCH llaveder;
 
 CUERPOSWITCH ::= CUERPOSWITCH casepr EXPRESION dpuntos CUERPOCASE breakpr puntocoma
+        | CUERPOSWITCH casepr EXPRESION dpuntos CUERPOCASE
         | casepr EXPRESION dpuntos CUERPOCASE breakpr puntocoma
+        | casepr EXPRESION dpuntos CUERPOCASE
         |error;
 
 CUERPOCASE ::= INSTRUCCION;

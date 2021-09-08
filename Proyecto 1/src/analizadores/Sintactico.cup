@@ -619,7 +619,7 @@ ARREGLOV ::= entero:a ARREGLOV2{:
         if(estado == 0){
             valoresy.set(0,"0");
         }:}
-        | BPUNTAJE{://System.out.println("--- Valory: PE");
+        | BPUNTAJE ARREGLOV2{://System.out.println("--- Valory: PE");
             valoresy.set(0,String.valueOf(proyecto.Interfaz.puntaje));:}
         |error;
 

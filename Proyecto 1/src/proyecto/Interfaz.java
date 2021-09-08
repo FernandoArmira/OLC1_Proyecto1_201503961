@@ -899,6 +899,37 @@ public class Interfaz extends javax.swing.JFrame {
                     pid = 0;
                     pmetodos = 0;
                     
+                    for(int j=0;j<clasesmetodostempA.size();j++){
+                        //Calcular puntaje metodos
+                        int totalmetodos = 0;
+                        double puntaje = 0;
+                        pmetodos = 0;
+                        
+                        String [] B = clasesmetodostempB.get(i).split("-");
+                        String [] A = clasesmetodostempA.get(j).split("-");
+                        ArrayList<String> C = new ArrayList();
+                        
+                        if (A.length == B.length){
+                            totalmetodos = A.length - 1;
+                            
+                            for(int k=0;k<B.length;k++){
+                                for(int l=0;l<A.length;l++){
+                                    if(B[k].equals(A[l])){
+                                        C.add(B[k]);
+                                        l = A.length;
+                                    }
+                            
+                                }   
+                               
+                            }
+                        
+                            if(C.size() == B.length){
+                                pmetodos = 0.4;
+                                j = clasesmetodostempA.size();
+                            }
+                        }                     
+                    }
+
                     int estado2 = 0;
                     for(int j=0;j<claseslineastempA.size();j++){
                         if(claseslineastempB.get(i) == claseslineastempA.get(j)){
@@ -940,6 +971,37 @@ public class Interfaz extends javax.swing.JFrame {
                     
                     pid = 0;
                     pmetodos = 0;
+                    
+                    for(int j=0;j<clasesmetodostempB.size();j++){
+                        //Calcular puntaje metodos
+                        int totalmetodos = 0;
+                        double puntaje = 0;
+                        pmetodos = 0;
+                        
+                        String [] B = clasesmetodostempA.get(i).split("-");
+                        String [] A = clasesmetodostempB.get(j).split("-");
+                        ArrayList<String> C = new ArrayList();
+                        
+                        if (A.length == B.length){
+                            totalmetodos = A.length - 1;
+                            
+                            for(int k=0;k<B.length;k++){
+                                for(int l=0;l<A.length;l++){
+                                    if(B[k].equals(A[l])){
+                                        C.add(B[k]);
+                                        l = A.length;
+                                    }
+                            
+                                }   
+                               
+                            }
+                        
+                            if(C.size() == B.length){
+                                pmetodos = 0.4;
+                                j = clasesmetodostempB.size();
+                            }
+                        }                     
+                    }
                     
                     int estado2 = 0;
                     for(int j=0;j<claseslineastempB.size();j++){

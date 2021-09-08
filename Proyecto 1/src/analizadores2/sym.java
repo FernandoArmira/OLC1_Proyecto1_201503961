@@ -23,6 +23,7 @@ public class sym {
   public static final int let = 9;
   public static final int casepr = 28;
   public static final int elsepr = 19;
+  public static final int masigual = 46;
   public static final int pariz = 14;
   public static final int constvar = 10;
   public static final int falsevar = 12;
@@ -45,6 +46,7 @@ public class sym {
   public static final int llaveiz = 16;
   public static final int id = 4;
   public static final int forpr = 22;
+  public static final int menigual = 47;
   public static final int requirepr = 44;
   public static final int mayorigual = 41;
   public static final int diferente = 21;
@@ -100,7 +102,9 @@ public class sym {
   "digual",
   "coma",
   "requirepr",
-  "classpr"
+  "classpr",
+  "masigual",
+  "menigual"
   };
 }
 
