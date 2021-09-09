@@ -367,6 +367,7 @@ public class Interfaz extends javax.swing.JFrame {
                     guardado.write(jTextArea1.getText());
                     JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
                     jTextField1.setText(archivo.getSelectedFile().getPath());
+                    jTextArea3.append("Archivo guardado correctamente \n");
                 }
             }
             
@@ -405,6 +406,7 @@ public class Interfaz extends javax.swing.JFrame {
                     guardado.write(jTextArea1.getText());
                     JOptionPane.showMessageDialog(rootPane, "El archivo fue guardado con éxito en la ruta establecida");
                     jTextField1.setText(archivo.getSelectedFile().getPath());
+                    jTextArea3.append("Archivo guardado correctamente \n");
                     
                 }
             }
@@ -431,6 +433,7 @@ public class Interfaz extends javax.swing.JFrame {
             
         try {
             System.out.println("Ejecutando analisis .....................................................");
+            jTextArea3.append("Ejecutando analisis \n");
             String path = jTextArea1.getText();
             analizadores.parser sintactico;
             sintactico = new analizadores.parser(new analizadores.Lexico(new StringReader(path)));
@@ -451,14 +454,14 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println(listacomentariosjs.get(i).comentario + " " + listacomentariosjs.get(i).archivo);
             }
             
-            System.out.println("------------------------------MetodosJS-------------------------------------");
+            /*System.out.println("------------------------------MetodosJS-------------------------------------");
             for(int i=0;i<metodostempA.size();i++){
                 System.out.println(metodostempA.get(i) + " " + metodosparamtempA.get(i) + " " + metodoslineastempA.get(i) + " " + archivometodosA.get(i));
             }
             
             for(int i=0;i<metodostempB.size();i++){
                 System.out.println(metodostempB.get(i) + " " + metodosparamtempB.get(i) + " " + metodoslineastempB.get(i) + " " + archivometodosB.get(i));
-            }
+            }*/
             
             //puntajemetodos();
             
@@ -467,7 +470,7 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println(listametodosjs.get(i).metodo + " " + listametodosjs.get(i).archivo + " " + listametodosjs.get(i).id + " " + listametodosjs.get(i).lineas + " " + listametodosjs.get(i).parametros);
             }
             
-            System.out.println("-------------------------------ClasesJS------------------------------------");
+            /*System.out.println("-------------------------------ClasesJS------------------------------------");
             
             for(int i=0;i<clasestempA.size();i++){
                 System.out.println(clasestempA.get(i) + " "  + archivoclasesA.get(i)+ " " + clasesmetodostempA.get(i) + " " + claseslineastempA.get(i) + " ");
@@ -475,7 +478,7 @@ public class Interfaz extends javax.swing.JFrame {
           
             for(int i=0;i<clasestempB.size();i++){
                 System.out.println(clasestempB.get(i) + " "  + archivoclasesB.get(i)+ " " + clasesmetodostempB.get(i) + " " + claseslineastempB.get(i) + " ");
-            }
+            }*/
             
             //puntajeclases();
             
@@ -519,18 +522,26 @@ public class Interfaz extends javax.swing.JFrame {
         
         try {
             glineasresumen("Resumen" + name[0]);
+            jTextArea3.append("Finalizando Analisis \n");
+            jTextArea3.append("Generando Reportes \n");
+            
         } catch (IOException ex) {
             Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
         }
         ReporteEstadistico("Estadistico" + name[0]);
+        jTextArea3.append("Reporte Estadistico generado correctamente \n");
         ReporteTokens("Tokens" + name[0]);
+        jTextArea3.append("Reporte Tokens generado correctamente \n");
         ReporteErrores("Errores" + name[0]);
+        jTextArea3.append("Reporte Errores generado correctamente \n");
         ReporteJSON("JSON" + name[0]);
+        jTextArea3.append("Reporte JSON generado correctamente \n");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
                 // TODO add your handling code here:
                 abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\Errores" + name[0] + ".html");
+                jTextArea3.append("Abriendo reporte de Errores \n");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -543,17 +554,20 @@ public class Interfaz extends javax.swing.JFrame {
         
         //Abrir reporte estadistico
         abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\Estadistico" + name[0] + ".html");
+        jTextArea3.append("Abriendo reporte Estadistico \n");
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
                 // TODO add your handling code here:
                 abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\Tokens" + name[0] + ".html");
+                jTextArea3.append("Abriendo reporte de Tokens \n");
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
             abrirarchivo("C:\\Users\\Fernando Armira\\Documents\\Reportes\\JSON" + name[0] + ".JSON");
+            jTextArea3.append("Abriendo reporte JSON \n");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
