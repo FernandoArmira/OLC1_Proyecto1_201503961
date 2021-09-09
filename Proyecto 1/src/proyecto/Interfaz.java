@@ -830,6 +830,7 @@ public class Interfaz extends javax.swing.JFrame {
                         //Calcular puntaje metodos
                         int totalmetodos = 0;
                         double puntaje = 0;
+                        pmetodos = 0;
                         
                         String [] B = clasesmetodostempB.get(i).split("-");
                         String [] A = clasesmetodostempA.get(j).split("-");
@@ -837,24 +838,39 @@ public class Interfaz extends javax.swing.JFrame {
                         
                         if(A.length > B.length){
                             totalmetodos = A.length - 1;
+                            pmetodos = 0;
+                            //Puntaje metodos = 0
                         } else if (A.length < B.length){
                             totalmetodos = B.length - 1;
+                            pmetodos = 0;
+                            //Puntaje metodos = 0
                         } else if (A.length == B.length){
                             totalmetodos = A.length - 1;
-                        }
-                        
-                        for(int k=0;k<B.length;k++){
-                            for(int l=0;l<A.length;l++){
-                                if(B[k].equals(A[l])){
-                                    C.add(B[k]);
-                                    l = A.length;
-                                }
                             
-                            }
+                            for(int k=0;k<B.length;k++){
+                                for(int l=0;l<A.length;l++){
+                                    if(B[k].equals(A[l])){
+                                        C.add(B[k]);
+                                        l = A.length;
+                                    }
+                            
+                                }   
                                
+                            }
+                        
+                            if(C.size() == B.length){
+                                pmetodos = 0.4;
+                            }else{
+                                pmetodos = 0;
+                            }
                         }
                         
-                        for(int k=0;k<C.size();k++){
+                        
+                        
+                        
+                        //Si length de k == a A.lenght, dar puntaje completo
+                        
+                        /*for(int k=0;k<C.size();k++){
                             for(int l=0;l<listametodosjs.size();l++){
                                 if(C.get(k).equals(listametodosjs.get(l).metodo)){
                                     puntaje = puntaje + listametodosjs.get(l).id + listametodosjs.get(l).lineas + listametodosjs.get(l).parametros;
@@ -865,7 +881,7 @@ public class Interfaz extends javax.swing.JFrame {
                                
                         }
                         
-                        pmetodos = (puntaje / totalmetodos) * 0.4;
+                        pmetodos = (puntaje / totalmetodos) * 0.4;*/
                         
                         
                         j = clasestempA.size();
