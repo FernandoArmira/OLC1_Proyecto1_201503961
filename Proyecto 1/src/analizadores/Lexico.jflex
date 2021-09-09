@@ -102,6 +102,7 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
 \n {yycolumn=1;}
 {blancos} {/*Se ignoran*/}
 
+{entero} {System.out.println("Entero" + yytext());AddToken("Entero",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.entero,yycolumn,yyline,yytext());}
 {decimal} {System.out.println("Decimal" + yytext());AddToken("Decimal",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
 {id} {System.out.println("Id" + yytext());AddToken("Id",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.id,yycolumn,yyline,yytext());}
 {cadena} {System.out.println("Cadena" + yytext());AddToken("Cadena",yytext(),yyline,yycolumn,proyecto.Interfaz.nombrearchivo);return new Symbol(sym.cadena,yycolumn,yyline,yytext().substring(1, yytext().length()-1));}

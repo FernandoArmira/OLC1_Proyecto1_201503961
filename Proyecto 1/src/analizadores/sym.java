@@ -29,6 +29,7 @@ public class sym {
   public static final int pariz = 5;
   public static final int definirglobales = 13;
   public static final int graficapie = 24;
+  public static final int entero = 32;
   public static final int graficalineas = 25;
   public static final int corder = 11;
   public static final int coriz = 10;
@@ -72,7 +73,8 @@ public class sym {
   "decimal",
   "id",
   "cadena",
-  "puntajegeneral"
+  "puntajegeneral",
+  "entero"
   };
 }
 

@@ -93,6 +93,16 @@ public class Interfaz extends javax.swing.JFrame {
     public static int metodosgB = 0;
     public static int clasesgB = 0;
     
+    //Puntaje de cada archivo
+    public static int comentariosl = 0;
+    public static int variablesl = 0;
+    public static int metodosl = 0;
+    public static int clasesl = 0;
+    public static int comentarioslB = 0;
+    public static int variableslB = 0;
+    public static int metodoslB = 0;
+    public static int claseslB = 0;
+    
     public static ArrayList<String> archivosproyecto = new ArrayList();
     public static ArrayList<Integer> rcomentarios = new ArrayList();
     public static ArrayList<Integer> rcomentariosB = new ArrayList();
@@ -116,6 +126,8 @@ public class Interfaz extends javax.swing.JFrame {
     public static ArrayList<String> lineasr = new ArrayList();
     public static ArrayList<String> barrasr = new ArrayList();
     public static ArrayList<String> pier = new ArrayList();
+    
+    public static String parametrospe;
     
     public Interfaz() {
         initComponents();
@@ -505,6 +517,11 @@ public class Interfaz extends javax.swing.JFrame {
         }*/
         name = nombrearchivo.split("\\.");
         
+        try {
+            glineasresumen("Resumen" + name[0]);
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ReporteEstadistico("Estadistico" + name[0]);
         ReporteTokens("Tokens" + name[0]);
         ReporteErrores("Errores" + name[0]);
@@ -1194,8 +1211,56 @@ public class Interfaz extends javax.swing.JFrame {
             System.out.println(ex);
 
      }
+    }
 
-}
+     
+     // Grafica de lineas resumen
+
+    public static void glineasresumen(String nombre) throws IOException{
+
+        final XYSeries serie1 = new XYSeries("Fernando Alonso");
+        
+        serie1.add(1, proyecto.Interfaz.variablesg);
+        serie1.add(2, proyecto.Interfaz.metodosg);
+        serie1.add(3, proyecto.Interfaz.clasesg);
+        serie1.add(4, proyecto.Interfaz.comentariosg);
+    
+	
+		
+	final XYSeries serie2 = new XYSeries("Jaime Alguersuari");
+
+        serie2.add(1, proyecto.Interfaz.variablesgB);
+        serie2.add(2, proyecto.Interfaz.metodosgB);
+        serie2.add(3, proyecto.Interfaz.clasesgB);
+        serie2.add(4, proyecto.Interfaz.comentariosgB);
+
+		
+	final XYSeriesCollection collection = new XYSeriesCollection();
+	collection.addSeries(serie1);
+	collection.addSeries(serie2);
+        
+        JFreeChart chart = 
+        ChartFactory.createXYLineChart("Resumen Proyecto",  
+        "1.variables  2.metodos  3.clases  4.comentarios","Numero",collection,PlotOrientation.VERTICAL,
+        false,
+        false, 
+        true                // Show legend
+        );
+        
+        //Mostramos la grafica en pantalla
+        /*ChartFrame frame = new ChartFrame("Ejemplo Grafica Circular", chart);
+        frame.pack();
+        frame.setVisible(true);*/
+
+        //Crear imaagen de la grafica
+        int width = 640; // Width of the image 
+        int height = 480; // Height of the image 
+        File XYChart = new File( nombre + ".jpeg" );
+        ChartUtilities.saveChartAsJPEG( XYChart , chart , width , height );
+
+        proyecto.Interfaz.lineasr.add(nombre + ".jpeg");
+
+    } 
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

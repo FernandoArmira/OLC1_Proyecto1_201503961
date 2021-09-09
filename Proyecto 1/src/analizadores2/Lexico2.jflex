@@ -75,8 +75,10 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
     System.out.println(comentario.trim());
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.comentariosg++;
+        proyecto.Interfaz.comentariosl++;
     }else{
         proyecto.Interfaz.comentariosgB++;
+        proyecto.Interfaz.comentarioslB++;
     }
     
     if(proyecto.Interfaz.archivoa == true){
@@ -101,8 +103,10 @@ cadena = ({cadena1}|{cadena2}|{cadena3}|{cadena4})
     System.out.println(comentario.trim());
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.comentariosg++;
+        proyecto.Interfaz.comentariosl++;
     }else{
         proyecto.Interfaz.comentariosgB++;
+        proyecto.Interfaz.comentarioslB++;
     }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.comentariostemp.add(comentario.trim());

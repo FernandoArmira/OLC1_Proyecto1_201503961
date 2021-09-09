@@ -48,10 +48,16 @@ parser code
         
         //String [ ] nombre = {"Fernando", "Marz", "Jade", "Juan", "Maria", "Pedro"};
 
-        /*for(int i = 0; i < valoresx.size(); i++){
+        /*System.out.println(valoresx.size());
+        for(int i = 0; i < valoresx.size(); i++){
+            System.out.println(valoresx.get(i));
+        }
+
+        for(int i = 0; i < valoresx.size(); i++){
             System.out.println(valoresx.get(i) + " " + valoresy.get(i));
         }*/
         
+        //Setear datos
         for(int i = 0; i < valoresx.size(); i++){
             dataset.setValue(Double.parseDouble(valoresy.get(i)), "", valoresx.get(i));
         }
@@ -208,7 +214,11 @@ parser code
 
         proyecto.Interfaz.lineasr.add(nombre + ".jpeg");
 
+        valoresx.clear();
+        valoresy.clear();
+
     } 
+
 
 // Variables globales del lenguaje fca
     public void Addvariable(String variable, String valor, String tipo){
@@ -309,6 +319,15 @@ parser code
                     proyecto.Interfaz.claseslineastempB.clear();
                     proyecto.Interfaz.clasesmetodostempB.clear();
                     proyecto.Interfaz.archivoclasesB.clear();
+
+                    proyecto.Interfaz.comentariosl = 0;
+                    proyecto.Interfaz.variablesl = 0;
+                    proyecto.Interfaz.metodosl = 0;
+                    proyecto.Interfaz.clasesl = 0;
+                    proyecto.Interfaz.comentarioslB = 0;
+                    proyecto.Interfaz.variableslB = 0;
+                    proyecto.Interfaz.metodoslB = 0;
+                    proyecto.Interfaz.claseslB = 0;
                     
                     proyecto.Interfaz.nombrearchivojs = nombre;
                     proyecto.Interfaz.archivoa = true;
@@ -321,14 +340,14 @@ parser code
 
                     proyecto.Interfaz.archivosproyecto.add(nombre);
 
-                    proyecto.Interfaz.rcomentarios.add(proyecto.Interfaz.comentariosg);
-                    proyecto.Interfaz.rcomentariosB.add(proyecto.Interfaz.comentariosgB);
-                    proyecto.Interfaz.rvariables.add(proyecto.Interfaz.variablesg);
-                    proyecto.Interfaz.rvariablesB.add(proyecto.Interfaz.variablesgB);
-                    proyecto.Interfaz.rmetodos.add(proyecto.Interfaz.metodosg);
-                    proyecto.Interfaz.rmetodosB.add(proyecto.Interfaz.metodosgB);
-                    proyecto.Interfaz.rclases.add(proyecto.Interfaz.clasesg);
-                    proyecto.Interfaz.rclasesB.add(proyecto.Interfaz.clasesgB);
+                    proyecto.Interfaz.rcomentarios.add(proyecto.Interfaz.comentariosl);
+                    proyecto.Interfaz.rcomentariosB.add(proyecto.Interfaz.comentarioslB);
+                    proyecto.Interfaz.rvariables.add(proyecto.Interfaz.variablesl);
+                    proyecto.Interfaz.rvariablesB.add(proyecto.Interfaz.variableslB);
+                    proyecto.Interfaz.rmetodos.add(proyecto.Interfaz.metodosl);
+                    proyecto.Interfaz.rmetodosB.add(proyecto.Interfaz.metodoslB);
+                    proyecto.Interfaz.rclases.add(proyecto.Interfaz.clasesl);
+                    proyecto.Interfaz.rclasesB.add(proyecto.Interfaz.claseslB);
                     
                     estadovar = 1;
                     i = archivos.size();
@@ -363,7 +382,7 @@ action code {:
 :}
 
 // terminal [Tipo] listaterminales;
-terminal String llaveiz, llaveder, puntocoma, pariz, parder, coma, igual, dpuntos, coriz, corder, dolar, definirglobales, generarreporteestadistico, compare, stringvar, doublevar, graficabarras, titulo, ejex, valores, titulox, tituloy, graficapie, graficalineas, archivo, puntajeespecifico, decimal, id, cadena, puntajegeneral;
+terminal String llaveiz, llaveder, puntocoma, pariz, parder, coma, igual, dpuntos, coriz, corder, dolar, definirglobales, generarreporteestadistico, compare, stringvar, doublevar, graficabarras, titulo, ejex, valores, titulox, tituloy, graficapie, graficalineas, archivo, puntajeespecifico, decimal, id, cadena, puntajegeneral, entero;
 
 // no terminal [Tipo] listanoterminales;
 non terminal Nodo INICIO, INSTRUCCION, BLOQUEGLOBALES, BLOQUEARCHIVOS, BLOQUEGBARRAS, BLOQUEGPIE, BLOQUEGLINEAS, CUERPOGLOBALES, VARSTRING, VARDOUBLE, CUERPOGBARRAS, BTITULO, BEJEX, BVALORES, BTITULOX, BTITULOY, ARREGLO, ARREGLO2, ARREGLOV, BPUNTAJE, ARREGLOV2, CUERPOGPIE, CUERPOGLINEAS, BARCHIVO;
@@ -401,8 +420,10 @@ VARSTRING ::= stringvar id:a igual cadena:b puntocoma {://System.out.println("--
 
 VARDOUBLE ::= doublevar id:a igual decimal:b puntocoma {://System.out.println("--- Variable: " + a + " Valor: " + b);
     Addvariable(a,b,"Double");:}
+        |doublevar id:a igual entero:b puntocoma {://System.out.println("--- Variable: " + a + " Valor: " + b);
+    Addvariable(a,b,"Double");:}
         | doublevar id:a igual BPUNTAJE puntocoma{://System.out.println("--- Variable: " + a + " Valor: " + b);
-    Addvariable(a,String.valueOf(proyecto.Interfaz.puntaje),"Double");:};
+    Addvariable(a,proyecto.Interfaz.parametrospe,"Double");:};
 
 //BLOQUEARCHIVOS ::= generarreporteestadistico llaveiz CUERPOARCHIVOS llaveder;
 
@@ -431,7 +452,7 @@ CUERPOGBARRAS ::= BTITULO BEJEX BVALORES BTITULOX BTITULOY{:System.out.println("
     parser.contgbarras++;:}
         |error;
     
-BTITULO ::= titulo dpuntos id:a puntocoma {://System.out.println("--- Titulo: " + a);
+BTITULO ::= titulo dpuntos id:a puntocoma {:
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
             //System.out.println("Existe la variable");
@@ -445,13 +466,14 @@ BTITULO ::= titulo dpuntos id:a puntocoma {://System.out.println("--- Titulo: " 
     valoresy.add("");:}
         | titulo dpuntos cadena:a puntocoma{://System.out.println("--- Titulo: " + a);
     titulografica = a;
-    valoresx.add("");:};
+    valoresx.add("");
+    valoresy.add("");:};
 
 BEJEX ::= ejex dpuntos coriz ARREGLO corder puntocoma;
 
-ARREGLO ::= cadena:a ARREGLO2 {://System.out.println("--- Valorx: " + a);
+ARREGLO ::= cadena:a ARREGLO2 {:
     valoresx.set(0,a);:}
-        | id:a ARREGLO2{://System.out.println("--- Valorx: " + a);
+        | id:a ARREGLO2{:
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
@@ -468,9 +490,9 @@ ARREGLO ::= cadena:a ARREGLO2 {://System.out.println("--- Valorx: " + a);
         }:}
         |error;
 
-ARREGLO2 ::= ARREGLO2 coma cadena:a{://System.out.println("--- Valorx: " + a);
+ARREGLO2 ::= ARREGLO2 coma cadena:a {:
     valoresx.add(a);:}
-        | ARREGLO2 coma id:a{://System.out.println("--- Valorx: " + a);
+        | ARREGLO2 coma id:a{:
         int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
@@ -485,9 +507,9 @@ ARREGLO2 ::= ARREGLO2 coma cadena:a{://System.out.println("--- Valorx: " + a);
     if(estado == 0){
             valoresx.add("-");
         }:}
-        | coma cadena:a{://System.out.println("--- Valorx: " + a);
+        | coma cadena:a{:
     valoresx.add(a);:}
-        | coma id:a{://System.out.println("--- Valorx: " + a);
+        | coma id:a{:
         int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
         if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
@@ -505,31 +527,109 @@ ARREGLO2 ::= ARREGLO2 coma cadena:a{://System.out.println("--- Valorx: " + a);
 
 BVALORES ::= valores dpuntos coriz ARREGLOV corder puntocoma;
 
-ARREGLOV ::= cadena:a ARREGLOV2{://System.out.println("--- Valory: " + a);
+ARREGLOV ::= entero:a ARREGLOV2{:
     valoresy.set(0,a);:}
-        | id:a ARREGLOV2{://System.out.println("--- Valory: " + a);
+        | decimal:a ARREGLOV2{:
+    valoresy.set(0,a);:}
+        | id:a ARREGLOV2{:
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
-        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+        
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a)){
             //System.out.println("Existe la variable");
-            valoresy.set(0,proyecto.Interfaz.listavariables.get(i).getvalor());
-            i = proyecto.Interfaz.listavariables.size();
-            estado = 1;
-        }else{
-            //System.out.println("No existe la variable");
-        }      
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+            //System.out.println(proyecto.Interfaz.listavariables.get(i).getvalor());
+
+            String [] split = proyecto.Interfaz.listavariables.get(i).getvalor().split("-");
+
+
+            if(split.length < 3){
+                valoresy.set(0,proyecto.Interfaz.listavariables.get(i).getvalor());
+                i = proyecto.Interfaz.listavariables.size();
+                estado = 1;
+            } else {
+                String a2 = split[0];
+                String b2 = split[1];
+                String c2 = split[2];
+
+                if(!a2.equals("PG")){
+
+                    //proyecto.Interfaz.puntaje = 0;
+
+    if(b2.toLowerCase().equals("variable")){
+        for(int j=0;j<proyecto.Interfaz.listavariablesjs.size();j++){
+                if(proyecto.Interfaz.listavariablesjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listavariablesjs.get(j).variable.equals(c2)){
+                    valoresy.set(0,"1");
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listavariablesjs.size();
+                    estado = 1;
+                }
+            }
+        
+    } else if(b2.toLowerCase().equals("comentario")){
+        for(int j=0;j<proyecto.Interfaz.listacomentariosjs.size();j++){
+                if(proyecto.Interfaz.listacomentariosjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listacomentariosjs.get(j).comentario.equals(c2)){
+                    valoresy.set(0,"1");
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listacomentariosjs.size();
+                    estado = 1;
+                } 
+         }
+        
+    } else if(b2.toLowerCase().equals("metodo")){
+        for(int j=0;j<proyecto.Interfaz.listametodosjs.size();j++){
+                if(proyecto.Interfaz.listametodosjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listametodosjs.get(j).metodo.equals(c2)){
+                    double p= proyecto.Interfaz.listametodosjs.get(j).id + proyecto.Interfaz.listametodosjs.get(j).parametros + proyecto.Interfaz.listametodosjs.get(j).lineas;
+                    valoresy.set(0,String.valueOf(p));
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listametodosjs.size();
+                    estado = 1;
+            }
+         }
+        
+        
+    } else if(b2.toLowerCase().equals("clase")){
+        for(int j=0;j<proyecto.Interfaz.listaclasesjs.size();j++){
+                if(proyecto.Interfaz.listaclasesjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listaclasesjs.get(j).clase.equals(c2)){
+                    double p = proyecto.Interfaz.listaclasesjs.get(j).id + proyecto.Interfaz.listaclasesjs.get(j).parametros + proyecto.Interfaz.listaclasesjs.get(j).lineas;
+                    valoresy.set(0,String.valueOf(p));
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listaclasesjs.size();
+                    estado = 1;
+                } 
+         }
+        
     }
+                }else{
+                    valoresy.set(0,String.valueOf(proyecto.Interfaz.puntajegeneral));
+                    i = proyecto.Interfaz.listavariables.size();
+                    estado = 1;
+                  
+                }
+                
+            }
+                
+           
+        }
+
+        
+        }
+
         if(estado == 0){
-            valoresy.add("0");
+            valoresy.set(0,"0");
         }:}
         | BPUNTAJE{://System.out.println("--- Valory: PE");
-    valoresy.set(0,String.valueOf(proyecto.Interfaz.puntaje));:}
+            valoresy.set(0,String.valueOf(proyecto.Interfaz.puntaje));:}
         |error;
 
 BPUNTAJE ::= dolar llaveiz puntajeespecifico coma cadena:a coma cadena:b coma cadena:c llaveder{://System.out.println("--- Valory: " + a);
     //System.out.println("+++++++++++++++++++++++++++" + a);
     //System.out.println("+++++++++++++++++++++++++++" + b);
     //System.out.println("+++++++++++++++++++++++++++" + c);
+    proyecto.Interfaz.parametrospe = "";
+    proyecto.Interfaz.parametrospe = a + "-" + b + "-" + c;
+
     proyecto.Interfaz.puntaje = 0;
 
     if(b.toLowerCase().equals("variable")){
@@ -563,48 +663,201 @@ BPUNTAJE ::= dolar llaveiz puntajeespecifico coma cadena:a coma cadena:b coma ca
         
     }
 :}
-        | dolar llaveiz puntajegeneral llaveder{://System.out.println("--- Valory: " + a);
-            //System.out.println("+++++++++++++++++++++" + proyecto.Interfaz.puntajegeneral);
+        | dolar llaveiz puntajegeneral llaveder{:
+            proyecto.Interfaz.parametrospe = "";
+            proyecto.Interfaz.parametrospe = "PG-PG-PG";
             proyecto.Interfaz.puntaje = proyecto.Interfaz.puntajegeneral;
-            //System.out.println("+++++++++++++++++++++" + proyecto.Interfaz.puntaje);
+
         :};
 
-ARREGLOV2 ::= ARREGLOV2 coma cadena:a {://System.out.println("--- Valory: " + a);
+ARREGLOV2 ::= ARREGLOV2 coma entero:a {:
     valoresy.add(a);:}
-        | ARREGLOV2 coma id:a {://System.out.println("--- Valory: " + a);
+        | ARREGLOV2 coma decimal:a {:
+    valoresy.add(a);:}
+        | ARREGLOV2 coma id:a {:
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
-        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+        
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a)){
             //System.out.println("Existe la variable");
-            valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
-            i = proyecto.Interfaz.listavariables.size();
-            estado = 1;
-        }else{
-            //System.out.println("No existe la variable");
-        }
+            //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+            //System.out.println(proyecto.Interfaz.listavariables.get(i).getvalor());
+
+            String [] split = proyecto.Interfaz.listavariables.get(i).getvalor().split("-");
+
+
+            if(split.length < 3){
+                valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
+                i = proyecto.Interfaz.listavariables.size();
+                estado = 1;
+            } else {
+                String a2 = split[0];
+                String b2 = split[1];
+                String c2 = split[2];
+
+                if(!a2.equals("PG")){
+
+                    //proyecto.Interfaz.puntaje = 0;
+
+    if(b2.toLowerCase().equals("variable")){
+        for(int j=0;j<proyecto.Interfaz.listavariablesjs.size();j++){
+                if(proyecto.Interfaz.listavariablesjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listavariablesjs.get(j).variable.equals(c2)){
+                    valoresy.add("1");
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listavariablesjs.size();
+                    estado = 1;
+                }
+            }
+        
+    } else if(b2.toLowerCase().equals("comentario")){
+        for(int j=0;j<proyecto.Interfaz.listacomentariosjs.size();j++){
+                if(proyecto.Interfaz.listacomentariosjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listacomentariosjs.get(j).comentario.equals(c2)){
+                    valoresy.add("1");
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listacomentariosjs.size();
+                    estado = 1;
+                } 
+         }
+        
+    } else if(b2.toLowerCase().equals("metodo")){
+        for(int j=0;j<proyecto.Interfaz.listametodosjs.size();j++){
+                if(proyecto.Interfaz.listametodosjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listametodosjs.get(j).metodo.equals(c2)){
+                    double p= proyecto.Interfaz.listametodosjs.get(j).id + proyecto.Interfaz.listametodosjs.get(j).parametros + proyecto.Interfaz.listametodosjs.get(j).lineas;
+                    valoresy.add(String.valueOf(p));
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listametodosjs.size();
+                    estado = 1;
+            }
+         }
+        
+        
+    } else if(b2.toLowerCase().equals("clase")){
+        for(int j=0;j<proyecto.Interfaz.listaclasesjs.size();j++){
+                if(proyecto.Interfaz.listaclasesjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listaclasesjs.get(j).clase.equals(c2)){
+                    double p = proyecto.Interfaz.listaclasesjs.get(j).id + proyecto.Interfaz.listaclasesjs.get(j).parametros + proyecto.Interfaz.listaclasesjs.get(j).lineas;
+                    valoresy.add(String.valueOf(p));
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listaclasesjs.size();
+                    estado = 1;
+                } 
+         }
+        
     }
-    if(estado == 0){
+                }else{
+                    valoresy.add(String.valueOf(proyecto.Interfaz.puntajegeneral));
+                    i = proyecto.Interfaz.listavariables.size();
+                    estado = 1;
+                  
+                }
+                
+            }
+                
+           
+        }
+
+        
+        }
+
+        if(estado == 0){
             valoresy.add("0");
-        }:}
+        }
+    :}
         | ARREGLOV2 coma BPUNTAJE {://System.out.println("--- Valory: PE");
     valoresy.add(String.valueOf(proyecto.Interfaz.puntaje));:}
-        | coma cadena:a {://System.out.println("--- Valory: " + a);
+        | coma entero:a {://System.out.println("--- Valory: " + a);
     valoresy.add(a);:}
-        | coma id:a {://System.out.println("--- Valory: " + a);
+        | coma decimal:a {://System.out.println("--- Valory: " + a);
+    valoresy.add(a);:}
+        | coma id:a {:
     int estado = 0;
     for(int i = 0; i < proyecto.Interfaz.listavariables.size(); i++){
-        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a) == true){
+        
+        if(proyecto.Interfaz.listavariables.get(i).getvariable().equals(a)){
             //System.out.println("Existe la variable");
-            valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
-            i = proyecto.Interfaz.listavariables.size();
-            estado = 1;
-        }else{
-            //System.out.println("No existe la variable");
-        }
+            //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+            //System.out.println(proyecto.Interfaz.listavariables.get(i).getvalor());
+
+            String [] split = proyecto.Interfaz.listavariables.get(i).getvalor().split("-");
+
+
+            if(split.length < 3){
+                valoresy.add(proyecto.Interfaz.listavariables.get(i).getvalor());
+                i = proyecto.Interfaz.listavariables.size();
+                estado = 1;
+            } else {
+                String a2 = split[0];
+                String b2 = split[1];
+                String c2 = split[2];
+
+                if(!a2.equals("PG")){
+
+                    //proyecto.Interfaz.puntaje = 0;
+
+    if(b2.toLowerCase().equals("variable")){
+        for(int j=0;j<proyecto.Interfaz.listavariablesjs.size();j++){
+                if(proyecto.Interfaz.listavariablesjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listavariablesjs.get(j).variable.equals(c2)){
+                    valoresy.add("1");
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listavariablesjs.size();
+                    estado = 1;
+                }
+            }
+        
+    } else if(b2.toLowerCase().equals("comentario")){
+        for(int j=0;j<proyecto.Interfaz.listacomentariosjs.size();j++){
+                if(proyecto.Interfaz.listacomentariosjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listacomentariosjs.get(j).comentario.equals(c2)){
+                    valoresy.add("1");
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listacomentariosjs.size();
+                    estado = 1;
+                } 
+         }
+        
+    } else if(b2.toLowerCase().equals("metodo")){
+        for(int j=0;j<proyecto.Interfaz.listametodosjs.size();j++){
+                if(proyecto.Interfaz.listametodosjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listametodosjs.get(j).metodo.equals(c2)){
+                    double p= proyecto.Interfaz.listametodosjs.get(j).id + proyecto.Interfaz.listametodosjs.get(j).parametros + proyecto.Interfaz.listametodosjs.get(j).lineas;
+                    valoresy.add(String.valueOf(p));
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listametodosjs.size();
+                    estado = 1;
+            }
+         }
+        
+        
+    } else if(b2.toLowerCase().equals("clase")){
+        for(int j=0;j<proyecto.Interfaz.listaclasesjs.size();j++){
+                if(proyecto.Interfaz.listaclasesjs.get(j).archivo.equals(a2) && proyecto.Interfaz.listaclasesjs.get(j).clase.equals(c2)){
+                    double p = proyecto.Interfaz.listaclasesjs.get(j).id + proyecto.Interfaz.listaclasesjs.get(j).parametros + proyecto.Interfaz.listaclasesjs.get(j).lineas;
+                    valoresy.add(String.valueOf(p));
+                    i = proyecto.Interfaz.listavariables.size();
+                    j = proyecto.Interfaz.listaclasesjs.size();
+                    estado = 1;
+                } 
+         }
+        
     }
-    if(estado == 0){
+                }else{
+                    valoresy.add(String.valueOf(proyecto.Interfaz.puntajegeneral));
+                    i = proyecto.Interfaz.listavariables.size();
+                    estado = 1;
+                  
+                }
+                
+            }
+                
+           
+        }
+
+        
+        }
+
+        if(estado == 0){
             valoresy.add("0");
-        }:}
+        }
+    :}
         | coma BPUNTAJE{://System.out.println("--- Valory: PE");
     valoresy.add(String.valueOf(proyecto.Interfaz.puntaje));:};
 

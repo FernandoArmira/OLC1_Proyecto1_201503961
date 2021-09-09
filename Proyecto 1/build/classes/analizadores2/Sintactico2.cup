@@ -177,11 +177,13 @@ INSTRUCCIONL ::= VARIABLES puntocoma
             | breakpr
             |error;
 
-VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
+VARIABLES ::= PRVARIABLES id:a igual EXPRESION {://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablesg++;
+        proyecto.Interfaz.variablesl++;
     }else{
         proyecto.Interfaz.variablesgB++;
+        proyecto.Interfaz.variableslB++;
     }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
@@ -196,8 +198,10 @@ VARIABLES ::= PRVARIABLES id:a igual VALOR{://System.out.println("Variables");
     |PRVARIABLES id:a {://System.out.println("Variables");
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablesg++;
+        proyecto.Interfaz.variablesl++;
     }else{
         proyecto.Interfaz.variablesgB++;
+        proyecto.Interfaz.variableslB++;
     }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.variablestemp.add(a);
@@ -214,13 +218,14 @@ PRVARIABLES ::= var
             | let
             | constvar;
 
-VALOR ::= entero
+/*VALOR ::= entero
         | decimal
         | cadena
         | truevar
         | falsevar
         | IMPORT
-        |error;
+        | id
+        |error;*/
 
 EXPRESION ::= cadena
             | id
@@ -237,7 +242,8 @@ EXPRESION ::= cadena
             | menos EXPRESION
             | pariz EXPRESION parder
             | RELACIONAL
-            | LOGICO;
+            | LOGICO
+            | IMPORT;
 
 IF ::= ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder
     | ifpr pariz CONDICION parder llaveiz CUERPOIF llaveder ELSE
@@ -280,8 +286,9 @@ INICIOFOR ::= VARIABLES
 
 ASIGNACION ::= id igual EXPRESION;
 
-INCFOR ::= id mas mas
-        | id menos menos;
+INCFOR ::= INC
+        | DEC
+        | ASIGNACION;
 
 CUERPOFOR ::= CUERPOFOR INSTRUCCIONL
             | INSTRUCCIONL;
@@ -326,11 +333,13 @@ CUERPOMETODO2 ::= CUERPOMETODO2 coma EXPRESION{:proyecto.Interfaz.numparametros+
 
 IMPORT ::= requirepr pariz cadena parder;
 
-CLASS ::= classpr id:a pariz parder llaveiz CUERPOCLASE  llaveder{://System.out.println("Variables");
+CLASS ::= classpr id:a llaveiz CUERPOCLASE  llaveder{://System.out.println("Variables");
         if(proyecto.Interfaz.archivoa == true){
             proyecto.Interfaz.clasesg++;
+            proyecto.Interfaz.clasesl++;
         } else{
             proyecto.Interfaz.clasesgB++;
+            proyecto.Interfaz.claseslB++;
         }
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.clasestempA.add(a);
@@ -360,8 +369,10 @@ CUERPOCLASE ::= CUERPOCLASE INSTRUCCIONL{:proyecto.Interfaz.numlineasc++;:}
 METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
     if(proyecto.Interfaz.archivoa == true){
         proyecto.Interfaz.metodosg++;
+        proyecto.Interfaz.metodosl++;
     } else{
         proyecto.Interfaz.metodosgB++;
+        proyecto.Interfaz.metodoslB++;
     }
     proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" + a;
     if(proyecto.Interfaz.archivoa == true){
@@ -386,8 +397,10 @@ METODO ::= id:a pariz parder llaveiz METODOBODY llaveder{://System.out.println("
         | id:a pariz CUERPOMETODO parder llaveiz METODOBODY llaveder{://System.out.println("Metodos");
         if(proyecto.Interfaz.archivoa == true){
             proyecto.Interfaz.metodosg++;
+            proyecto.Interfaz.metodosl++;
         } else{
             proyecto.Interfaz.metodosgB++;
+            proyecto.Interfaz.metodoslB++;
         }
         proyecto.Interfaz.metodosc = proyecto.Interfaz.metodosc + "-" +  a;
     if(proyecto.Interfaz.archivoa == true){
